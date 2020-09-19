@@ -1,9 +1,9 @@
 # SE - NOTE: taken from last unreal project and trimmed back.
 
-# Visual Studio 2015 user specific files
+# Visual Studio user specific files
 .vs/
 
-# Visual Studio 2015 database file
+# Visual Studio database file
 *.VC.db
 
 # Compiled Object files
