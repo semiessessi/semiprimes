@@ -1,4 +1,4 @@
-[TOC}(../TOC.md)
+[TOC](../TOC.md)
 
 # 1 - Starting
 
