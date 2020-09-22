@@ -47,7 +47,7 @@ Number& Number::operator =( Number&& xNumber ) noexcept
     return *this;
 }
 
-Number operator "" _z( const char* const szToken )
+Number operator ""z( const char* const szToken )
 {
     return Number( std::string( szToken ) );
 }
