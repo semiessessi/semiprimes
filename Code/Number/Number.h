@@ -24,14 +24,14 @@ public:
 
     bool operator >( const Number& xOperand ) const;
 
-    Number& operator+=( const int64_t iOperand );
-    //Number& operator+=( const uint64_t iOperand );
-    Number& operator+=( const Number& xOperand );
-    //Number& operator-=( const Number& xOperand );
-    Number& operator*=( const int64_t iOperand );
-    //Number& operator*=( const Number& xOperand );
-    Number& operator/=( const int64_t xOperand );
-    Number& operator/=( const Number& xOperand );
+    Number& operator +=( const int64_t iOperand );
+    //Number& operator +=( const uint64_t iOperand );
+    Number& operator +=( const Number& xOperand );
+    //Number& operator -=( const Number& xOperand );
+    Number& operator *=( const int64_t iOperand );
+    //Number& operator *=( const Number& xOperand );
+    Number& operator /=( const int64_t xOperand );
+    Number& operator /=( const Number& xOperand );
     int64_t operator %( const int64_t iOperand ) const;
     
     void InplaceLimbShiftLeft( const size_t uLimbs );

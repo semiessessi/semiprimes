@@ -1,6 +1,8 @@
 
 #include <cstdio>
 
+#include "../Number/Number.h"
+
 void InteractiveMode( const bool bVerbose, const bool bTiming )
 {
     // SE - TODO: endless buffer, obvs.
@@ -14,5 +16,9 @@ void InteractiveMode( const bool bVerbose, const bool bTiming )
         {
             return;
         }
+
+        Number xNumber( szBuffer );
+        puts( "String test:" );
+        puts( xNumber.ToString().c_str() );
     }
 }

@@ -523,7 +523,230 @@ Number operator ""z( const char* const szToken )
 
 ### 1.1.4 Interactive mode
 
+Stubbing out a loop for the interactive mode is the next step towards making these routines testable.
 
+This can be its own file, InteractiveMode.cpp:
 
-### 1.1.5 Testing, debugging and fixing
+```cpp
+#include <cstdio>
+
+void InteractiveMode( const bool bVerbose, const bool bTiming )
+{
+    // SE - TODO: endless buffer, obvs.
+    static char szBuffer[ 4096 ];
+    while( true )
+    {
+        putchar( ':' );
+        gets_s( szBuffer );
+        // allow to quit
+        if( szBuffer[ 0 ] == 'q' )
+        {
+            return;
+        }
+    }
+}
+```
+### 1.1.5 Mistakes are real
+
+If we try to test this by calling it from the appropriate place in the entry point function, we will notice the flag doesn't work because the constant in EntryPoint.cpp is wrong and the CheckFlag routine also has a '1' in place of 'i' in its loop.
+
+Fixing these is simple, if easily overlooked:
+
+```cpp
+#include <cstdio>
+#include <cstring>
+
+void InteractiveMode( const bool bVerbose, const bool bTiming );
+
+bool CheckFlag(
+    const char* const szFlag,
+    const int iArgumentCount,
+    const char* const* const pszArguments )
+{
+    for( int i = 0; i < iArgumentCount; ++i )
+    {
+        if( _stricmp( pszArguments[ i ], szFlag ) == 0 )
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+int main(
+    const int iArgumentCount,
+    const char* const* const pszArguments )
+{
+    bool bVerbose = false;
+    bool bTiming = false;
+    if( CheckFlag( "-v", iArgumentCount, pszArguments )
+        || CheckFlag( "-verbose", iArgumentCount, pszArguments ) )
+    {
+        bVerbose = true;
+    }
+
+    if( CheckFlag( "-t", iArgumentCount, pszArguments )
+        || CheckFlag( "-timing", iArgumentCount, pszArguments ) )
+    {
+        bTiming = true;
+    }
+
+    if( CheckFlag( "-i", iArgumentCount, pszArguments )
+        || CheckFlag( "-interactive", iArgumentCount, pszArguments ) )
+    {
+        InteractiveMode( bVerbose, bTiming );
+        return 0;
+    }
+
+    // SE - TODO: do prime number thing to spare parameters
+    return 0;
+}
+```
+
+### 1.1.6 Testing, debugging and fixing
+
+Now that the interactive mode loop works we can try to take a number as input and display it back on the screen. Long numbers will test the multi-precisioness and may reveal problems.
+
+(in InteractiveMode.cpp)
+
+```cpp
+#include <cstdio>
+
+#include "../Number/Number.h"
+
+void InteractiveMode( const bool bVerbose, const bool bTiming )
+{
+    // SE - TODO: endless buffer, obvs.
+    static char szBuffer[ 4096 ];
+    while( true )
+    {
+        putchar( ':' );
+        gets_s( szBuffer );
+        // allow to quit
+        if( szBuffer[ 0 ] == 'q' )
+        {
+            return;
+        }
+
+        Number xNumber( szBuffer );
+        puts( "String test:" );
+        puts( xNumber.ToString().c_str() );
+    }
+}
+```
+
+This shows bugs immediately (output from running program):
+
+```
+:111111111111111111111111111111111111111111111111
+String test:
+
+:1
+String test:
+-
+:1
+String test:
+-
+:1
+String test:
+-
+:1
+String test:
+-
+:1
+String test:
+-
+:1
+String test:
+-
+:11111111111111111
+String test:
+-
+:1111111111111111111111111111111
+String test:
+-
+:
+```
+
+Stepping through the code with a debugger we can find that the number of limbs has not been initialised in the case of the string constructor and repair that problem.
+
+In Number.cpp:
+
+```cpp
+Number::Number( const std::string& xString )
+: mxLimbs( { 0 } ) // initialise limb vector // <--- here
+, mbNegative( xString[ 0 ] == '-' ) // SE - TODO: robustness against dodgy inputs
+{
+    const size_t uStart = ( mbNegative || ( xString[ 0 ] == '+' ) ) ? 1 : 0;
+    const size_t uLength = xString.length();
+    for( size_t uPosition = uStart; uPosition < uLength; ++uPosition )
+    {
+        *this *= 10;
+        *this += static_cast< int64_t >( xString[ uPosition ] ) - '0';
+    }
+}
+```
+
+The output remains similarly incorrect. Continuing to step through the flow we find that the sign evaluation on the multiply is incorrect.
+
+Notice that I'm debugging complexity of functionality I didn't need yet.
+
+In Number.cpp:
+
+```cpp
+Number& Number::operator*=( const int64_t iOperand )
+{
+    // handle the possible factor of -1 from the signs of the operands
+    mbNegative = ( iOperand < 0 ) != mbNegative; // <--- here
+
+    const uint64_t uOperand = static_cast< uint64_t >( iOperand );
+    const size_t uLimbCount = mxLimbs.size();
+    uint64_t uUpperPart = 0;
+    uint64_t uCarry = 0;
+    for( size_t uLimb = 0; uLimb < uLimbCount; ++uLimb )
+    {
+        mxLimbs[ uLimb ] = _umul128(
+            uOperand, mxLimbs[ uLimb ], &uUpperPart )
+                + uCarry;   // add the previous carry as we go along
+                            // this shouldn't overflow since the biggest pair
+                            // of numbers multiply to:
+                            // (2^64-1)(2^64-1) = 2^128 - 2.2^64 + 1
+                            // ??? maybe? should verify that more.
+
+        uCarry = uUpperPart;
+    }
+
+    if( uCarry > 0 )
+    {
+        mxLimbs.push_back( uCarry );
+    }
+
+    return *this;
+}
+```
+
+Then a mistake in the left shift loop while condition:
+
+In Number.cpp:
+
+```cpp
+void Number::InplaceLimbShiftLeft( const size_t uLimbs )
+{
+    // add new limbs and copy
+    mxLimbs.resize( mxLimbs.size() + uLimbs );
+    size_t uLimb = mxLimbs.size();
+    while( uLimb > uLimbs ) // <--- here
+    {
+        --uLimb;
+        mxLimbs[ uLimb ] = mxLimbs[ uLimb - uLimbs ];
+    }
+
+    // fill zeroes...
+    for( size_t uLimb = 0; uLimb < uLimbs; ++uLimb )
+    {
+        mxLimbs[ uLimb ] = 0;
+    }
+}
+```
 

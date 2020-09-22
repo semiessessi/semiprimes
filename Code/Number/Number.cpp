@@ -38,7 +38,8 @@ Number::Number( const uint64_t uValue )
 }
 
 Number::Number( const std::string& xString )
-: mbNegative( xString[ 0 ] == '-' ) // SE - TODO: robustness against dodgy inputs
+: mxLimbs( { 0 } ) // initialise limb vector
+, mbNegative( xString[ 0 ] == '-' ) // SE - TODO: robustness against dodgy inputs
 {
     const size_t uStart = ( mbNegative || ( xString[ 0 ] == '+' ) ) ? 1 : 0;
     const size_t uLength = xString.length();
@@ -108,7 +109,7 @@ bool Number::operator >( const Number& xOperand ) const
     return mbNegative ? ( bEqual || !bResult ) : bResult;
 }
 
-Number& Number::operator+=( const int64_t iOperand )
+Number& Number::operator +=( const int64_t iOperand )
 {
     // SE - TODO: handle the signed cases.
 
@@ -143,7 +144,7 @@ Number& Number::operator+=( const int64_t iOperand )
     return *this;
 }
 
-Number& Number::operator+=( const Number& xOperand )
+Number& Number::operator +=( const Number& xOperand )
 {
     // SE - TODO: handle the signed cases.
 
@@ -171,10 +172,10 @@ Number& Number::operator+=( const Number& xOperand )
     return *this;
 }
 
-Number& Number::operator*=( const int64_t iOperand )
+Number& Number::operator *=( const int64_t iOperand )
 {
     // handle the possible factor of -1 from the signs of the operands
-    mbNegative = ( iOperand < 0 ) == mbNegative;
+    mbNegative = ( iOperand < 0 ) != mbNegative;
 
     const uint64_t uOperand = static_cast< uint64_t >( iOperand );
     const size_t uLimbCount = mxLimbs.size();
@@ -201,14 +202,14 @@ Number& Number::operator*=( const int64_t iOperand )
     return *this;
 }
 
-Number& Number::operator/=( const int64_t iOperand )
+Number& Number::operator /=( const int64_t iOperand )
 {
     static int64_t iDeadRemainder; // :(
     *this = DivMod( *this, iOperand, iDeadRemainder );
     return *this;
 }
 
-Number& Number::operator/=( const Number& xOperand )
+Number& Number::operator /=( const Number& xOperand )
 {
     static Number xDeadRemainder; // :(
     *this = DivMod( *this, xOperand, xDeadRemainder );
@@ -227,7 +228,7 @@ void Number::InplaceLimbShiftLeft( const size_t uLimbs )
     // add new limbs and copy
     mxLimbs.resize( mxLimbs.size() + uLimbs );
     size_t uLimb = mxLimbs.size();
-    while( uLimb != 0 )
+    while( uLimb > uLimbs )
     {
         --uLimb;
         mxLimbs[ uLimb ] = mxLimbs[ uLimb - uLimbs ];
