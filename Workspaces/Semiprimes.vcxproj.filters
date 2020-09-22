@@ -4,10 +4,21 @@
     <Filter Include="Core">
       <UniqueIdentifier>{4fc56d5e-8edd-4469-a9ce-3f711b2f6cb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Number">
+      <UniqueIdentifier>{3beaf6f6-3a97-41d3-b429-8345ba65e786}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Core\EntryPoint.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Number\Number.cpp">
+      <Filter>Number</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Code\Number\Number.h">
+      <Filter>Number</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

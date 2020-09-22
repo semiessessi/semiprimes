@@ -15,7 +15,7 @@ int main( const int iArgumentCount, const char* const* const pszArguments )
 }
 ```
 
-### 1.1.2 Fleshing it out
+### 1.1.2 Taking parameters
 
 To do anything useful we need to process numbers of arbitrary length as input and display them as output.
 
@@ -69,4 +69,6 @@ int main(
 	return 0;
 }
 ```
+
+### 1.1.3 Number class
 
