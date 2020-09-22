@@ -15,6 +15,9 @@
     <ClCompile Include="..\Code\Number\Number.cpp">
       <Filter>Number</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Core\InteractiveMode.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
