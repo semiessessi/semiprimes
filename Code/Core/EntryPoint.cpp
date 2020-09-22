@@ -10,7 +10,7 @@ bool CheckFlag(
 {
 	for( int i = 0; i < iArgumentCount; ++i )
 	{
-		if( _stricmp( pszArguments[ 1 ], szFlag ) == 0 )
+		if( _stricmp( pszArguments[ i ], szFlag ) == 0 )
 		{
 			return true;
 		}
