@@ -37,7 +37,7 @@ int main(
 		bTiming = true;
 	}
 
-	if( CheckFlag( "-1", iArgumentCount, pszArguments )
+	if( CheckFlag( "-i", iArgumentCount, pszArguments )
 		|| CheckFlag( "-interactive", iArgumentCount, pszArguments ) )
 	{
 		InteractiveMode( bVerbose, bTiming );
