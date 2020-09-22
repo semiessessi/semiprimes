@@ -8,7 +8,7 @@ The first step is to create a 'do-nothing' program, with suitable project files 
 
 ### 1.1.1 The null entrypoint program
 
-```
+```C++
 int main( const int iArgumentCount, const char* const* const pszArguments )
 {
 	return 0;
@@ -23,7 +23,7 @@ It is also helpful to allow parameters from the command line.
 
 Something like this...
 
-```
+```C++
 #include <cstdio>
 #include <cstring>
 
@@ -77,7 +77,7 @@ Writing the shape of the string to number and number to string conversion gives 
 
 Header:
 
-```
+```C++
 #ifndef NUMBER_H
 #define NUMBER_H
 
@@ -116,7 +116,7 @@ Number operator ""z( const char* const szToken );
 
 Implementation:
 
-```
+```C++
 #include "Number.h"
 
 #include <complex>
