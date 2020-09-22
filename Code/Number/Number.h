@@ -11,18 +11,50 @@ class Number
 public:
 
     Number();
+    Number( const int iValue );
+    Number( const unsigned int uValue );
+    Number( const int64_t iValue );
+    Number( const uint64_t uValue );
     Number( const std::string& xString );
     Number( const Number& xNumber );
     Number( Number&& xNumber ) noexcept;
 
     Number& operator=( const Number& xNumber );
     Number& operator=( Number&& xNumber ) noexcept;
+
+    bool operator >( const Number& xOperand ) const;
+
+    Number& operator+=( const int64_t iOperand );
+    //Number& operator+=( const uint64_t iOperand );
+    Number& operator+=( const Number& xOperand );
+    //Number& operator-=( const Number& xOperand );
+    Number& operator*=( const int64_t iOperand );
+    //Number& operator*=( const Number& xOperand );
+    Number& operator/=( const int64_t xOperand );
+    Number& operator/=( const Number& xOperand );
+    int64_t operator %( const int64_t iOperand ) const;
     
+    void InplaceLimbShiftLeft( const size_t uLimbs );
+    void InplaceLimbShiftRight( const size_t uLimbs );
+
     std::string ToString() const;
+
+    static Number DivMod(
+        const Number xNumerator,
+        const int64_t iDenominator,
+        int64_t& iRemainder );
+    static Number DivMod(
+        const Number xNumerator,
+        const uint64_t uDenominator,
+        uint64_t& uRemainder );
+    static Number DivMod(
+        const Number xNumerator,
+        const Number xDenominator,
+        Number& xRemainder );
 
 private:
 
-    std::vector<int64_t> mxLimbs;
+    std::vector< uint64_t > mxLimbs;
     bool mbNegative;
 };
 

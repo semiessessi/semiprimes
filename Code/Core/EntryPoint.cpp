@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <cstring>
 
+void InteractiveMode( const bool bVerbose, const bool bTiming );
+
 bool CheckFlag(
 	const char* const szFlag,
 	const int iArgumentCount,
@@ -21,22 +23,25 @@ int main(
 	const int iArgumentCount,
 	const char* const* const pszArguments )
 {
+	bool bVerbose = false;
+	bool bTiming = false;
 	if( CheckFlag( "-v", iArgumentCount, pszArguments )
 		|| CheckFlag( "-verbose", iArgumentCount, pszArguments ) )
 	{
-		// SE - TODO: set verbosity enabled
+		bVerbose = true;
 	}
 
 	if( CheckFlag( "-t", iArgumentCount, pszArguments )
 		|| CheckFlag( "-timing", iArgumentCount, pszArguments ) )
 	{
-		// SE - TODO: set timing enabled
+		bTiming = true;
 	}
 
 	if( CheckFlag( "-1", iArgumentCount, pszArguments )
 		|| CheckFlag( "-interactive", iArgumentCount, pszArguments ) )
 	{
-		// SE - TODO: run interactive mode
+		InteractiveMode( bVerbose, bTiming );
+		return 0;
 	}
 
 	// SE - TODO: do prime number thing to spare parameters
