@@ -1253,7 +1253,7 @@ void StopTiming()
 
 #### 1.2.5.1 A serious bug
 
-Whilst testing this I found a bug with large numbers of powers of 2 that was easily fixed but caused the program to stop responding, stuck in an infinite loop previously.
+Whilst testing this I found a bug with large numbers of powers of 2 that was easily fixed but caused the program to stop responding, stuck in an infinite loop.
 
 Shifting left instead of right.
 
