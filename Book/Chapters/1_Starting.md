@@ -931,7 +931,7 @@ String test:
 
 ## 1.2 Easy tests
 
-### 1.1.2 A little polish
+### 1.2.1 A little polish
 
 The interactive mode can be quickly improved to be more usable.
 
@@ -1026,5 +1026,50 @@ int main(
     // SE - TODO: do prime number thing to spare parameters
     return 0;
 }
+```
+
+## 1.2.2 Representing test results
+
+We need some way to pass the results of various tests on and to display them to the user when the tests are complete, or as complete as currently possible.
+
+A new header/implementation pair defining a struct representing a factorisation.
+
+Header:
+
+```cpp
+#ifndef FACTORISATION_H
+#define FACTORISATION_H
+
+#include "Number.h"
+
+#include <vector>
+
+struct Factorisation
+{
+    std::vector<Factorisation> mxKnownFactors;
+    Number mxNumber;
+    bool mbKnownPrime;
+    bool mbKnownComposite;
+    
+    Factorisation( const Number& xNumber = 0z );
+};
+
+#endif
+
+```
+
+Implementation:
+
+```cpp
+#include "Factorisation.h"
+
+Factorisation::Factorisation( const Number& xNumber )
+: mxKnownFactors()
+, mxNumber( xNumber )
+, mbKnownPrime( false )
+, mbKnownComposite( false )
+{
+}
+
 ```
 

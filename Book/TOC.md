@@ -11,4 +11,5 @@
    * [1.1.5](./Chapters/1_Starting.md#115-mistakes-are-real) Mistakes are real
    * [1.1.6](./Chapters/1_Starting.md#116-testing-debugging-and-fixing) Testing, debugging and fixing
 * [1.2](./Chapters/1_Starting.md#12-easy-tests) Easy tests
-	* [1.2.1](./Chapters/1_Starting.md#121-a-little-polish) A little polish
+   * [1.2.1](./Chapters/1_Starting.md#121-a-little-polish) A little polish
+   * [1.2.2](./Chapters/1_Starting.md#122-representing test results) Representing test results
