@@ -87,12 +87,12 @@ bool Number::operator >( const Number& xOperand ) const
     // size checks
     if( mxLimbs.size() > xOperand.mxLimbs.size() )
     {
-        return mbNegative;
+        return !mbNegative;
     }
 
     if( mxLimbs.size() < xOperand.mxLimbs.size() )
     {
-        return !mbNegative;
+        return mbNegative;
     }
 
     // actual comparison
@@ -276,7 +276,7 @@ std::string Number::ToString() const
     Number xWorkingValue = *this;
     while( xWorkingValue > 0 )
     {
-        xReturnValue += '0' + static_cast< char >( xWorkingValue % 10 );
+        xReturnValue = std::to_string( xWorkingValue % 10 ) + xReturnValue;
         xWorkingValue /= 10;
     }
 

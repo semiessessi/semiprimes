@@ -831,3 +831,98 @@ String test:
 
 :
 ```
+
+On inspection, again the comparison operation has a flaw, this time it returns inverted results when checking size by the number of limbs filled with values.
+
+```cpp
+bool Number::operator >( const Number& xOperand ) const
+{
+    // sign checks
+    if( xOperand.mbNegative != mbNegative )
+    {
+        return xOperand.mbNegative;
+    }
+
+    // size checks
+    if( mxLimbs.size() > xOperand.mxLimbs.size() )
+    {
+        return !mbNegative;
+    }
+
+    if( mxLimbs.size() < xOperand.mxLimbs.size() )
+    {
+        return mbNegative;
+    }
+
+    // actual comparison
+    size_t uLimb = mxLimbs.size();
+    bool bResult = false;
+    bool bEqual = true;
+    while( bEqual && ( uLimb != 0 ) )
+    {
+        --uLimb;
+        bResult = mxLimbs[ uLimb ] > xOperand.mxLimbs[ uLimb ];
+        bEqual = mxLimbs[ uLimb ] == xOperand.mxLimbs[ uLimb ];
+    }
+
+    return mbNegative ? ( bEqual || !bResult ) : bResult;
+}
+```
+
+Testing again with better test cases reveals additional problems, but that the algorithms are largely working correctly but the string has the order of digits in reverse, and this is likely the last fix required except for edge cases:
+
+```
+:11111111111111111111111111111111
+String test:
+11111111111111111111111111111111
+:1111111111111111111
+String test:
+1111111111111111111
+:1111111111111111111111111111111111111111111111111111111111111111111111111111111111
+String test:
+1111111111111111111111111111111111111111111111111111111111111111111111111111111111
+:11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+String test:
+11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+:4984894894564871984894515621
+String test:
+1265154984891784654984984894
+:5151961561651651616541
+String test:
+1456161561561651691515
+:16516516165416516919191919198194198498498494984984911651616197198191651651961651941949465162161061
+String test:
+16016126156494914915616915615619189179161615611948948949489489489149189191919191961561456161561561
+:
+```
+
+The fix is straightforwards:
+
+```cpp
+std::string Number::ToString() const
+{
+    std::string xReturnValue = "";
+    if( mbNegative )
+    {
+        xReturnValue += "-";
+    }
+
+    Number xWorkingValue = *this;
+    while( xWorkingValue > 0 )
+    {
+        xReturnValue = std::to_string( xWorkingValue % 10 ) + xReturnValue; // <--- here
+        xWorkingValue /= 10;
+    }
+
+    return xReturnValue;
+}
+```
+
+Finally the output seems reasonable.
+
+```
+:1234567890123456789012345678901234567890
+String test:
+1234567890123456789012345678901234567890
+:
+```
