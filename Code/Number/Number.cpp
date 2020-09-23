@@ -13,28 +13,24 @@ Number::Number( const int iValue )
 : mxLimbs( { static_cast< uint64_t >( ( iValue > 0 ) ? iValue : -iValue ) } )
 , mbNegative( iValue < 0 )
 {
-
 }
 
 Number::Number( const unsigned int uValue )
 : mxLimbs( { uValue } )
 , mbNegative( false )
 {
-
 }
 
 Number::Number( const int64_t iValue )
 : mxLimbs( { static_cast< uint64_t >( ( iValue > 0 ) ? iValue : -iValue ) } )
 , mbNegative( iValue < 0 )
 {
-
 }
 
 Number::Number( const uint64_t uValue )
 : mxLimbs( { uValue } )
 , mbNegative( false )
 {
-
 }
 
 Number::Number( const std::string& xString )

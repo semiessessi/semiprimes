@@ -4,6 +4,8 @@
 
 ## 1.1 First Steps
 
+TODO: layout goals of program in a nice way, about primality testing, factoring and other things that can be reported when entering a number
+
 The first step is to create a 'do-nothing' program, with suitable project files to build and run it, from which we can grow the rest of the project.
 
 ### 1.1.1 The null entrypoint program
@@ -926,3 +928,103 @@ String test:
 1234567890123456789012345678901234567890
 :
 ```
+
+## 1.2 Easy tests
+
+### 1.1.2 A little polish
+
+The interactive mode can be quickly improved to be more usable.
+
+```cpp
+
+#include <cstdio>
+
+#include "../Number/Number.h"
+
+void InteractiveMode( const bool bVerbose, const bool bTiming )
+{
+    puts( "Semiprimes Interactive Mode - Enter a number, or q to quit." );
+
+    // SE - TODO: endless buffer, obvs.
+    static char szBuffer[ 4096 ];
+    while( true )
+    {
+        putchar( ':' );
+        gets_s( szBuffer );
+        // allow to quit
+        if( ( szBuffer[ 0 ] == 'q' )
+            || ( szBuffer[ 0 ] == 'Q' ) )
+        {
+            return;
+        }
+
+        Number xNumber( szBuffer );
+        printf( "Testing number %s...\n", xNumber.ToString().c_str() );
+        puts( "TODO: some testing!" );
+    }
+}
+```
+
+Providing help flags is also a good idea.
+
+In a new file Help.cpp:
+
+```cpp
+#include <cstdio>
+
+void Help()
+{
+    puts( "Semiprimes - A prime testing and integer factorisation tool" );
+    puts( "WARNING: WORK IN PROGRESS" );
+    puts( "Usage: " );
+    puts( " sp <options> [numbers]" );
+    puts( "Options:" );
+    puts( " -h -help                show this message" );
+    puts( " -i -interactive         provides a prompt for the user to enter numbers" );
+    puts( " -t -timing              display timings" );
+    puts( " -v -verbose             report many messages about progress" );
+}
+
+```
+
+This is easily added to the entry point function:
+
+```cpp
+int main(
+    const int iArgumentCount,
+    const char* const* const pszArguments )
+{
+    bool bVerbose = false;
+    bool bTiming = false;
+    if( CheckFlag( "-v", iArgumentCount, pszArguments )
+        || CheckFlag( "-verbose", iArgumentCount, pszArguments ) )
+    {
+        bVerbose = true;
+    }
+
+    if( CheckFlag( "-t", iArgumentCount, pszArguments )
+        || CheckFlag( "-timing", iArgumentCount, pszArguments ) )
+    {
+        bTiming = true;
+    }
+
+    if( CheckFlag( "-h", iArgumentCount, pszArguments )
+        || CheckFlag( "/?", iArgumentCount, pszArguments )
+        || CheckFlag( "-help", iArgumentCount, pszArguments ) )
+    {
+        Help();
+        return 0;
+    }
+
+    if( CheckFlag( "-i", iArgumentCount, pszArguments )
+        || CheckFlag( "-interactive", iArgumentCount, pszArguments ) )
+    {
+        InteractiveMode( bVerbose, bTiming );
+        return 0;
+    }
+
+    // SE - TODO: do prime number thing to spare parameters
+    return 0;
+}
+```
+

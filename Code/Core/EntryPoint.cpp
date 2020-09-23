@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstring>
 
+void Help();
 void InteractiveMode( const bool bVerbose, const bool bTiming );
 
 bool CheckFlag(
@@ -35,6 +36,14 @@ int main(
 		|| CheckFlag( "-timing", iArgumentCount, pszArguments ) )
 	{
 		bTiming = true;
+	}
+
+	if( CheckFlag( "-h", iArgumentCount, pszArguments )
+		|| CheckFlag( "/?", iArgumentCount, pszArguments )
+		|| CheckFlag( "-help", iArgumentCount, pszArguments ) )
+	{
+		Help();
+		return 0;
 	}
 
 	if( CheckFlag( "-i", iArgumentCount, pszArguments )
