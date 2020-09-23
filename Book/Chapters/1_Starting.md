@@ -11,7 +11,7 @@
    * [1.1.6](./1_Starting.md#116-testing-debugging-and-fixing) Testing, debugging and fixing
 * [1.2](./1_Starting.md#12-easy-tests) Easy tests
    * [1.2.1](./1_Starting.md#121-a-little-polish) A little polish
-   * [1.2.2](./1_Starting.md#122-representing test results) Representing test results
+   * [1.2.2](./1_Starting.md#122-representing-test-results) Representing test results
 
 ## 1.1 First Steps
 
