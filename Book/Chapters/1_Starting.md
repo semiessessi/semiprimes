@@ -1066,7 +1066,6 @@ struct Factorisation
 };
 
 #endif
-
 ```
 
 Implementation:
@@ -1081,6 +1080,5 @@ Factorisation::Factorisation( const Number& xNumber )
 , mbKnownComposite( false )
 {
 }
-
 ```
 
