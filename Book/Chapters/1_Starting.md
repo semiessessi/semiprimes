@@ -12,7 +12,9 @@
 * [1.2](./1_Starting.md#12-easy-tests) Easy tests
    * [1.2.1](./1_Starting.md#121-a-little-polish) A little polish
    * [1.2.2](./1_Starting.md#122-representing-test-results) Representing test results
-
+   * [1.2.3](./1_Starting.md#123-removing-powers-of-2) Removing powers of 2
+   * [1.2.4](./1_Starting.md#124-reporting-results) Reporting results
+   
 ## 1.1 First Steps
 
 TODO: layout goals of program in a nice way, about primality testing, factoring and other things that can be reported when entering a number
