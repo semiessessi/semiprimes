@@ -11,7 +11,7 @@ Factorisation PowersOf2( const Number& xNumber )
     while( xWorkingValue.LeastSignificantLimb() == 0 )
     {
         iPowers += 64;
-        xWorkingValue.InplaceLimbShiftLeft( 1 );
+        xWorkingValue.InplaceLimbShiftRight( 1 );
     }
 
     // test remaining bits

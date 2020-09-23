@@ -1214,6 +1214,113 @@ void Factorisation::Report() const
 
 ### 1.2.5 Timing
 
+A very simple 'one at a time' timer implementation is good enough for now.
+
+```cpp
+#include "Timing.h"
+
+#include <chrono>
+#include <cstdint>
+#include <cstdio>
+
+static std::chrono::steady_clock::time_point sxStart;
+static std::chrono::steady_clock::time_point sxEnd;
+
+void StartTiming( const bool bVerbose )
+{
+    sxStart = std::chrono::high_resolution_clock::now();
+
+    if( bVerbose )
+    {
+        puts( "Starting timer." );
+    }
+}
+
+void StopTiming()
+{
+    sxEnd = std::chrono::high_resolution_clock::now();
+
+    int64_t iDuration =
+        std::chrono::duration_cast< std::chrono::nanoseconds >(
+            sxEnd - sxStart ).count();
+
+    printf(
+        "Took %d.%09d seconds\n",
+        iDuration / 1000000000,
+        iDuration % 1000000000 );
+}
+```
+
+#### 1.2.5.1 A serious bug
+
+Whilst testing this I found a bug with large numbers of powers of 2 that was easily fixed but caused the program to stop responding, stuck in an infinite loop previously.
+
+Shifting left instead of right.
+
+In PowersOf2.cpp:
+
+```cpp
+Factorisation PowersOf2( const Number& xNumber )
+{
+    int iPowers = 0;
+    Number xWorkingValue = xNumber;
+    // go fast if whole limbs are zeroed out
+    while( xWorkingValue.LeastSignificantLimb() == 0 )
+    {
+        iPowers += 64;
+        xWorkingValue.InplaceLimbShiftRight( 1 ); // <---- here
+    }
+
+    // test remaining bits
+    while( ( xWorkingValue.LeastSignificantLimb() != 0 )
+        && ( ( xWorkingValue & 0x1 ) == 0 ) )
+    {
+        xWorkingValue /= 2;
+        ++iPowers;
+    }
+
+    Factorisation xResult( xNumber );
+    xResult.mbKnownComposite = iPowers != 0;
+    if( xResult.mbKnownComposite )
+    {
+        Factorisation xTwoFactorisation( 2z );
+        xTwoFactorisation.mbKnownPrime = true;
+        xTwoFactorisation.miPower = iPowers;
+        xResult.mxKnownFactors.push_back( xTwoFactorisation );
+        // SE - TODO: equality test.
+        if( xWorkingValue > 1 )
+        {
+            xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
+        }
+    }
+
+    return xResult;
+}
+
+```
+
+The right shift itself was previously untested and turns out to also have a bug, also easily fixed.
+
+In Number.cpp:
+
+```cpp
+void Number::InplaceLimbShiftRight( const size_t uLimbs )
+{
+    // copy
+    const size_t uShiftAmount = 
+        ( uLimbs > mxLimbs.size() ) ? mxLimbs.size() : uLimbs;
+    const size_t uLimbCount = mxLimbs.size();
+    const size_t uNewLimbCount = uLimbCount - uLimbs;           // <--- here
+    for( size_t uLimb = 0; uLimb < uNewLimbCount; ++uLimb )     // <--- here
+    {
+        mxLimbs[ uLimb ] = mxLimbs[ uLimb + uLimbs ];
+    }
+
+    // shrink
+    mxLimbs.resize( uLimbCount );                               // <--- here
+}
+```
+
 ### 1.2.6 Trial division
 
 ### 1.2.7 Wheel factorisation
