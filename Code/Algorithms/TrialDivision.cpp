@@ -35,7 +35,11 @@ Factorisation TrialDivision( const Number& xNumber )
         }
     }
 
-    if( xWorkingValue > 1 )
+    if( xResult.mxKnownFactors.empty() )
+    {
+        xResult.mbKnownPrime = true;
+    }
+    else if( xWorkingValue > 1 )
     {
         xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue, true ) );
     }

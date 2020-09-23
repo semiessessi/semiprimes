@@ -14,9 +14,10 @@ Factorisation::Factorisation( const Number& xNumber, const bool bPrime )
 void Factorisation::Report() const
 {
     const std::string xNumberString = mxNumber.ToString();
-    if( mbKnownPrime )
+    if( mbKnownPrime && ( miPower == 1 ) )
     {
         printf( "%s is prime!\n", xNumberString.c_str() );
+        return;
     }
 
     bool bComplete = true;

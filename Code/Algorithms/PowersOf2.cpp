@@ -23,7 +23,7 @@ Factorisation PowersOf2( const Number& xNumber )
     }
 
     Factorisation xResult( xNumber );
-    xResult.mbKnownComposite = iPowers != 0;
+    xResult.mbKnownComposite = iPowers > 0;
     if( xResult.mbKnownComposite )
     {
         Factorisation xTwoFactorisation( 2z );

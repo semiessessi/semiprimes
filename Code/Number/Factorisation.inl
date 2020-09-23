@@ -41,6 +41,14 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
 	}
 
 	// SE - TODO: sort/collapse/tidy results (?)
+
+	// SE - NOTE: not sure how this happens...
+	if( ( mxKnownFactors.size() == 1 )
+		&& ( mxKnownFactors[ 0 ].miPower == 1 )
+		&& ( mxKnownFactors[ 0 ].mbKnownPrime == true ) )
+	{
+		mbKnownPrime = true;
+	}
 }
 
 #endif

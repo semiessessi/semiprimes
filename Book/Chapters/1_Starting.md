@@ -1325,6 +1325,62 @@ void Number::InplaceLimbShiftRight( const size_t uLimbs )
 
 ### 1.2.6 Trial division
 
+As well as checking for divisibility by two, we can check the remaining odd numbers to see if they will divide.
+
+Setting an upper limit prevents the algorithm from running and endlessly, and we early out if we test enough numbers that the square of the test divisor is larger than our number, and we have proven it is prime or completed the factorisation.
+
+```cpp
+#include "TrialDivision.h"
+
+#include "../Number/Factorisation.h"
+#include "../Number/Number.h"
+
+static const uint64_t uTrialDivisionCutoff = 100000;
+
+Factorisation TrialDivision( const Number& xNumber )
+{
+    // SE - TODO: this is only really good up to 32-bit factors.
+    Number xWorkingValue = xNumber;
+    Factorisation xResult( xNumber );
+    uint64_t uTest = 3;
+    while( xWorkingValue > ( ( uTest * uTest ) - 1 ) )
+    {
+        if( ( xWorkingValue % uTest ) == 0 )
+        {
+            xResult.mbKnownComposite = true;
+            Factorisation xNew( uTest, true );
+            xNew.miPower = 0;
+            while( ( xWorkingValue % uTest ) == 0 )
+            {
+                ++xNew.miPower;
+                xWorkingValue /= uTest;
+            }
+            xResult.mxKnownFactors.push_back( xNew );
+        }
+
+        uTest += 2;
+
+        if( uTest > uTrialDivisionCutoff )
+        {
+            xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
+            return xResult;
+        }
+    }
+
+    if( xResult.mxKnownFactors.empty() )
+    {
+        xResult.mbKnownPrime = true;
+    }
+    else if( xWorkingValue > 1 )
+    {
+        xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue, true ) );
+    }
+
+    return xResult;
+}
+
+```
+
 #### 1.2.6.1 Accomodating multiple algorithms
 
 To make it easier to chain the results of factoring and primality testing algorithms a template helper function can reduce the code repetition.
@@ -1378,6 +1434,20 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
 }
 
 #endif
+```
+
+There are some other small bug fixes spotted now that primality testing is an option, an early out added to the reporting function in Factorisation.cpp:
+
+```cpp
+
+void Factorisation::Report() const
+{
+    const std::string xNumberString = mxNumber.ToString();
+    if( mbKnownPrime && ( miPower == 1 ) )                      // <--- here
+    {
+        printf( "%s is prime!\n", xNumberString.c_str() );
+        return;                                                 // <--- here
+    }
 ```
 
 ### 1.2.7 Wheel factorisation
