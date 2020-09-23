@@ -800,3 +800,34 @@ bool Number::operator >( const Number& xOperand ) const
 }
 ```
 
+The program now appears to function correctly when inputting and displaying integers that are less than 64-bits, implying that some of the operations only have bugs when the number is sufficiently large.
+
+Example output:
+
+```
+:11111
+String test:
+11111
+:111111111111111111111
+String test:
+
+:1111111111
+String test:
+1111111111
+:11111111111111
+String test:
+11111111111111
+:1111111111111111
+String test:
+1111111111111111
+:1111111111111111111
+String test:
+1111111111111111111
+:111111111111111111111
+String test:
+
+:1111111111111111111111111111111111111111111111
+String test:
+
+:
+```
