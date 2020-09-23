@@ -733,10 +733,23 @@ In Number.cpp:
 ```cpp
 void Number::InplaceLimbShiftLeft( const size_t uLimbs )
 {
+    // START FIX
+    
+    // maintain zero as zero when shifted
+    if( mxLimbs.size() == 1 )
+    {
+        if( mxLimbs[ 0 ] == 0 )
+        {
+            return;
+        }
+    }
+
+    // END FIX
+    
     // add new limbs and copy
     mxLimbs.resize( mxLimbs.size() + uLimbs );
     size_t uLimb = mxLimbs.size();
-    while( uLimb > uLimbs ) // <--- here
+    while( uLimb > uLimbs )
     {
         --uLimb;
         mxLimbs[ uLimb ] = mxLimbs[ uLimb - uLimbs ];
@@ -747,6 +760,43 @@ void Number::InplaceLimbShiftLeft( const size_t uLimbs )
     {
         mxLimbs[ uLimb ] = 0;
     }
+}
+```
+
+Once this is fixed it becomes obvious that the 'greater than' operator has a bug in detecting the end of a loop with a unsigned integer being compared to zero.
+
+```cpp
+bool Number::operator >( const Number& xOperand ) const
+{
+    // sign checks
+    if( xOperand.mbNegative != mbNegative )
+    {
+        return xOperand.mbNegative;
+    }
+
+    // size checks
+    if( mxLimbs.size() > xOperand.mxLimbs.size() )
+    {
+        return mbNegative;
+    }
+
+    if( mxLimbs.size() < xOperand.mxLimbs.size() )
+    {
+        return !mbNegative;
+    }
+
+    // actual comparison
+    size_t uLimb = mxLimbs.size();      // <--- here
+    bool bResult = false;
+    bool bEqual = true;
+    while( bEqual && ( uLimb != 0 ) )   // <--- here
+    {
+        --uLimb;                        // <--- here
+        bResult = mxLimbs[ uLimb ] > xOperand.mxLimbs[ uLimb ];
+        bEqual = mxLimbs[ uLimb ] == xOperand.mxLimbs[ uLimb ];
+    }
+
+    return mbNegative ? ( bEqual || !bResult ) : bResult;
 }
 ```
 

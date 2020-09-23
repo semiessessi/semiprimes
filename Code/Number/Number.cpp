@@ -96,14 +96,14 @@ bool Number::operator >( const Number& xOperand ) const
     }
 
     // actual comparison
-    size_t uLimb = mxLimbs.size() - 1;
+    size_t uLimb = mxLimbs.size();
     bool bResult = false;
     bool bEqual = true;
-    while( bEqual && ( uLimb >= 0 ) )
+    while( bEqual && ( uLimb != 0 ) )
     {
+        --uLimb;
         bResult = mxLimbs[ uLimb ] > xOperand.mxLimbs[ uLimb ];
         bEqual = mxLimbs[ uLimb ] == xOperand.mxLimbs[ uLimb ];
-        --uLimb;
     }
 
     return mbNegative ? ( bEqual || !bResult ) : bResult;
@@ -225,6 +225,15 @@ int64_t Number::operator %( const int64_t iOperand ) const
 
 void Number::InplaceLimbShiftLeft( const size_t uLimbs )
 {
+    // maintain zero as zero when shifted
+    if( mxLimbs.size() == 1 )
+    {
+        if( mxLimbs[ 0 ] == 0 )
+        {
+            return;
+        }
+    }
+
     // add new limbs and copy
     mxLimbs.resize( mxLimbs.size() + uLimbs );
     size_t uLimb = mxLimbs.size();
