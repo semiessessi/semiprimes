@@ -155,11 +155,13 @@
     <ClCompile Include="..\Code\Core\EntryPoint.cpp" />
     <ClCompile Include="..\Code\Core\Help.cpp" />
     <ClCompile Include="..\Code\Core\InteractiveMode.cpp" />
+    <ClCompile Include="..\Code\Core\Timing.cpp" />
     <ClCompile Include="..\Code\Number\Factorisation.cpp" />
     <ClCompile Include="..\Code\Number\Number.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Algorithms\PowersOf2.h" />
+    <ClInclude Include="..\Code\Core\Timing.h" />
     <ClInclude Include="..\Code\Number\Factorisation.h" />
     <ClInclude Include="..\Code\Number\Number.h" />
   </ItemGroup>

@@ -14,6 +14,9 @@
    * [1.2.2](./1_Starting.md#122-representing-test-results) Representing test results
    * [1.2.3](./1_Starting.md#123-removing-powers-of-2) Removing powers of 2
    * [1.2.4](./1_Starting.md#124-reporting-results) Reporting results
+   * [1.2.5](./1_Starting.md#125-timing) Timing
+   * [1.2.6](./1_Starting.md#126-trial-division) Trial division
+   * [1.2.7](./1_Starting.md#127-wheel-factorisation) Wheel factorisation
    
 ## 1.1 First Steps
 
@@ -1208,3 +1211,9 @@ void Factorisation::Report() const
     }
 }
 ```
+
+### 1.2.5 Timing
+
+### 1.2.6 Trial division
+
+### 1.2.7 Wheel factorisation

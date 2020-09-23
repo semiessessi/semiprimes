@@ -30,6 +30,9 @@
     <ClCompile Include="..\Code\Algorithms\PowersOf2.cpp">
       <Filter>Algorithms</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Core\Timing.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -40,6 +43,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\PowersOf2.h">
       <Filter>Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Core\Timing.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
