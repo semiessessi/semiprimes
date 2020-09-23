@@ -152,6 +152,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Core\EntryPoint.cpp" />
+    <ClCompile Include="..\Code\Core\Help.cpp" />
+    <ClCompile Include="..\Code\Core\InteractiveMode.cpp" />
     <ClCompile Include="..\Code\Number\Number.cpp" />
   </ItemGroup>
   <ItemGroup>
