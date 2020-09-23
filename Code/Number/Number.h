@@ -24,6 +24,8 @@ public:
 
     bool operator >( const Number& xOperand ) const;
 
+    uint64_t operator &( const uint64_t uOperand ) const;
+
     Number& operator +=( const int64_t iOperand );
     //Number& operator +=( const uint64_t iOperand );
     Number& operator +=( const Number& xOperand );
@@ -36,6 +38,8 @@ public:
     
     void InplaceLimbShiftLeft( const size_t uLimbs );
     void InplaceLimbShiftRight( const size_t uLimbs );
+    
+    uint64_t LeastSignificantLimb() const { return mxLimbs[ 0 ]; }
 
     std::string ToString() const;
 

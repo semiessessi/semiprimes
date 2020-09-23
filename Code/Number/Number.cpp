@@ -105,6 +105,11 @@ bool Number::operator >( const Number& xOperand ) const
     return mbNegative ? ( bEqual || !bResult ) : bResult;
 }
 
+uint64_t Number::operator &( const uint64_t uOperand ) const
+{
+    return mxLimbs[ 0 ] & uOperand;
+}
+
 Number& Number::operator +=( const int64_t iOperand )
 {
     // SE - TODO: handle the signed cases.
@@ -285,7 +290,10 @@ Number Number::DivMod(
     int64_t& iRemainder )
 {
     Number xReturnValue = DivMod( xNumerator,
-        static_cast< uint64_t >( ( iDenominator < 0 ) ? -iDenominator : iDenominator ),
+        static_cast< uint64_t >(
+            ( iDenominator < 0 )
+                ? -iDenominator
+                : iDenominator ),
         reinterpret_cast< uint64_t& >( iRemainder ) );
     iRemainder = ( xNumerator.mbNegative ) ? -iRemainder : iRemainder;
     return xReturnValue;
@@ -303,8 +311,11 @@ Number Number::DivMod(
     {
         --uLimb;
         xReturnValue.InplaceLimbShiftLeft( 1 );
-        // _udiv128(unsigned __int64 /* highdividend */, unsigned __int64 /* lowdividend */, unsigned __int64 /* divisor */, unsigned __int64* /* remainder */);
-        xReturnValue += _udiv128( uRemainder, xNumerator.mxLimbs[ uLimb ], uDenominator, &uRemainder );
+        xReturnValue += _udiv128(
+            uRemainder,
+            xNumerator.mxLimbs[ uLimb ],
+            uDenominator,
+            &uRemainder );
     }
 
     return xReturnValue;

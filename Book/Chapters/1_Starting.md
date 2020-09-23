@@ -2,6 +2,19 @@
 
 # 1 - Starting
 
+* [1.1](./1_Starting.md#11-first-steps) First steps
+   * [1.1.1](./1_Starting.md#111-the-null-entrypoint-program) The null entrypoint program
+   * [1.1.2](./1_Starting.md#112-taking-parameters) Taking parameters
+   * [1.1.3](./1_Starting.md#113-number-class) Number class
+   * [1.1.4](./1_Starting.md#114-interactive-mode) Interactive mode
+   * [1.1.5](./1_Starting.md#115-mistakes-are-real) Mistakes are real
+   * [1.1.6](./1_Starting.md#116-testing-debugging-and-fixing) Testing, debugging and fixing
+* [1.2](./1_Starting.md#12-easy-tests) Easy tests
+   * [1.2.1](./1_Starting.md#121-a-little-polish) A little polish
+   * [1.2.2](./1_Starting.md#122-representing-test-results) Representing test results
+   * [1.2.3](./1_Starting.md#123-removing-powers-of-2) Removing powers of 2
+   * [1.2.4](./1_Starting.md#124-reporting-results) Reporting results
+   
 ## 1.1 First Steps
 
 TODO: layout goals of program in a nice way, about primality testing, factoring and other things that can be reported when entering a number
@@ -931,7 +944,7 @@ String test:
 
 ## 1.2 Easy tests
 
-### 1.1.2 A little polish
+### 1.2.1 A little polish
 
 The interactive mode can be quickly improved to be more usable.
 
@@ -1028,3 +1041,170 @@ int main(
 }
 ```
 
+## 1.2.2 Representing test results
+
+We need some way to pass the results of various tests on and to display them to the user when the tests are complete, or as complete as currently possible.
+
+A new header/implementation pair defining a struct representing a factorisation.
+
+Header:
+
+```cpp
+#ifndef FACTORISATION_H
+#define FACTORISATION_H
+
+#include "Number.h"
+
+#include <vector>
+
+struct Factorisation
+{
+    std::vector<Factorisation> mxKnownFactors;
+    Number mxNumber;
+    bool mbKnownPrime;
+    bool mbKnownComposite;
+    
+    Factorisation( const Number& xNumber = 0z );
+};
+
+#endif
+```
+
+Implementation:
+
+```cpp
+#include "Factorisation.h"
+
+Factorisation::Factorisation( const Number& xNumber )
+: mxKnownFactors()
+, mxNumber( xNumber )
+, mbKnownPrime( false )
+, mbKnownComposite( false )
+{
+}
+```
+
+## 1.2.3 Removing powers of 2
+
+TODO: explain motivation etc.
+
+```cpp
+uint64_t Number::operator &( const uint64_t uOperand ) const
+{
+    return mxLimbs[ 0 ] & uOperand;
+}
+```
+
+```cpp
+uint64_t LeastSignificantLimb() const { return mxLimbs[ 0 ]; }
+```
+
+The implementation...
+
+```cpp
+#include "PowersOf2.h"
+
+#include "../Number/Factorisation.h"
+#include "../Number/Number.h"
+
+Factorisation PowersOf2( const Number& xNumber )
+{
+    int iPowers = 0;
+    Number xWorkingValue = xNumber;
+    // go fast if whole limbs are zeroed out
+    while( xWorkingValue.LeastSignificantLimb() == 0 )
+    {
+        iPowers += 64;
+        xWorkingValue.InplaceLimbShiftLeft( 1 );
+    }
+
+    // test remaining bits
+    while( ( xWorkingValue.LeastSignificantLimb() != 0 )
+        && ( ( xWorkingValue & 0x1 ) == 0 ) )
+    {
+        xWorkingValue /= 2;
+        ++iPowers;
+    }
+
+    Factorisation xResult( xNumber );
+    xResult.mbKnownComposite = iPowers != 0;
+    if( xResult.mbKnownComposite )
+    {
+        Factorisation xTwoFactorisation( 2z );
+        xTwoFactorisation.mbKnownPrime = true;
+        xTwoFactorisation.miPower = iPowers;
+        xResult.mxKnownFactors.push_back( xTwoFactorisation );
+        // SE - TODO: equality test.
+        if( xWorkingValue > 1 )
+        {
+            xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
+        }
+    }
+
+    return xResult;
+}
+```
+
+## 1.2.4 Reporting results
+
+Outputting using the struct is straightforwards:
+
+```cpp
+void Factorisation::Report() const
+{
+    const std::string xNumberString = mxNumber.ToString();
+    if( mbKnownPrime )
+    {
+        printf( "%s is prime!\n", xNumberString.c_str() );
+    }
+
+    bool bComplete = true;
+    if( mbKnownComposite )
+    {
+        printf( "%s is a composite\n", xNumberString.c_str() );
+        puts( "Factorisation: " );
+        printf( " " );
+        for( size_t uFactor = 0; uFactor < mxKnownFactors.size(); ++uFactor )
+        {
+            if( mxKnownFactors[ uFactor ].miPower == 1 )
+            {
+                printf( "%s", mxKnownFactors[ uFactor ].mxNumber.ToString().c_str() );
+            }
+            else
+            {
+                printf( "%s^%d",
+                    mxKnownFactors[ uFactor ].mxNumber.ToString().c_str(),
+                    mxKnownFactors[ uFactor ].miPower );
+            }
+
+            if( mxKnownFactors[ uFactor ].mbKnownComposite )
+            {
+                printf( "(C)" );
+            }
+
+            if( !mxKnownFactors[ uFactor ].mbKnownComposite && !mxKnownFactors[ uFactor ].mbKnownPrime )
+            {
+                printf( "(?)" );
+                bComplete = false;
+            }
+
+            if( uFactor != ( mxKnownFactors.size() - 1 ) )
+            {
+                printf( " * " );
+            }
+        }
+
+        puts( "" );
+
+        if( bComplete == false )
+        {
+            puts( "NOTE: TESTS WERE NOT COMPLETED" );
+        }
+    }
+
+    if( !mbKnownPrime && !mbKnownComposite )
+    {
+        printf( "Could not determine if %s was prime or not!\n", xNumberString.c_str() );
+    }
+}
+```
