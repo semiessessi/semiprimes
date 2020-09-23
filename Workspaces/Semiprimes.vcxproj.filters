@@ -21,9 +21,15 @@
     <ClCompile Include="..\Code\Core\Help.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Number\Factorisation.cpp">
+      <Filter>Number</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
+      <Filter>Number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Number\Factorisation.h">
       <Filter>Number</Filter>
     </ClInclude>
   </ItemGroup>
