@@ -7,6 +7,9 @@
     <Filter Include="Number">
       <UniqueIdentifier>{3beaf6f6-3a97-41d3-b429-8345ba65e786}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Algorithms">
+      <UniqueIdentifier>{49d69ed1-4853-4859-ae27-cbd643979337}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Core\EntryPoint.cpp">
@@ -24,6 +27,9 @@
     <ClCompile Include="..\Code\Number\Factorisation.cpp">
       <Filter>Number</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\PowersOf2.cpp">
+      <Filter>Algorithms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -31,6 +37,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Number\Factorisation.h">
       <Filter>Number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\PowersOf2.h">
+      <Filter>Algorithms</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

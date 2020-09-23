@@ -9,10 +9,13 @@ struct Factorisation
 {
 	std::vector<Factorisation> mxKnownFactors;
 	Number mxNumber;
+	int miPower;
 	bool mbKnownPrime;
 	bool mbKnownComposite;
 	
 	Factorisation( const Number& xNumber = 0z );
+
+	void Report() const;
 };
 
 #endif

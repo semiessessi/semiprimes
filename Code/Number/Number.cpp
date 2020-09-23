@@ -105,6 +105,11 @@ bool Number::operator >( const Number& xOperand ) const
     return mbNegative ? ( bEqual || !bResult ) : bResult;
 }
 
+uint64_t Number::operator &( const uint64_t uOperand ) const
+{
+    return mxLimbs[ 0 ] & uOperand;
+}
+
 Number& Number::operator +=( const int64_t iOperand )
 {
     // SE - TODO: handle the signed cases.

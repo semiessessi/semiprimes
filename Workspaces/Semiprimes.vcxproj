@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Algorithms\PowersOf2.cpp" />
     <ClCompile Include="..\Code\Core\EntryPoint.cpp" />
     <ClCompile Include="..\Code\Core\Help.cpp" />
     <ClCompile Include="..\Code\Core\InteractiveMode.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="..\Code\Number\Number.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Code\Algorithms\PowersOf2.h" />
     <ClInclude Include="..\Code\Number\Factorisation.h" />
     <ClInclude Include="..\Code\Number\Number.h" />
   </ItemGroup>

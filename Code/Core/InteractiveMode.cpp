@@ -1,7 +1,9 @@
 
 #include <cstdio>
 
+#include "../Number/Factorisation.h"
 #include "../Number/Number.h"
+#include "../Algorithms/PowersOf2.h"
 
 void InteractiveMode( const bool bVerbose, const bool bTiming )
 {
@@ -22,6 +24,10 @@ void InteractiveMode( const bool bVerbose, const bool bTiming )
 
         Number xNumber( szBuffer );
         printf( "Testing number %s...\n", xNumber.ToString().c_str() );
-        puts( "TODO: some testing!" );
+        
+        Factorisation xTest = PowersOf2( xNumber );
+        xTest.Report();
     }
+
+    puts( "Interactive session terminated." );
 }
