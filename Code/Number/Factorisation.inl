@@ -49,6 +49,11 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
 	{
 		mbKnownPrime = true;
 	}
+
+	if( mxKnownFactors.size() > 1 )
+	{
+		mbKnownComposite = true;
+	}
 }
 
 #endif

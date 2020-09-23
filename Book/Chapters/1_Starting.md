@@ -18,6 +18,7 @@
       * [1.2.5.1](./1_Starting.md#1251-a-serious-bug) A serious bug
    * [1.2.6](./1_Starting.md#126-trial-division) Trial division
       * [1.2.6.1](./1_Starting.md#1261-accomodating-multiple-algorithms) Accomodating multiple algorithms
+      * [1.2.6.2](./1_Starting.md#1262-more-bugs) More bugs
    * [1.2.7](./1_Starting.md#127-wheel-factorisation) Wheel factorisation
    
 ## 1.1 First Steps
@@ -1436,10 +1437,11 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
 #endif
 ```
 
-There are some other small bug fixes spotted now that primality testing is an option, an early out added to the reporting function in Factorisation.cpp:
+#### 1.2.6.2 More bugs
+
+There are some other small bug fixes spotted now that primality testing is an option, for instance, an early out added to the reporting function in Factorisation.cpp:
 
 ```cpp
-
 void Factorisation::Report() const
 {
     const std::string xNumberString = mxNumber.ToString();
@@ -1451,3 +1453,4 @@ void Factorisation::Report() const
 ```
 
 ### 1.2.7 Wheel factorisation
+

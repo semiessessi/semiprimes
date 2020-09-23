@@ -62,6 +62,8 @@ void Factorisation::Report() const
         {
             puts( "NOTE: TESTS WERE NOT COMPLETED" );
         }
+
+        return;
     }
 
     if( !mbKnownPrime && !mbKnownComposite )
