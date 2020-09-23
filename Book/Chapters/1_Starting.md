@@ -15,7 +15,9 @@
    * [1.2.3](./1_Starting.md#123-removing-powers-of-2) Removing powers of 2
    * [1.2.4](./1_Starting.md#124-reporting-results) Reporting results
    * [1.2.5](./1_Starting.md#125-timing) Timing
+      * [1.2.5.1](./1_Starting.md#1251-a-serious-bug) A serious bug
    * [1.2.6](./1_Starting.md#126-trial-division) Trial division
+      * [1.2.6.1](./1_Starting.md#1261-accomodating-multiple-algorithms) Accomodating multiple algorithms
    * [1.2.7](./1_Starting.md#127-wheel-factorisation) Wheel factorisation
    
 ## 1.1 First Steps
@@ -1322,5 +1324,60 @@ void Number::InplaceLimbShiftRight( const size_t uLimbs )
 ```
 
 ### 1.2.6 Trial division
+
+#### 1.2.6.1 Accomodating multiple algorithms
+
+To make it easier to chain the results of factoring and primality testing algorithms a template helper function can reduce the code repetition.
+
+A new file, Factorisation.inl to be included in the corresponding header file:
+
+```cpp
+#ifndef FACTORISATION_INL
+#define FACTORISATION_INL
+
+// SE - NOTE: for intellisense.. urg
+#include "Factorisation.h"
+
+template< typename Algorithm >
+void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
+{
+    if( mbKnownPrime == true )
+    {
+        return;
+    }
+
+    if( mxKnownFactors.size() == 0 )
+    {
+        mxKnownFactors.push_back( Factorisation( mxNumber ) );
+    }
+
+    for( size_t u = 0; u < mxKnownFactors.size(); ++u )
+    {
+        // this might be breakable or prime and unknown...
+        if( mxKnownFactors[ u ].mbKnownComposite || !mxKnownFactors[ u ].mbKnownPrime )
+        {
+            const Factorisation xNew = xAlgorithm( mxKnownFactors[ u ].mxNumber );
+            // .. if we got factors substitute them.
+            if( xNew.mxKnownFactors.size() >= 0 )
+            {
+                mbKnownComposite = xNew.mbKnownComposite;
+                mxKnownFactors.erase( mxKnownFactors.begin() + u );
+                for( size_t v = 0; v < xNew.mxKnownFactors.size(); ++v )
+                {
+                    mxKnownFactors.insert( mxKnownFactors.begin() + u + v, xNew.mxKnownFactors[ v ] );
+                }
+            }
+            else
+            {
+                mxKnownFactors[ u ] = xNew;
+            }
+        }
+    }
+
+    // SE - TODO: sort/collapse/tidy results (?)
+}
+
+#endif
+```
 
 ### 1.2.7 Wheel factorisation

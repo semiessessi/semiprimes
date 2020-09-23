@@ -5,6 +5,7 @@
 #include "../Number/Factorisation.h"
 #include "../Number/Number.h"
 #include "../Algorithms/PowersOf2.h"
+#include "../Algorithms/TrialDivision.h"
 
 void InteractiveMode( const bool bVerbose, const bool bTiming )
 {
@@ -31,7 +32,10 @@ void InteractiveMode( const bool bVerbose, const bool bTiming )
             StartTiming( bVerbose );
         }
         
-        Factorisation xTest = PowersOf2( xNumber );
+        Factorisation xTest( xNumber );
+
+        xTest.ContinueWithAlgorithm( PowersOf2 );
+        xTest.ContinueWithAlgorithm( TrialDivision );
         
         if( bTiming )
         {

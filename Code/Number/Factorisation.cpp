@@ -2,11 +2,11 @@
 
 #include <cstdio>
 
-Factorisation::Factorisation( const Number& xNumber )
+Factorisation::Factorisation( const Number& xNumber, const bool bPrime )
 : mxKnownFactors()
 , mxNumber( xNumber )
 , miPower( 1 )
-, mbKnownPrime( false )
+, mbKnownPrime( bPrime )
 , mbKnownComposite( false )
 {
 }

@@ -18,4 +18,5 @@
    * [1.2.5](./Chapters/1_Starting.md#125-timing) Timing
       * [1.2.5.1](./Chapters/1_Starting.md#1251-a-serious-bug) A serious bug
    * [1.2.6](./Chapters/1_Starting.md#126-trial-division) Trial division
+	  * [1.2.6.1](./Chapters/1_Starting.md#1261-accomodating-multiple-algorithms) Accomodating multiple algorithms
    * [1.2.7](./Chapters/1_Starting.md#127-wheel-factorisation) Wheel factorisation

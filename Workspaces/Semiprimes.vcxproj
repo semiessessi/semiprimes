@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Algorithms\PowersOf2.cpp" />
+    <ClCompile Include="..\Code\Algorithms\TrialDivision.cpp" />
     <ClCompile Include="..\Code\Core\EntryPoint.cpp" />
     <ClCompile Include="..\Code\Core\Help.cpp" />
     <ClCompile Include="..\Code\Core\InteractiveMode.cpp" />
@@ -161,9 +162,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Algorithms\PowersOf2.h" />
+    <ClInclude Include="..\Code\Algorithms\TrialDivision.h" />
     <ClInclude Include="..\Code\Core\Timing.h" />
     <ClInclude Include="..\Code\Number\Factorisation.h" />
     <ClInclude Include="..\Code\Number\Number.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Code\Number\Factorisation.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
