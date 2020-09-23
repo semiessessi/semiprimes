@@ -2,6 +2,17 @@
 
 # 1 - Starting
 
+* [1.1](./1_Starting.md#11-first-steps) First steps
+   * [1.1.1](./1_Starting.md#111-the-null-entrypoint-program) The null entrypoint program
+   * [1.1.2](./1_Starting.md#112-taking-parameters) Taking parameters
+   * [1.1.3](./1_Starting.md#113-number-class) Number class
+   * [1.1.4](./1_Starting.md#114-interactive-mode) Interactive mode
+   * [1.1.5](./1_Starting.md#115-mistakes-are-real) Mistakes are real
+   * [1.1.6](./1_Starting.md#116-testing-debugging-and-fixing) Testing, debugging and fixing
+* [1.2](./1_Starting.md#12-easy-tests) Easy tests
+   * [1.2.1](./1_Starting.md#121-a-little-polish) A little polish
+   * [1.2.2](./1_Starting.md#122-representing test results) Representing test results
+
 ## 1.1 First Steps
 
 TODO: layout goals of program in a nice way, about primality testing, factoring and other things that can be reported when entering a number
