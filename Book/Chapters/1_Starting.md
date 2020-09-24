@@ -20,9 +20,10 @@
       * [1.2.6.1 Accomodating multiple algorithms](./1_Starting.md#1261-accomodating-multiple-algorithms)
       * [1.2.6.2 More bugs](./1_Starting.md#1262-more-bugs)
    * [1.2.7 Wheel factorisation](./1_Starting.md#127-wheel-factorisation)
-      * [1.2.7.1 Removing powers of n](./1_Starting.md#1262-more-bugs)
-      * [1.2.7.2 Wheel up to 3](./1_Starting.md#1262-more-bugs)
-      * [1.2.7.3 More bugs](./1_Starting.md#1262-more-bugs)
+      * [1.2.7.1 Removing powers of n](./1_Starting.md#1271-removing-powers)
+      * [1.2.7.2 Wheel up to 3](./1_Starting.md#1272-wheel-up-to-3)
+      * [1.2.7.3 More bugs](./1_Starting.md#1273-more-bugs)
+* [1.3 Review](./1_Starting.md#13-review)
    
 ## 1.1 First Steps
 
@@ -1580,3 +1581,4 @@ void Number::InplaceLimbShiftRight( const size_t uLimbs )
 }
 ```
 
+# 1.3 Review

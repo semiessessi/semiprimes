@@ -24,4 +24,5 @@
       * [1.2.7.1 Removing powers of n](./Chapters/1_Starting.md#1271-removing-powers-of-n)
       * [1.2.7.2 Wheel up to 3](./Chapters/1_Starting.md#1272-wheel-up-to-3)
       * [1.2.7.3 More bugs](./Chapters/1_Starting.md#1273-more-bugs)
+* [1.3] Review
 ### [2 - Polish](./Chapters/2_Polish.md)
