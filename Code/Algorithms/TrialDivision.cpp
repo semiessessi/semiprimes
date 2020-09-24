@@ -7,7 +7,6 @@ static const uint64_t uTrialDivisionCutoff = 100000;
 
 Factorisation TrialDivision( const Number& xNumber )
 {
-    // SE - TODO: this is only really good up to 32-bit factors.
     Number xWorkingValue = xNumber;
     Factorisation xResult( xNumber );
     uint64_t uTest = 3;
