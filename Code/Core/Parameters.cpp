@@ -42,7 +42,7 @@ Parameters::Parameters(
 		else
 		{
 			// SE - TODO: fancier parameters, e.g. trial division limit
-			mxNumbers.push_back( Number( pszParameters[ i ] ) );
+			mxNumbers.push_back( Number( std::string( pszParameters[ i ] ) ) );
 		}
     }
 }

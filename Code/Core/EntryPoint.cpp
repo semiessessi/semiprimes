@@ -1,25 +1,28 @@
 #include "Parameters.h"
+#include "ProcessNumber.h"
 
 void Help();
-void InteractiveMode( const bool bVerbose, const bool bTiming );
+void InteractiveMode( const Parameters& xParameters );
 
 int main(
 	const int iArgumentCount,
 	const char* const* const pszArguments )
 {
-	const Parameters xParameters( iArgumentCount, pszArguments );
+	const Parameters xParameters( iArgumentCount - 1, pszArguments + 1 );
 	if( xParameters.Help() )
 	{
 		Help();
 		return 0;
 	}
 
-	if( xParameters.Interactive() )
+	for( int i = 0; i < xParameters.NumberCount(); ++i )
 	{
-		InteractiveMode( xParameters.Verbose(), xParameters.Timing() );
-		return 0;
+		ProcessNumber( xParameters.GetNumber( i ), xParameters );
 	}
 
-	// SE - TODO: do prime number thing to spare parameters
-	return 0;
+	if( xParameters.Interactive() )
+	{
+		InteractiveMode( xParameters );
+		return 0;
+	}
 }

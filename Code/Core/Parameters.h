@@ -20,6 +20,9 @@ public:
     bool Verbose() const { return mxFlags.at( "verbose" ); }
     bool Interactive() const { return mxFlags.at( "interactive" ); }
 
+    int NumberCount() const { return static_cast< int >( mxNumbers.size() ); }
+    const Number& GetNumber( const int iNumber ) const { return mxNumbers[ iNumber ]; }
+
 private:
 
     std::unordered_map<std::string, Number> mxNumberParameters;

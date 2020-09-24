@@ -158,6 +158,7 @@
     <ClCompile Include="..\Code\Core\Help.cpp" />
     <ClCompile Include="..\Code\Core\InteractiveMode.cpp" />
     <ClCompile Include="..\Code\Core\Parameters.cpp" />
+    <ClCompile Include="..\Code\Core\ProcessNumber.cpp" />
     <ClCompile Include="..\Code\Core\Timing.cpp" />
     <ClCompile Include="..\Code\Number\Factorisation.cpp" />
     <ClCompile Include="..\Code\Number\Number.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="..\Code\Algorithms\TrialDivision.h" />
     <ClInclude Include="..\Code\Algorithms\Wheel.h" />
     <ClInclude Include="..\Code\Core\Parameters.h" />
+    <ClInclude Include="..\Code\Core\ProcessNumber.h" />
     <ClInclude Include="..\Code\Core\Timing.h" />
     <ClInclude Include="..\Code\Number\Factorisation.h" />
     <ClInclude Include="..\Code\Number\Number.h" />

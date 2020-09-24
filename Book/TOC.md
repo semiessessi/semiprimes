@@ -29,3 +29,6 @@
 ### [2 - Polish](./Chapters/2_Polish.md)
 * [2.1 Interface](./Chapters/2_Polish.md#21-interface)
    * [2.1.1 Improving parameters](./Chapters/2_Polish.md#211-improving-parameters)
+   * [2.1.2 Handling numbers](./Chapters/2_Polish.md#212-handling-numbers)
+      * [2.1.2.1 Refactoring](./Chapters/2_Polish.md#2121-refactoring)
+      * [2.1.2.2 More command line handling](./Chapters/2_Polish.md#2122-more-command-line-handling)
