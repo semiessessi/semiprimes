@@ -8,7 +8,6 @@ static const uint64_t uWheel3Cutoff = 150000;
 Factorisation Wheel3( const Number& xNumber )
 {
 	const unsigned int auDiffs[] = { 4, 2 };
-    // SE - TODO: this is only really good up to 32-bit factors.
     Number xWorkingValue = xNumber;
     Factorisation xResult( xNumber );
     uint64_t uTest = 7;
