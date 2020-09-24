@@ -3,21 +3,25 @@
 # Table of Contents
 
 ### [1 - Starting](./Chapters/1_Starting.md)
-* [1.1](./Chapters/1_Starting.md#11-first-steps) First steps
-   * [1.1.1](./Chapters/1_Starting.md#111-the-null-entrypoint-program) The null entrypoint program
-   * [1.1.2](./Chapters/1_Starting.md#112-taking-parameters) Taking parameters
-   * [1.1.3](./Chapters/1_Starting.md#113-number-class) Number class
-   * [1.1.4](./Chapters/1_Starting.md#114-interactive-mode) Interactive mode
-   * [1.1.5](./Chapters/1_Starting.md#115-mistakes-are-real) Mistakes are real
-   * [1.1.6](./Chapters/1_Starting.md#116-testing-debugging-and-fixing) Testing, debugging and fixing
-* [1.2](./Chapters/1_Starting.md#12-easy-tests) Easy tests
-   * [1.2.1](./Chapters/1_Starting.md#121-a-little-polish) A little polish
-   * [1.2.2](./Chapters/1_Starting.md#122-representing-test-results) Representing test results
-   * [1.2.3](./Chapters/1_Starting.md#123-removing-powers-of-2) Removing powers of 2
-   * [1.2.4](./Chapters/1_Starting.md#124-reporting-results) Reporting results
-   * [1.2.5](./Chapters/1_Starting.md#125-timing) Timing
-      * [1.2.5.1](./Chapters/1_Starting.md#1251-a-serious-bug) A serious bug
-   * [1.2.6](./Chapters/1_Starting.md#126-trial-division) Trial division
-      * [1.2.6.1](./Chapters/1_Starting.md#1261-accomodating-multiple-algorithms) Accomodating multiple algorithms
-      * [1.2.6.2](./Chapters/1_Starting.md#1262-more-bugs) More bugs
-   * [1.2.7](./Chapters/1_Starting.md#127-wheel-factorisation) Wheel factorisation
+* [1.1 First steps](./Chapters/1_Starting.md#11-first-steps)
+   * [1.1.1 The null entrypoint program ](./Chapters/1_Starting.md#111-the-null-entrypoint-program)
+   * [1.1.2 Taking parameters](./Chapters/1_Starting.md#112-taking-parameters)
+   * [1.1.3 Number class](./Chapters/1_Starting.md#113-number-class)
+   * [1.1.4 Interactive mode](./Chapters/1_Starting.md#114-interactive-mode)
+   * [1.1.5 Mistakes are real](./Chapters/1_Starting.md#115-mistakes-are-real)
+   * [1.1.6 Testing, debugging and fixing](./Chapters/1_Starting.md#116-testing-debugging-and-fixing)
+* [1.2 Easy tests](./Chapters/1_Starting.md#12-easy-tests)
+   * [1.2.1 A little polish](./Chapters/1_Starting.md#121-a-little-polish)
+   * [1.2.2 Representing test results](./Chapters/1_Starting.md#122-representing-test-results)
+   * [1.2.3 Removing powers of 2](./Chapters/1_Starting.md#123-removing-powers-of-2)
+   * [1.2.4 Reporting results](./Chapters/1_Starting.md#124-reporting-results)
+   * [1.2.5 Timing](./Chapters/1_Starting.md#125-timing)
+      * [1.2.5.1 A serious bug](./Chapters/1_Starting.md#1251-a-serious-bug)
+   * [1.2.6 Trial division](./Chapters/1_Starting.md#126-trial-division)
+      * [1.2.6.1 Accomodating multiple algorithms](./Chapters/1_Starting.md#1261-accomodating-multiple-algorithms)
+      * [1.2.6.2 More bugs](./Chapters/1_Starting.md#1262-more-bugs)
+   * [1.2.7 Wheel factorisation](./Chapters/1_Starting.md#127-wheel-factorisation)
+      * [1.2.7.1 Removing powers of n](./Chapters/1_Starting.md#1271-removing-powers-of-n)
+      * [1.2.7.2 Wheel up to 3](./Chapters/1_Starting.md#1272-wheel-up-to-3)
+      * [1.2.7.3 More bugs](./Chapters/1_Starting.md#1273-more-bugs)
+### [2 - Polish](./Chapters/2_Polish.md)
