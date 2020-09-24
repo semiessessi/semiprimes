@@ -256,14 +256,15 @@ void Number::InplaceLimbShiftRight( const size_t uLimbs )
     // copy
     const size_t uShiftAmount = 
         ( uLimbs > mxLimbs.size() ) ? mxLimbs.size() : uLimbs;
-    size_t uLimbCount = mxLimbs.size();
-    for( size_t uLimb = 0; uLimb < uLimbCount; ++uLimb )
+    const size_t uLimbCount = mxLimbs.size();
+    const size_t uNewLimbCount = uLimbCount - uLimbs;
+    for( size_t uLimb = 0; uLimb < uNewLimbCount; ++uLimb )
     {
         mxLimbs[ uLimb ] = mxLimbs[ uLimb + uLimbs ];
     }
 
     // shrink
-    mxLimbs.resize( mxLimbs.size() - uLimbs );
+    mxLimbs.resize( uNewLimbCount );
 }
 
 std::string Number::ToString() const

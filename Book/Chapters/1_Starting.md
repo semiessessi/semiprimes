@@ -2,18 +2,28 @@
 
 # 1 - Starting
 
-* [1.1](./1_Starting.md#11-first-steps) First steps
-   * [1.1.1](./1_Starting.md#111-the-null-entrypoint-program) The null entrypoint program
-   * [1.1.2](./1_Starting.md#112-taking-parameters) Taking parameters
-   * [1.1.3](./1_Starting.md#113-number-class) Number class
-   * [1.1.4](./1_Starting.md#114-interactive-mode) Interactive mode
-   * [1.1.5](./1_Starting.md#115-mistakes-are-real) Mistakes are real
-   * [1.1.6](./1_Starting.md#116-testing-debugging-and-fixing) Testing, debugging and fixing
-* [1.2](./1_Starting.md#12-easy-tests) Easy tests
-   * [1.2.1](./1_Starting.md#121-a-little-polish) A little polish
-   * [1.2.2](./1_Starting.md#122-representing-test-results) Representing test results
-   * [1.2.3](./1_Starting.md#123-removing-powers-of-2) Removing powers of 2
-   * [1.2.4](./1_Starting.md#124-reporting-results) Reporting results
+* [1.1 First steps](./1_Starting.md#11-first-steps)
+   * [1.1.1 The null entrypoint program](./1_Starting.md#111-the-null-entrypoint-program)
+   * [1.1.2 Taking parameters](./1_Starting.md#112-taking-parameters)
+   * [1.1.3 Number class](./1_Starting.md#113-number-class)
+   * [1.1.4 Interactive mode](./1_Starting.md#114-interactive-mode)
+   * [1.1.5 Mistakes are real](./1_Starting.md#115-mistakes-are-real)
+   * [1.1.6 Testing, debugging and fixing](./1_Starting.md#116-testing-debugging-and-fixing)
+* [1.2 Easy tests](./1_Starting.md#12-easy-tests)
+   * [1.2.1 A little polish](./1_Starting.md#121-a-little-polish)
+   * [1.2.2 Representing test results](./1_Starting.md#122-representing-test-results)
+   * [1.2.3 Removing powers of 2](./1_Starting.md#123-removing-powers-of-2)
+   * [1.2.4 Reporting results](./1_Starting.md#124-reporting-results)
+   * [1.2.5 Timing](./1_Starting.md#125-timing)
+      * [1.2.5.1 A serious bug](./1_Starting.md#1251-a-serious-bug)
+   * [1.2.6 Trial division](./1_Starting.md#126-trial-division)
+      * [1.2.6.1 Accomodating multiple algorithms](./1_Starting.md#1261-accomodating-multiple-algorithms)
+      * [1.2.6.2 More bugs](./1_Starting.md#1262-more-bugs)
+   * [1.2.7 Wheel factorisation](./1_Starting.md#127-wheel-factorisation)
+      * [1.2.7.1 Removing powers of n](./1_Starting.md#1271-removing-powers)
+      * [1.2.7.2 Wheel up to 3](./1_Starting.md#1272-wheel-up-to-3)
+      * [1.2.7.3 More bugs](./1_Starting.md#1273-more-bugs)
+* [1.3 Review](./1_Starting.md#13-review)
    
 ## 1.1 First Steps
 
@@ -1208,3 +1218,367 @@ void Factorisation::Report() const
     }
 }
 ```
+
+### 1.2.5 Timing
+
+A very simple 'one at a time' timer implementation is good enough for now.
+
+```cpp
+#include "Timing.h"
+
+#include <chrono>
+#include <cstdint>
+#include <cstdio>
+
+static std::chrono::steady_clock::time_point sxStart;
+static std::chrono::steady_clock::time_point sxEnd;
+
+void StartTiming( const bool bVerbose )
+{
+    sxStart = std::chrono::high_resolution_clock::now();
+
+    if( bVerbose )
+    {
+        puts( "Starting timer." );
+    }
+}
+
+void StopTiming()
+{
+    sxEnd = std::chrono::high_resolution_clock::now();
+
+    int64_t iDuration =
+        std::chrono::duration_cast< std::chrono::nanoseconds >(
+            sxEnd - sxStart ).count();
+
+    printf(
+        "Took %d.%09d seconds\n",
+        iDuration / 1000000000,
+        iDuration % 1000000000 );
+}
+```
+
+#### 1.2.5.1 A serious bug
+
+Whilst testing this I found a bug with large numbers of powers of 2 that was easily fixed but caused the program to stop responding, stuck in an infinite loop.
+
+Shifting left instead of right.
+
+In PowersOf2.cpp:
+
+```cpp
+Factorisation PowersOf2( const Number& xNumber )
+{
+    int iPowers = 0;
+    Number xWorkingValue = xNumber;
+    // go fast if whole limbs are zeroed out
+    while( xWorkingValue.LeastSignificantLimb() == 0 )
+    {
+        iPowers += 64;
+        xWorkingValue.InplaceLimbShiftRight( 1 ); // <---- here
+    }
+
+    // test remaining bits
+    while( ( xWorkingValue.LeastSignificantLimb() != 0 )
+        && ( ( xWorkingValue & 0x1 ) == 0 ) )
+    {
+        xWorkingValue /= 2;
+        ++iPowers;
+    }
+
+    Factorisation xResult( xNumber );
+    xResult.mbKnownComposite = iPowers != 0;
+    if( xResult.mbKnownComposite )
+    {
+        Factorisation xTwoFactorisation( 2z );
+        xTwoFactorisation.mbKnownPrime = true;
+        xTwoFactorisation.miPower = iPowers;
+        xResult.mxKnownFactors.push_back( xTwoFactorisation );
+        // SE - TODO: equality test.
+        if( xWorkingValue > 1 )
+        {
+            xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
+        }
+    }
+
+    return xResult;
+}
+
+```
+
+The right shift itself was previously untested and turns out to also have a bug, also easily fixed.
+
+In Number.cpp:
+
+```cpp
+void Number::InplaceLimbShiftRight( const size_t uLimbs )
+{
+    // copy
+    const size_t uShiftAmount = 
+        ( uLimbs > mxLimbs.size() ) ? mxLimbs.size() : uLimbs;
+    const size_t uLimbCount = mxLimbs.size();
+    const size_t uNewLimbCount = uLimbCount - uLimbs;           // <--- here
+    for( size_t uLimb = 0; uLimb < uNewLimbCount; ++uLimb )     // <--- here
+    {
+        mxLimbs[ uLimb ] = mxLimbs[ uLimb + uLimbs ];
+    }
+
+    // shrink
+    mxLimbs.resize( uLimbCount );                               // <--- here
+}
+```
+
+### 1.2.6 Trial division
+
+As well as checking for divisibility by two, we can check the remaining odd numbers to see if they will divide.
+
+Setting an upper limit prevents the algorithm from running and endlessly, and we early out if we test enough numbers that the square of the test divisor is larger than our number, and we have proven it is prime or completed the factorisation.
+
+Ideally trial division would only test prime numbers up to the square root, but we live with testing the odd numbers as a compromise between performance and simplicity.
+
+The algorithm still has complexity ![O(sqrt(n))](https://latex.codecogs.com/gif.latex?O%5C%28%5Csqrt%7Bn%7D%29), more accurately the runtime is ![1/2 sqrt(n)](https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7B2%7D%5Csqrt%7Bn%7D) in terms of division operations.
+
+```cpp
+#include "TrialDivision.h"
+
+#include "../Number/Factorisation.h"
+#include "../Number/Number.h"
+
+static const uint64_t uTrialDivisionCutoff = 100000;
+
+Factorisation TrialDivision( const Number& xNumber )
+{
+    // SE - TODO: this is only really good up to 32-bit factors.
+    Number xWorkingValue = xNumber;
+    Factorisation xResult( xNumber );
+    uint64_t uTest = 3;
+    while( xWorkingValue > ( ( uTest * uTest ) - 1 ) )
+    {
+        if( ( xWorkingValue % uTest ) == 0 )
+        {
+            xResult.mbKnownComposite = true;
+            Factorisation xNew( uTest, true );
+            xNew.miPower = 0;
+            while( ( xWorkingValue % uTest ) == 0 )
+            {
+                ++xNew.miPower;
+                xWorkingValue /= uTest;
+            }
+            xResult.mxKnownFactors.push_back( xNew );
+        }
+
+        uTest += 2;
+
+        if( uTest > uTrialDivisionCutoff )
+        {
+            xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
+            return xResult;
+        }
+    }
+
+    if( xResult.mxKnownFactors.empty() )
+    {
+        xResult.mbKnownPrime = true;
+    }
+    else if( xWorkingValue > 1 )
+    {
+        xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue, true ) );
+    }
+
+    return xResult;
+}
+
+```
+
+#### 1.2.6.1 Accomodating multiple algorithms
+
+To make it easier to chain the results of factoring and primality testing algorithms a template helper function can reduce the code repetition.
+
+A new file, Factorisation.inl to be included in the corresponding header file:
+
+```cpp
+#ifndef FACTORISATION_INL
+#define FACTORISATION_INL
+
+// SE - NOTE: for intellisense.. urg
+#include "Factorisation.h"
+
+template< typename Algorithm >
+void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
+{
+    if( mbKnownPrime == true )
+    {
+        return;
+    }
+
+    if( mxKnownFactors.size() == 0 )
+    {
+        mxKnownFactors.push_back( Factorisation( mxNumber ) );
+    }
+
+    for( size_t u = 0; u < mxKnownFactors.size(); ++u )
+    {
+        // this might be breakable or prime and unknown...
+        if( mxKnownFactors[ u ].mbKnownComposite || !mxKnownFactors[ u ].mbKnownPrime )
+        {
+            const Factorisation xNew = xAlgorithm( mxKnownFactors[ u ].mxNumber );
+            // .. if we got factors substitute them.
+            if( xNew.mxKnownFactors.size() >= 0 )
+            {
+                mbKnownComposite = xNew.mbKnownComposite;
+                mxKnownFactors.erase( mxKnownFactors.begin() + u );
+                for( size_t v = 0; v < xNew.mxKnownFactors.size(); ++v )
+                {
+                    mxKnownFactors.insert( mxKnownFactors.begin() + u + v, xNew.mxKnownFactors[ v ] );
+                }
+            }
+            else
+            {
+                mxKnownFactors[ u ] = xNew;
+            }
+        }
+    }
+
+    // SE - TODO: sort/collapse/tidy results (?)
+}
+
+#endif
+```
+
+#### 1.2.6.2 More bugs
+
+There are some other small bug fixes spotted now that primality testing is an option, for instance, an early out added to the reporting function in Factorisation.cpp:
+
+```cpp
+void Factorisation::Report() const
+{
+    const std::string xNumberString = mxNumber.ToString();
+    if( mbKnownPrime && ( miPower == 1 ) )                      // <--- here
+    {
+        printf( "%s is prime!\n", xNumberString.c_str() );
+        return;                                                 // <--- here
+    }
+```
+
+### 1.2.7 Wheel factorisation
+
+If we remove the multiples of 3, as well as the multiples of two from the list of numbers tested by trial division we get the first in a sequence of slightly faster variations on the trial division algorithm. These algorithms are called wheel factorisation, and can be improved by including multiples of 5, 7, 11 and other primes in sequence, although for diminishing returns.
+
+Wheels have to start running at higher values because the repeating pattern is only present after the product of the numbers in the wheel has been reached. We remove powers of those smaller numbers before starting to use the wheel.
+
+### 1.2.7.1 Removing powers of n
+
+#include "../Number/Factorisation.h"
+#include "../Number/Number.h"
+
+template< int N >
+Factorisation PowersOf( const Number& xNumber )
+{
+    int iPowers = 0;
+    Number xWorkingValue = xNumber;
+
+    while( ( xWorkingValue.LeastSignificantLimb() != 0 )
+        && ( ( xWorkingValue % N ) == 0 ) )
+    {
+        xWorkingValue /= N;
+        ++iPowers;
+    }
+
+    Factorisation xResult( xNumber );
+    xResult.mbKnownComposite = iPowers > 0;
+    if( xResult.mbKnownComposite )
+    {
+        Factorisation xFactorisation( N );
+        xFactorisation.mbKnownPrime = true;
+        xFactorisation.miPower = iPowers;
+        xResult.mxKnownFactors.push_back( xFactorisation );
+        // SE - TODO: equality test.
+        if( xWorkingValue > 1 )
+        {
+            xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
+        }
+    }
+
+    return xResult;
+}
+
+
+### 1.2.7.2 Wheel up to 3
+
+```cpp
+#include "Wheel.h"
+
+#include "../Number/Factorisation.h"
+#include "../Number/Number.h"
+
+static const uint64_t uWheel3Cutoff = 150000;
+
+Factorisation Wheel3( const Number& xNumber )
+{
+	const unsigned int auDiffs[] = { 4, 2 };
+    // SE - TODO: this is only really good up to 32-bit factors.
+    Number xWorkingValue = xNumber;
+    Factorisation xResult( xNumber );
+    uint64_t uTest = 7;
+    int iDiff = 0;
+    while( xWorkingValue > ( ( uTest * uTest ) - 1 ) )
+    {
+        if( ( xWorkingValue % uTest ) == 0 )
+        {
+            xResult.mbKnownComposite = true;
+            Factorisation xNew( uTest, true );
+            xNew.miPower = 0;
+            while( ( xWorkingValue % uTest ) == 0 )
+            {
+                ++xNew.miPower;
+                xWorkingValue /= uTest;
+            }
+            xResult.mxKnownFactors.push_back( xNew );
+        }
+
+        uTest += auDiffs[ iDiff ];
+        iDiff ^= 1;
+
+        if( uTest > uWheel3Cutoff )
+        {
+            xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
+            return xResult;
+        }
+    }
+
+    if( xResult.mxKnownFactors.empty() )
+    {
+        xResult.mbKnownPrime = true;
+    }
+    else if( xWorkingValue > 1 )
+    {
+        xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue, true ) );
+    }
+
+    return xResult;
+}
+```
+
+### 1.2.7.3 More bugs
+
+It turns out there was a typo in the limb shift right routine:
+
+```cpp
+void Number::InplaceLimbShiftRight( const size_t uLimbs )
+{
+    // copy
+    const size_t uShiftAmount = 
+        ( uLimbs > mxLimbs.size() ) ? mxLimbs.size() : uLimbs;
+    const size_t uLimbCount = mxLimbs.size();
+    const size_t uNewLimbCount = uLimbCount - uLimbs;
+    for( size_t uLimb = 0; uLimb < uNewLimbCount; ++uLimb )
+    {
+        mxLimbs[ uLimb ] = mxLimbs[ uLimb + uLimbs ];
+    }
+
+    // shrink
+    mxLimbs.resize( uNewLimbCount );            // <--- here
+}
+```
+
+# 1.3 Review

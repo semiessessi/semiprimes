@@ -2,11 +2,11 @@
 
 #include <cstdio>
 
-Factorisation::Factorisation( const Number& xNumber )
+Factorisation::Factorisation( const Number& xNumber, const bool bPrime )
 : mxKnownFactors()
 , mxNumber( xNumber )
 , miPower( 1 )
-, mbKnownPrime( false )
+, mbKnownPrime( bPrime )
 , mbKnownComposite( false )
 {
 }
@@ -14,9 +14,10 @@ Factorisation::Factorisation( const Number& xNumber )
 void Factorisation::Report() const
 {
     const std::string xNumberString = mxNumber.ToString();
-    if( mbKnownPrime )
+    if( mbKnownPrime && ( miPower == 1 ) )
     {
         printf( "%s is prime!\n", xNumberString.c_str() );
+        return;
     }
 
     bool bComplete = true;
@@ -61,6 +62,8 @@ void Factorisation::Report() const
         {
             puts( "NOTE: TESTS WERE NOT COMPLETED" );
         }
+
+        return;
     }
 
     if( !mbKnownPrime && !mbKnownComposite )

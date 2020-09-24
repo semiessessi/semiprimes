@@ -152,16 +152,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Algorithms\PowersOf2.cpp" />
+    <ClCompile Include="..\Code\Algorithms\TrialDivision.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Wheel.cpp" />
     <ClCompile Include="..\Code\Core\EntryPoint.cpp" />
     <ClCompile Include="..\Code\Core\Help.cpp" />
     <ClCompile Include="..\Code\Core\InteractiveMode.cpp" />
+    <ClCompile Include="..\Code\Core\Timing.cpp" />
     <ClCompile Include="..\Code\Number\Factorisation.cpp" />
     <ClCompile Include="..\Code\Number\Number.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Algorithms\PowersOf2.h" />
+    <ClInclude Include="..\Code\Algorithms\PowersOfN.h" />
+    <ClInclude Include="..\Code\Algorithms\TrialDivision.h" />
+    <ClInclude Include="..\Code\Algorithms\Wheel.h" />
+    <ClInclude Include="..\Code\Core\Timing.h" />
     <ClInclude Include="..\Code\Number\Factorisation.h" />
     <ClInclude Include="..\Code\Number\Number.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Code\Algorithms\PowersOfN.inl" />
+    <None Include="..\Code\Number\Factorisation.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
