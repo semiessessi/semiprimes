@@ -28,3 +28,4 @@
 * [1.3 Review](./Chapters/1_Starting.md#13-review)
 ### [2 - Polish](./Chapters/2_Polish.md)
 * [2.1 Interface](./Chapters/2_Polish.md#21-interface)
+   * [2.1.1 Improving parameters](./Chapters/2_Polish.md#211-improving-parameters)
