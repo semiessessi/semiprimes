@@ -264,7 +264,7 @@ void Number::InplaceLimbShiftRight( const size_t uLimbs )
     }
 
     // shrink
-    mxLimbs.resize( uLimbCount );
+    mxLimbs.resize( uNewLimbCount );
 }
 
 std::string Number::ToString() const

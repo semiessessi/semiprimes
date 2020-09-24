@@ -1454,3 +1454,25 @@ void Factorisation::Report() const
 
 ### 1.2.7 Wheel factorisation
 
+### 1.2.7.1 More bugs
+
+It turns out there was a typo in the limb shift right routine:
+
+```cpp
+void Number::InplaceLimbShiftRight( const size_t uLimbs )
+{
+    // copy
+    const size_t uShiftAmount = 
+        ( uLimbs > mxLimbs.size() ) ? mxLimbs.size() : uLimbs;
+    const size_t uLimbCount = mxLimbs.size();
+    const size_t uNewLimbCount = uLimbCount - uLimbs;
+    for( size_t uLimb = 0; uLimb < uNewLimbCount; ++uLimb )
+    {
+        mxLimbs[ uLimb ] = mxLimbs[ uLimb + uLimbs ];
+    }
+
+    // shrink
+    mxLimbs.resize( uNewLimbCount );            // <--- here
+}
+```
+
