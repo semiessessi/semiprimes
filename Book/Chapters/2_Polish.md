@@ -7,6 +7,10 @@
    * [2.1.2 Handling numbers](./2_Polish.md#212-handling-numbers)
       * [2.1.2.1 Refactoring](./2_Polish.md#2121-refactoring)
       * [2.1.2.2 More command line handling](./2_Polish.md#2122-more-command-line-handling)
+* [2.2 Functionality](./2_Polish.md#22-functionality)
+   * [2.2.1 Better wheels](./2_Polish.md#221-better-wheels)
+      * [2.2.1.1 Wheel up to 5](./1_Starting.md#2211-wheel-up-to-5)
+* [2.3 Performance](./2_Polish.md#23-performance)
 
 ## 2.1 Interface
 
@@ -215,4 +219,10 @@ int main(
 }
 ```
 
-...
+# 2.2 Functionality
+
+## 2.2.1 Better wheels
+
+### 2.2.1.1 Wheel up to 5
+
+# 2.3 Performance
