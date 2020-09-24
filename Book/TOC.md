@@ -34,5 +34,5 @@
       * [2.1.2.2 More command line handling](./Chapters/2_Polish.md#2122-more-command-line-handling)
 * [2.2 Functionality](./Chapters/2_Polish.md#22-functionality)
    * [2.2.1 Better wheels](./Chapters/2_Polish.md#221-better-wheels)
-      * [2.2.1.1 Wheel up to 5](./Chapters/1_Starting.md#2211-wheel-up-to-5)
+      * [2.2.1.1 Wheel up to 5](./Chapters/2_Polish.md#2211-wheel-up-to-5)
 * [2.3 Performance](./Chapters/2_Polish.md#23-performance)
