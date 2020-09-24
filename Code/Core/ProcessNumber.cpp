@@ -30,7 +30,9 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
     xTest.ContinueWithAlgorithm( PowersOf< 13 > );
     xTest.ContinueWithAlgorithm( PowersOf< 17 > );
     xTest.ContinueWithAlgorithm( PowersOf< 19 > );
-    xTest.ContinueWithAlgorithm( Wheel3 );
+    xTest.ContinueWithAlgorithm( PowersOf< 23 > );
+    xTest.ContinueWithAlgorithm( PowersOf< 29 > );
+    xTest.ContinueWithAlgorithm( Wheel5 );
 
     if( xParameters.Timing() )
     {

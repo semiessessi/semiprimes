@@ -7,6 +7,10 @@
    * [2.1.2 Handling numbers](./2_Polish.md#212-handling-numbers)
       * [2.1.2.1 Refactoring](./2_Polish.md#2121-refactoring)
       * [2.1.2.2 More command line handling](./2_Polish.md#2122-more-command-line-handling)
+* [2.2 Functionality](./2_Polish.md#22-functionality)
+   * [2.2.1 Better wheels](./2_Polish.md#221-better-wheels)
+      * [2.2.1.1 Wheel up to 5](./2_Polish.md#2211-wheel-up-to-5)
+* [2.3 Performance](./2_Polish.md#23-performance)
 
 ## 2.1 Interface
 
@@ -215,4 +219,56 @@ int main(
 }
 ```
 
-...
+# 2.2 Functionality
+
+## 2.2.1 Better wheels
+
+### 2.2.1.1 Wheel up to 5
+
+```cpp
+Factorisation Wheel5( const Number& xNumber )
+{
+    const unsigned int auDiffs[] = { 6, 4, 2, 4, 2, 4, 6, 2 };
+    Number xWorkingValue = xNumber;
+    Factorisation xResult( xNumber );
+    uint64_t uTest = 31;
+    int iDiff = 0;
+    while( xWorkingValue > ( ( uTest * uTest ) - 1 ) )
+    {
+        if( ( xWorkingValue % uTest ) == 0 )
+        {
+            xResult.mbKnownComposite = true;
+            Factorisation xNew( uTest, true );
+            xNew.miPower = 0;
+            while( ( xWorkingValue % uTest ) == 0 )
+            {
+                ++xNew.miPower;
+                xWorkingValue /= uTest;
+            }
+            xResult.mxKnownFactors.push_back( xNew );
+        }
+
+        uTest += auDiffs[ iDiff ];
+        iDiff = ( iDiff + 1 ) & 7;
+
+        if( uTest > uWheel5Cutoff )
+        {
+            xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
+            return xResult;
+        }
+    }
+
+    if( xResult.mxKnownFactors.empty() )
+    {
+        xResult.mbKnownPrime = true;
+    }
+    else if( xWorkingValue > 1 )
+    {
+        xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue, true ) );
+    }
+
+    return xResult;
+}
+```
+
+# 2.3 Performance
