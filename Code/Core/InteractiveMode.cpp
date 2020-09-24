@@ -5,7 +5,9 @@
 #include "../Number/Factorisation.h"
 #include "../Number/Number.h"
 #include "../Algorithms/PowersOf2.h"
+#include "../Algorithms/PowersOfN.h"
 #include "../Algorithms/TrialDivision.h"
+#include "../Algorithms/Wheel.h"
 
 void InteractiveMode( const bool bVerbose, const bool bTiming )
 {
@@ -35,7 +37,11 @@ void InteractiveMode( const bool bVerbose, const bool bTiming )
         Factorisation xTest( xNumber );
 
         xTest.ContinueWithAlgorithm( PowersOf2 );
-        xTest.ContinueWithAlgorithm( TrialDivision );
+        xTest.ContinueWithAlgorithm( PowersOf< 3 > );
+        xTest.ContinueWithAlgorithm( PowersOf< 5 > );
+        //xTest.ContinueWithAlgorithm( PowersOf< 7 > );
+        //xTest.ContinueWithAlgorithm( PowersOf< 11 > );
+        xTest.ContinueWithAlgorithm( Wheel3 );
         
         if( bTiming )
         {
