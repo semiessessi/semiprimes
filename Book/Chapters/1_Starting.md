@@ -1582,3 +1582,7 @@ void Number::InplaceLimbShiftRight( const size_t uLimbs )
 ```
 
 # 1.3 Review
+
+We now have implemented an algorithm for determining if numbers are prime, factorising them if not, and failing gracefully instead of running indefinitely on difficult cases, along with a minimally usable interface to it.
+
+SE - TODO: more.
