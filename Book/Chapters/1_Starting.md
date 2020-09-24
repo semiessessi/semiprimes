@@ -1336,7 +1336,7 @@ Setting an upper limit prevents the algorithm from running and endlessly, and we
 
 Ideally trial division would only test prime numbers up to the square root, but we live with testing the odd numbers as a compromise between performance and simplicity.
 
-The algorithm still has complexity ![O(sqrt(n))](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Cdpi%7B150%7D%20%5Ctiny%20O%5C%28%5Csqrt%7Bn%7D%29), more accurately the runtime is ![1/2 sqrt(n)](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Cdpi%7B150%7D%20%5Ctiny%20%5Cfrac%7B1%7D%7B2%7D%5Csqrt%7Bn%7D) in terms of division operations.
+The algorithm still has complexity ![O(sqrt(n))](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Cdpi%7B150%7D%20%5Cfn_phv%20%5Csmall%20O%5C%28%5Csqrt%7Bn%7D%29), more accurately the runtime is ![1/2 sqrt(n)](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Cdpi%7B150%7D%20%5Cfn_phv%20%5Csmall%20%5Cfrac%7B1%7D%7B2%7D%5Csqrt%7Bn%7D) in terms of division operations.
 
 ```cpp
 #include "TrialDivision.h"
