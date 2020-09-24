@@ -2,6 +2,7 @@
 
 # Table of Contents
 
+### [0 - Introduction](./Introduction.md)
 ### [1 - Starting](./Chapters/1_Starting.md)
 * [1.1 First steps](./Chapters/1_Starting.md#11-first-steps)
    * [1.1.1 The null entrypoint program ](./Chapters/1_Starting.md#111-the-null-entrypoint-program)
@@ -26,3 +27,4 @@
       * [1.2.7.3 More bugs](./Chapters/1_Starting.md#1273-more-bugs)
 * [1.3 Review](./Chapters/1_Starting.md#13-review)
 ### [2 - Polish](./Chapters/2_Polish.md)
+* [2.1 Interface](./Chapters/2_Polish.md#21-interface)
