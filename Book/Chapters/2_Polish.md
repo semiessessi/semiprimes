@@ -617,6 +617,8 @@ uint64_t Number::Mod(
 
 ### 2.3.1.3 Bug fixing
 
+Entering zero, or an empty string causes a crash which can be fixed by checking for that case, as well as some extra protective code in the limb shift right.
+
 ```cpp
 void Number::InplaceLimbShiftRight( const size_t uLimbs )
 {
@@ -643,5 +645,41 @@ void Number::InplaceLimbShiftRight( const size_t uLimbs )
     }
 
     // END FIX
+}
+```
+
+
+```cpp
+void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
+{
+    // START FIX
+    if( ( xNumber.GetLimbCount() == 1 )
+        && ( xNumber.LeastSignificantLimb() == 0 ) )
+    {
+        puts( "Cannot test zero.\n" );
+        return;
+    }
+    // END FIX
+    
+    printf( "Testing number %s...\n", xNumber.ToString().c_str() );
+
+    if( xParameters.Timing() )
+    {
+        StartTiming( xParameters.Verbose() );
+    }
+
+    Factorisation xTest( xNumber );
+
+    xTest.ContinueWithAlgorithm( PowersOf2 );
+
+    Helper< iWheelPrimeCount - 1, ( 2 * 3 * 5 * 7 * 11 ) >::ContinueFactorisation( xTest );
+    xTest.ContinueWithAlgorithm( WheelUpTo< 11 > );
+
+    if( xParameters.Timing() )
+    {
+        StopTiming();
+    }
+
+    xTest.Report();
 }
 ```

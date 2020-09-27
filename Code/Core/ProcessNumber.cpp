@@ -60,6 +60,13 @@ struct Helper< X, 2 >
 
 void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
 {
+    if( ( xNumber.GetLimbCount() == 1 )
+        && ( xNumber.LeastSignificantLimb() == 0 ) )
+    {
+        puts( "Cannot test zero.\n" );
+        return;
+    }
+
     printf( "Testing number %s...\n", xNumber.ToString().c_str() );
 
     if( xParameters.Timing() )
