@@ -12,6 +12,10 @@
       * [2.2.1.1 Wheel up to 5](./2_Polish.md#2211-wheel-up-to-5)
       * [2.2.1.2 Wheel up to n](./2_Polish.md#2212-wheel-up-to-n)
 * [2.3 Performance](./2_Polish.md#23-performance)
+   * [2.3.1 Profiling](./2_Polish.md#231-profiling)
+      * [2.3.1.1 Reducing allocations](./2_Polish.md#2311-reducing-allocations)
+      * [2.3.1.2 Mod with no resizing](./2_Polish.md#2312-mod-with-no-resizing)
+      * [2.3.1.3 Bug fixing](./2_Polish.md#2313-bug-fixing)
 
 ## 2.1 Interface
 
@@ -591,5 +595,96 @@ Number Number::DivMod(
     }
 
     return xReturnValue;
+}
+```
+
+### 2.3.1.2 Mod with no resizing
+
+```cpp
+uint64_t Number::Mod(
+    const Number xNumerator,
+    const uint64_t uDenominator )
+{
+    uint64_t uRemainder = 0;
+    for( size_t uLimb = xNumerator.mxLimbs.size();
+        uLimb != 0; --uLimb )
+    {
+        _udiv128(
+            uRemainder,
+            xNumerator.mxLimbs[ uLimb - 1 ],
+            uDenominator,
+            &uRemainder );
+    }
+
+    return uRemainder;
+}
+```
+
+### 2.3.1.3 Bug fixing
+
+Entering zero, or an empty string causes a crash which can be fixed by checking for that case, as well as some extra protective code in the limb shift right.
+
+```cpp
+void Number::InplaceLimbShiftRight( const size_t uLimbs )
+{
+    // copy
+    const size_t uShiftAmount = 
+        ( uLimbs > mxLimbs.size() ) ? mxLimbs.size() : uLimbs;
+    const size_t uLimbCount = mxLimbs.size();
+    const size_t uNewLimbCount = uLimbCount - uLimbs;
+    for( size_t uLimb = 0; uLimb < uNewLimbCount; ++uLimb )
+    {
+        mxLimbs[ uLimb ] = mxLimbs[ uLimb + uLimbs ];
+    }
+    
+    // START FIX
+
+    // shrink
+    if( uNewLimbCount > 0 )
+    {
+        mxLimbs.resize( uNewLimbCount );
+    }
+    else
+    {
+        mxLimbs[ 0 ] = 0;
+    }
+
+    // END FIX
+}
+```
+
+
+```cpp
+void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
+{
+    // START FIX
+    if( ( xNumber.GetLimbCount() == 1 )
+        && ( xNumber.LeastSignificantLimb() == 0 ) )
+    {
+        puts( "Cannot test zero.\n" );
+        return;
+    }
+    // END FIX
+    
+    printf( "Testing number %s...\n", xNumber.ToString().c_str() );
+
+    if( xParameters.Timing() )
+    {
+        StartTiming( xParameters.Verbose() );
+    }
+
+    Factorisation xTest( xNumber );
+
+    xTest.ContinueWithAlgorithm( PowersOf2 );
+
+    Helper< iWheelPrimeCount - 1, ( 2 * 3 * 5 * 7 * 11 ) >::ContinueFactorisation( xTest );
+    xTest.ContinueWithAlgorithm( WheelUpTo< 11 > );
+
+    if( xParameters.Timing() )
+    {
+        StopTiming();
+    }
+
+    xTest.Report();
 }
 ```

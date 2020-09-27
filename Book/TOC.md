@@ -37,3 +37,7 @@
       * [2.2.1.1 Wheel up to 5](./Chapters/2_Polish.md#2211-wheel-up-to-5)
       * [2.2.1.2 Wheel up to n](./Chapters/2_Polish.md#2212-wheel-up-to-n)
 * [2.3 Performance](./Chapters/2_Polish.md#23-performance)
+   * [2.3.1 Profiling](./Chapters/2_Polish.md#231-profiling)
+      * [2.3.1.1 Reducing allocations](./Chapters/2_Polish.md#2311-reducing-allocations)
+      * [2.3.1.2 Mod with no resizing](./Chapters/2_Polish.md#2312-mod-with-no-resizing)
+      * [2.3.1.3 Bug fixing](./Chapters/2_Polish.md#2313-bug-fixing)

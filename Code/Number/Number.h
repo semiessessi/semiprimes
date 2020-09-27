@@ -38,7 +38,8 @@ public:
     
     void InplaceLimbShiftLeft( const size_t uLimbs );
     void InplaceLimbShiftRight( const size_t uLimbs );
-    
+
+    size_t GetLimbCount() const { return mxLimbs.size(); }
     uint64_t LeastSignificantLimb() const { return mxLimbs[ 0 ]; }
 
     std::string ToString() const;
@@ -55,6 +56,10 @@ public:
         const Number xNumerator,
         const Number xDenominator,
         Number& xRemainder );
+
+    static uint64_t Mod(
+        const Number xNumerator,
+        const uint64_t uDenominator );
 
 private:
 

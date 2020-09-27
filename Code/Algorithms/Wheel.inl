@@ -104,7 +104,7 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 {
     GenerateWheel();
 
-    static const uint64_t uWheelLimit = 200000;
+    const uint64_t uWheelLimit = 5500000 / ( xNumber.GetLimbCount() * 2 - 1 );
 
     Number xWorkingValue = xNumber;
     Factorisation xResult( xNumber );

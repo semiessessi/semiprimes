@@ -219,9 +219,7 @@ Number& Number::operator /=( const Number& xOperand )
 
 int64_t Number::operator %( const int64_t iOperand ) const
 {
-    int64_t iRemainder = 0;
-    DivMod( *this, iOperand, iRemainder );
-    return iRemainder;
+    return Mod( *this, iOperand );
 }
 
 void Number::InplaceLimbShiftLeft( const size_t uLimbs )
@@ -264,7 +262,14 @@ void Number::InplaceLimbShiftRight( const size_t uLimbs )
     }
 
     // shrink
-    mxLimbs.resize( uNewLimbCount );
+    if( uNewLimbCount > 0 )
+    {
+        mxLimbs.resize( uNewLimbCount );
+    }
+    else
+    {
+        mxLimbs[ 0 ] = 0;
+    }
 }
 
 std::string Number::ToString() const
@@ -330,6 +335,24 @@ Number Number::DivMod(
 {
     // SE - TODO: division innit...
     return 0z;
+}
+
+uint64_t Number::Mod(
+    const Number xNumerator,
+    const uint64_t uDenominator )
+{
+    uint64_t uRemainder = 0;
+    for( size_t uLimb = xNumerator.mxLimbs.size();
+        uLimb != 0; --uLimb )
+    {
+        _udiv128(
+            uRemainder,
+            xNumerator.mxLimbs[ uLimb - 1 ],
+            uDenominator,
+            &uRemainder );
+    }
+
+    return uRemainder;
 }
 
 #pragma warning( disable : 4455 )
