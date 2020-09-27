@@ -593,3 +593,55 @@ Number Number::DivMod(
     return xReturnValue;
 }
 ```
+
+### 2.3.1.2 Mod with no resizing
+```cpp
+uint64_t Number::Mod(
+    const Number xNumerator,
+    const uint64_t uDenominator )
+{
+    uint64_t uRemainder = 0;
+    for( size_t uLimb = xNumerator.mxLimbs.size();
+        uLimb != 0; --uLimb )
+    {
+        _udiv128(
+            uRemainder,
+            xNumerator.mxLimbs[ uLimb - 1 ],
+            uDenominator,
+            &uRemainder );
+    }
+
+    return uRemainder;
+}
+```
+
+### 2.3.1.3 Bug fixing
+
+```cpp
+void Number::InplaceLimbShiftRight( const size_t uLimbs )
+{
+    // copy
+    const size_t uShiftAmount = 
+        ( uLimbs > mxLimbs.size() ) ? mxLimbs.size() : uLimbs;
+    const size_t uLimbCount = mxLimbs.size();
+    const size_t uNewLimbCount = uLimbCount - uLimbs;
+    for( size_t uLimb = 0; uLimb < uNewLimbCount; ++uLimb )
+    {
+        mxLimbs[ uLimb ] = mxLimbs[ uLimb + uLimbs ];
+    }
+    
+    // START FIX
+
+    // shrink
+    if( uNewLimbCount > 0 )
+    {
+        mxLimbs.resize( uNewLimbCount );
+    }
+    else
+    {
+        mxLimbs[ 0 ] = 0;
+    }
+
+    // END FIX
+}
+```
