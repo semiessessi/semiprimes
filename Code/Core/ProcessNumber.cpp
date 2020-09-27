@@ -11,6 +11,53 @@
 
 #include <cstdio>
 
+namespace
+{
+
+template< int X, int N >
+struct Helper
+{
+    static constexpr int i = iWheelPrimeCount - X;
+    static constexpr int PreviousPrime =
+        ( aiWheelPrimes[ i ] >= N )
+            ? aiWheelPrimes[ i - 1 ]
+            : Helper< X - 1, N >::PreviousPrime;
+
+    static void ContinueFactorisation( Factorisation& xTest )
+    {
+        Helper< iWheelPrimeCount - 1, PreviousPrime >::ContinueFactorisation( xTest );
+        //if( N <= 1 )
+        //{
+            // error
+        //}
+        xTest.ContinueWithAlgorithm( PowersOf< N > );
+    }
+};
+
+template< int N >
+struct Helper< 0, N >
+{
+    static constexpr int PreviousPrime = 1;
+
+    static void ContinueFactorisation( Factorisation& xFactorisation )
+    {
+
+    }
+};
+
+template< int X >
+struct Helper< X, 2 >
+{
+    static constexpr int PreviousPrime = 1;
+
+    static void ContinueFactorisation( Factorisation& xFactorisation )
+    {
+
+    }
+};
+
+}
+
 void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
 {
     printf( "Testing number %s...\n", xNumber.ToString().c_str() );
@@ -23,16 +70,9 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
     Factorisation xTest( xNumber );
 
     xTest.ContinueWithAlgorithm( PowersOf2 );
-    xTest.ContinueWithAlgorithm( PowersOf< 3 > );
-    xTest.ContinueWithAlgorithm( PowersOf< 5 > );
-    xTest.ContinueWithAlgorithm( PowersOf< 7 > );
-    xTest.ContinueWithAlgorithm( PowersOf< 11 > );
-    xTest.ContinueWithAlgorithm( PowersOf< 13 > );
-    xTest.ContinueWithAlgorithm( PowersOf< 17 > );
-    xTest.ContinueWithAlgorithm( PowersOf< 19 > );
-    xTest.ContinueWithAlgorithm( PowersOf< 23 > );
-    xTest.ContinueWithAlgorithm( PowersOf< 29 > );
-    xTest.ContinueWithAlgorithm( Wheel5 );
+
+    Helper< iWheelPrimeCount - 1, ( 2 * 3 * 5 * 7 * 11 ) >::ContinueFactorisation( xTest );
+    xTest.ContinueWithAlgorithm( WheelUpTo< 11 > );
 
     if( xParameters.Timing() )
     {
