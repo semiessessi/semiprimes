@@ -306,6 +306,7 @@ Number Number::DivMod(
     uint64_t& uRemainder )
 {
     Number xReturnValue = 0;
+    xReturnValue.mxLimbs.reserve( xNumerator.mxLimbs.size() );
     size_t uLimb = xNumerator.mxLimbs.size();
     uRemainder = 0;
     while( uLimb != 0 )
