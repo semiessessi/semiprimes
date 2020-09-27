@@ -16,6 +16,7 @@
       * [2.3.1.1 Reducing allocations](./2_Polish.md#2311-reducing-allocations)
       * [2.3.1.2 Mod with no resizing](./2_Polish.md#2312-mod-with-no-resizing)
       * [2.3.1.3 Bug fixing](./2_Polish.md#2313-bug-fixing)
+      * [2.3.1.4 Reducing copies](./2_Polish.md#2314-reducing-copies)
 
 ## 2.1 Interface
 
@@ -687,4 +688,29 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
 
     xTest.Report();
 }
+```
+
+### 2.3.1.4 Reducing copies
+
+Changing the function signature of the div/mod functions reduces the number of copies performed:
+
+Note the & operator used here...
+
+```cpp
+static Number DivMod(
+    const Number& xNumerator,
+    const int64_t iDenominator,
+    int64_t& iRemainder );
+static Number DivMod(
+    const Number& xNumerator,
+    const uint64_t uDenominator,
+    uint64_t& uRemainder );
+static Number DivMod(
+    const Number& xNumerator,
+    const Number& xDenominator,
+    Number& xRemainder );
+
+static uint64_t Mod(
+    const Number& xNumerator,
+    const uint64_t uDenominator );
 ```

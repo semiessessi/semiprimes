@@ -291,7 +291,7 @@ std::string Number::ToString() const
 }
 
 Number Number::DivMod(
-    const Number xNumerator,
+    const Number& xNumerator,
     const int64_t iDenominator,
     int64_t& iRemainder )
 {
@@ -306,7 +306,7 @@ Number Number::DivMod(
 }
 
 Number Number::DivMod(
-    const Number xNumerator,
+    const Number& xNumerator,
     const uint64_t uDenominator,
     uint64_t& uRemainder )
 {
@@ -329,8 +329,8 @@ Number Number::DivMod(
 }
 
 Number Number::DivMod(
-    const Number xNumerator,
-    const Number xDenominator,
+    const Number& xNumerator,
+    const Number& xDenominator,
     Number& xRemainder )
 {
     // SE - TODO: division innit...
@@ -338,7 +338,7 @@ Number Number::DivMod(
 }
 
 uint64_t Number::Mod(
-    const Number xNumerator,
+    const Number& xNumerator,
     const uint64_t uDenominator )
 {
     uint64_t uRemainder = 0;

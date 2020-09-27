@@ -45,20 +45,20 @@ public:
     std::string ToString() const;
 
     static Number DivMod(
-        const Number xNumerator,
+        const Number& xNumerator,
         const int64_t iDenominator,
         int64_t& iRemainder );
     static Number DivMod(
-        const Number xNumerator,
+        const Number& xNumerator,
         const uint64_t uDenominator,
         uint64_t& uRemainder );
     static Number DivMod(
-        const Number xNumerator,
-        const Number xDenominator,
+        const Number& xNumerator,
+        const Number& xDenominator,
         Number& xRemainder );
 
     static uint64_t Mod(
-        const Number xNumerator,
+        const Number& xNumerator,
         const uint64_t uDenominator );
 
 private:
