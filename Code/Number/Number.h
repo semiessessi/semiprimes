@@ -1,6 +1,8 @@
 #ifndef NUMBER_H
 #define NUMBER_H
 
+#pragma warning( disable : 4530 )
+
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -59,6 +61,11 @@ public:
 
     static uint64_t Mod(
         const Number& xNumerator,
+        const uint64_t uDenominator );
+
+    static uint64_t ModMul(
+        const Number& xNumerator,
+        const uint64_t uMultiplicand,
         const uint64_t uDenominator );
 
 private:

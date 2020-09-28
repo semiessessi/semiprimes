@@ -355,6 +355,18 @@ uint64_t Number::Mod(
     return uRemainder;
 }
 
+uint64_t Number::ModMul(
+    const Number& xNumerator,
+    const uint64_t uMultiplicand,
+    const uint64_t uDenominator )
+{
+    // SE - TODO: better algorithms?
+    // .. avoid the copy?
+    Number xProduct = xNumerator;
+    xProduct *= uMultiplicand;
+    return xProduct % uDenominator;
+}
+
 #pragma warning( disable : 4455 )
 Number operator ""z( const char* const szToken )
 {
