@@ -1,6 +1,8 @@
 #ifndef NUMBER_H
 #define NUMBER_H
 
+#pragma warning( disable : 4530 )
+
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -23,13 +25,21 @@ public:
     Number& operator=( Number&& xNumber ) noexcept;
 
     bool operator >( const Number& xOperand ) const;
+    bool operator <( const Number& xOperand ) const { return -*this > -xOperand; }
+    bool operator <=( const Number& xOperand ) const { return xOperand > *this; }
+    bool operator >=( const Number& xOperand ) const { return xOperand < *this; }
+    bool operator ==( const Number& xOperand ) const;
+    bool operator !=( const Number& xOperand ) const { return !( *this == xOperand ); }
 
     uint64_t operator &( const uint64_t uOperand ) const;
+
+    Number operator -() const;
 
     Number& operator +=( const int64_t iOperand );
     //Number& operator +=( const uint64_t iOperand );
     Number& operator +=( const Number& xOperand );
-    //Number& operator -=( const Number& xOperand );
+    Number& operator -=( const int64_t iOperand );
+    Number& operator -=( const Number& xOperand );
     Number& operator *=( const int64_t iOperand );
     //Number& operator *=( const Number& xOperand );
     Number& operator /=( const int64_t xOperand );
@@ -45,20 +55,25 @@ public:
     std::string ToString() const;
 
     static Number DivMod(
-        const Number xNumerator,
+        const Number& xNumerator,
         const int64_t iDenominator,
         int64_t& iRemainder );
     static Number DivMod(
-        const Number xNumerator,
+        const Number& xNumerator,
         const uint64_t uDenominator,
         uint64_t& uRemainder );
     static Number DivMod(
-        const Number xNumerator,
-        const Number xDenominator,
+        const Number& xNumerator,
+        const Number& xDenominator,
         Number& xRemainder );
 
     static uint64_t Mod(
-        const Number xNumerator,
+        const Number& xNumerator,
+        const uint64_t uDenominator );
+
+    static uint64_t ModMul(
+        const Number& xNumerator,
+        const uint64_t uMultiplicand,
         const uint64_t uDenominator );
 
 private:

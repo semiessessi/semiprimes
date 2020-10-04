@@ -16,7 +16,16 @@
       * [2.3.1.1 Reducing allocations](./2_Polish.md#2311-reducing-allocations)
       * [2.3.1.2 Mod with no resizing](./2_Polish.md#2312-mod-with-no-resizing)
       * [2.3.1.3 Bug fixing](./2_Polish.md#2313-bug-fixing)
-
+      * [2.3.1.4 Reducing copies](./2_Polish.md#2314-reducing-copies)
+   * [2.3.2 Strong probable primality tests](./2_Polish.md#232-strong-probable-primality-tests)
+      * [2.3.2.1 Small modular multiplication](./2_Polish.md#2321-small-modular-multiplication)
+      * [2.3.2.2 Small modular exponentiation](./2_Polish.md#2322-small-modular-exponentiation)
+      * [2.3.2.3 Small SPRP Test](./2_Polish.md#2323-small-sprp-test)
+      * [2.3.2.4 Bugfix](./2_Polish.md#2324-bugfix)
+* [2.4 Larger numbers](./2_Polish.md#24-larger-numbers)
+   * [2.4.1 Overdue functionality](./2_Polish.md#241-overdue-functionality)
+      * [2.4.1.1 Comparisons](./2_Polish.md#2411-comparisons)
+      * [2.4.1.2 Addition and subtraction](./2_Polish.md#2412-addition-subtraction)
 ## 2.1 Interface
 
 ### 2.1.1 Improving Parameters
@@ -687,4 +696,385 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
 
     xTest.Report();
 }
+```
+
+### 2.3.1.4 Reducing copies
+
+Changing the function signature of the div/mod functions reduces the number of copies performed:
+
+Note the references used here...
+
+```cpp
+static Number DivMod(
+    const Number& xNumerator,
+    const int64_t iDenominator,
+    int64_t& iRemainder );
+static Number DivMod(
+    const Number& xNumerator,
+    const uint64_t uDenominator,
+    uint64_t& uRemainder );
+static Number DivMod(
+    const Number& xNumerator,
+    const Number& xDenominator,
+    Number& xRemainder );
+
+static uint64_t Mod(
+    const Number& xNumerator,
+    const uint64_t uDenominator );
+```
+
+## 2.3.2 Strong probable primality tests
+
+Strong probable primality tests blah blah... SE - TODO: ...
+
+```cpp
+Factorisation SPRPTests( const Number& xNumber )
+{
+    Factorisation xResult( xNumber );
+    if( xNumber.GetLimbCount() == 1 )
+    {
+        uint64_t uNumber = xNumber.LeastSignificantLimb();
+        
+        xResult.mbKnownComposite = !SmallSPRP< 2 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        if( uNumber < 2047 )
+        {
+            xResult.mbKnownPrime = !xResult.mbKnownComposite;
+            return xResult;
+        }
+
+        xResult.mbKnownComposite = !SmallSPRP< 3 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        if( uNumber < 1373653 )
+        {
+            xResult.mbKnownPrime = !xResult.mbKnownComposite;
+            return xResult;
+        }
+
+        xResult.mbKnownComposite = !SmallSPRP< 5 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        if( uNumber < 25326001 )
+        {
+            xResult.mbKnownPrime = !xResult.mbKnownComposite;
+            return xResult;
+        }
+
+        xResult.mbKnownComposite = !SmallSPRP< 7 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        if( uNumber < 3215031751 )
+        {
+            xResult.mbKnownPrime = !xResult.mbKnownComposite;
+            return xResult;
+        }
+
+        xResult.mbKnownComposite = !SmallSPRP< 11 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        if( uNumber < 2152302898747 )
+        {
+            xResult.mbKnownPrime = !xResult.mbKnownComposite;
+            return xResult;
+        }
+
+        xResult.mbKnownComposite = !SmallSPRP< 13 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        if( uNumber < 3474749660383 )
+        {
+            xResult.mbKnownPrime = !xResult.mbKnownComposite;
+            return xResult;
+        }
+
+        xResult.mbKnownComposite = !SmallSPRP< 17 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        if( uNumber < 341550071728321 )
+        {
+            xResult.mbKnownPrime = !xResult.mbKnownComposite;
+            return xResult;
+        }
+
+
+        xResult.mbKnownComposite = !SmallSPRP< 19 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        xResult.mbKnownComposite = !SmallSPRP< 23 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        if( uNumber < 3825123056546413051 )
+        {
+            xResult.mbKnownPrime = !xResult.mbKnownComposite;
+            return xResult;
+        }
+
+        xResult.mbKnownComposite = !SmallSPRP< 29 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        xResult.mbKnownComposite = !SmallSPRP< 31 >( uNumber );
+        if( xResult.mbKnownComposite == true )
+        {
+            return xResult;
+        }
+
+        xResult.mbKnownComposite = !SmallSPRP< 37 >( uNumber );
+        xResult.mbKnownPrime = !xResult.mbKnownComposite;
+        return xResult;
+    }
+
+    // SE - TODO: test bigger numbers.
+
+    return xResult;
+}
+```
+
+This is a bit repetitive, but the chore of refactoring it can come later.
+
+To implement the SPRP template function we will use some modular arithmetic functions.
+
+### 2.3.2.1 Small modular multiplication
+
+```cpp
+uint64_t ModMul( const uint64_t uNumber, const uint64_t uMultiplicand, const uint64_t uModulus )
+{
+    uint64_t uUpperPart = 0;
+    uint64_t uLowerPart = _umul128(
+        uNumber, uMultiplicand, &uUpperPart );
+    // only divide if necessary.
+    if( ( uUpperPart != 0 ) || ( uLowerPart >= uModulus ) )
+    {
+        _udiv128(
+            uUpperPart,
+            uLowerPart,
+            uModulus,
+            &uLowerPart );
+    }
+
+    return uLowerPart;
+}
+```
+
+### 2.3.2.2 Small modular exponentiation
+
+```cpp
+uint64_t ModExpRightToLeft( const uint64_t uNumber, const uint64_t uExponent, const uint64_t uModulus )
+{
+    uint64_t uReturnValue = 1;
+    uint64_t uRemainingPower = uExponent;
+    while( true )
+    {
+        if( ( uRemainingPower & 0x1 ) == 1 )
+        {
+            uReturnValue = ModMul( uReturnValue, uNumber, uModulus );
+        }
+        uRemainingPower >>= 1;
+        if( uRemainingPower == 0 )
+        {
+            break;
+        }
+        uReturnValue = ModMul( uReturnValue, uReturnValue, uModulus );
+    }
+    
+    return uReturnValue;
+}
+```
+
+### 2.3.2.3 Small SPRP Test
+
+```cpp
+template< int N >
+bool SmallSPRP( const uint64_t uNumber )
+{
+    // find a * 2^b + 1 == uNumber
+    uint64_t uA = ( uNumber - 1 ) >> 1;
+    uint64_t uB = 1;
+
+    while( ( uA & 0x1 ) == 0 )
+    {
+        ++uB;
+        uA >>= 1;
+    }
+
+    uint64_t uPowerTest = ModExpRightToLeft( N, uA, uNumber );
+    if( uPowerTest == 1 )
+    {
+        return true;
+    }
+
+    const uint64_t uMinusOne = uNumber - 1;
+    if( uPowerTest == uMinusOne )
+    {
+        return true;
+    }
+
+    for( uint64_t i = 0; i < uB; ++i )
+    {
+        uPowerTest = ModMul( uPowerTest, uPowerTest, uNumber );
+        if( uPowerTest == uMinusOne )
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+```
+
+### 2.3.2.4 Bugfix
+
+We need to take care to propogate if a number is known composite or not.
+
+```cpp
+template< typename Algorithm >
+void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
+{
+    if( mbKnownPrime == true )
+    {
+        return;
+    }
+
+    if( mxKnownFactors.size() == 0 )
+    {
+        mxKnownFactors.push_back( Factorisation( mxNumber ) );
+    }
+
+    for( size_t u = 0; u < mxKnownFactors.size(); ++u )
+    {
+        // this might be breakable or prime and unknown...
+        if( mxKnownFactors[ u ].mbKnownComposite || !mxKnownFactors[ u ].mbKnownPrime )
+        {
+            Factorisation xNew = xAlgorithm( mxKnownFactors[ u ].mxNumber );
+            if( mxKnownFactors[ u ].mbKnownComposite )
+            {
+                xNew.mbKnownComposite = true;
+                mbKnownComposite = true;
+            }
+            // .. if we got factors substitute them.
+            if( xNew.mxKnownFactors.size() > 0 )
+            {
+                mxKnownFactors.erase( mxKnownFactors.begin() + u );
+                for( size_t v = 0; v < xNew.mxKnownFactors.size(); ++v )
+                {
+                    mxKnownFactors.insert( mxKnownFactors.begin() + u + v, xNew.mxKnownFactors[ v ] );
+                }
+            }
+            else
+            {
+                mxKnownFactors[ u ] = xNew;
+            }
+        }
+    }
+
+    // SE - TODO: sort/collapse/tidy results (?)
+
+    // SE - NOTE: not sure how this happens...
+    if( ( mxKnownFactors.size() == 1 )
+        && ( mxKnownFactors[ 0 ].miPower == 1 )
+        && ( mxKnownFactors[ 0 ].mbKnownPrime == true ) )
+    {
+        mbKnownPrime = true;
+    }
+
+    if( mxKnownFactors.size() > 1 )
+    {
+        mbKnownComposite = true;
+    }
+
+    if( mbKnownComposite && ( mxKnownFactors.size() == 1 ) )
+    {
+        mxKnownFactors[ 0 ].mbKnownComposite = true;
+    }
+}
+```
+
+# 2.4 Larger numbers
+
+#2.4.1 Overdue functionality
+
+#2.4.1.1 Comparisions
+
+Adding the various less and greater thans based on the existing less than is quite easy, provided we can change the sign of our number when needed.
+
+```cpp
+    bool operator >( const Number& xOperand ) const;
+    bool operator <( const Number& xOperand ) const { return -*this > -xOperand; }
+    bool operator <=( const Number& xOperand ) const { return xOperand > *this; }
+    bool operator >=( const Number& xOperand ) const { return xOperand < *this; }
+```
+
+Negation:
+
+```cpp
+Number Number::operator -() const
+{
+    Number xCopy( *this );
+    xCopy.mbNegative = !xCopy.mbNegative;
+    return xCopy;
+}
+```
+
+The equality check is straightforwards:
+
+```cpp
+bool Number::operator ==( const Number& xOperand ) const
+{
+    if( mbNegative != xOperand.mbNegative )
+    {
+        return false;
+    }
+
+    if( mxLimbs.size() != xOperand.mxLimbs.size() )
+    {
+        return false;
+    }
+
+    for( size_t i = 0; i < mxLimbs.size(); ++i )
+    {
+        if( mxLimbs[ i ] != xOperand.mxLimbs[ i ] )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+```
+
+... and we can add a not for inequality:
+
+```cpp
+    bool operator !=( const Number& xOperand ) const { return !( *this == xOperand ); }
 ```

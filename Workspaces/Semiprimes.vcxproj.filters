@@ -45,6 +45,12 @@
     <ClCompile Include="..\Code\Core\ProcessNumber.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\SPRP.cpp">
+      <Filter>Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Core\Test.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -74,12 +80,18 @@
     <ClInclude Include="..\Code\Core\ProcessNumber.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\SPRP.h">
+      <Filter>Algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Code\Number\Factorisation.inl">
       <Filter>Number</Filter>
     </None>
     <None Include="..\Code\Algorithms\PowersOfN.inl">
+      <Filter>Algorithms</Filter>
+    </None>
+    <None Include="..\Code\Algorithms\Wheel.inl">
       <Filter>Algorithms</Filter>
     </None>
   </ItemGroup>

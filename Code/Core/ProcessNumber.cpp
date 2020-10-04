@@ -4,6 +4,7 @@
 #include "Timing.h"
 #include "../Algorithms/PowersOf2.h"
 #include "../Algorithms/PowersOfN.h"
+#include "../Algorithms/SPRP.h"
 #include "../Algorithms/TrialDivision.h"
 #include "../Algorithms/Wheel.h"
 #include "../Number/Factorisation.h"
@@ -76,9 +77,15 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
 
     Factorisation xTest( xNumber );
 
+    // remove any powers of 2 first.
     xTest.ContinueWithAlgorithm( PowersOf2 );
 
+    // sprp tests to avoid expensive wheel stuff if possible
+    xTest.ContinueWithAlgorithm( SPRPTests );
+
+    // prepare for wheel
     Helper< iWheelPrimeCount - 1, ( 2 * 3 * 5 * 7 * 11 ) >::ContinueFactorisation( xTest );
+    // do wheel
     xTest.ContinueWithAlgorithm( WheelUpTo< 11 > );
 
     if( xParameters.Timing() )

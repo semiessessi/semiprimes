@@ -22,11 +22,15 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
 		// this might be breakable or prime and unknown...
 		if( mxKnownFactors[ u ].mbKnownComposite || !mxKnownFactors[ u ].mbKnownPrime )
 		{
-			const Factorisation xNew = xAlgorithm( mxKnownFactors[ u ].mxNumber );
+			Factorisation xNew = xAlgorithm( mxKnownFactors[ u ].mxNumber );
+			if( mxKnownFactors[ u ].mbKnownComposite )
+			{
+				xNew.mbKnownComposite = true;
+				mbKnownComposite = true;
+			}
 			// .. if we got factors substitute them.
 			if( xNew.mxKnownFactors.size() > 0 )
 			{
-				mbKnownComposite = xNew.mbKnownComposite;
 				mxKnownFactors.erase( mxKnownFactors.begin() + u );
 				for( size_t v = 0; v < xNew.mxKnownFactors.size(); ++v )
 				{
@@ -53,6 +57,11 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
 	if( mxKnownFactors.size() > 1 )
 	{
 		mbKnownComposite = true;
+	}
+
+	if( mbKnownComposite && ( mxKnownFactors.size() == 1 ) )
+	{
+		mxKnownFactors[ 0 ].mbKnownComposite = true;
 	}
 }
 

@@ -39,6 +39,10 @@ Parameters::Parameters(
 		{
 			mxFlags[ "interactive" ] = true;
 		}
+		else if( CheckFlag( "-test", iParameterCount, pszParameters[ i ] ) )
+		{
+			mxFlags[ "test" ] = true;
+		}
 		else
 		{
 			// SE - TODO: fancier parameters, e.g. trial division limit
