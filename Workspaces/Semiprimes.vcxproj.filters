@@ -88,6 +88,8 @@
     <None Include="..\Code\Algorithms\PowersOfN.inl">
       <Filter>Algorithms</Filter>
     </None>
-    <None Include="..\Code\Algorithms\Wheel.inl" />
+    <None Include="..\Code\Algorithms\Wheel.inl">
+      <Filter>Algorithms</Filter>
+    </None>
   </ItemGroup>
 </Project>
