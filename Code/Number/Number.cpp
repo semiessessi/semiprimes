@@ -197,7 +197,7 @@ Number& Number::operator -=( const int64_t iOperand )
     // is iOperand largest?
     if( ( mbNegative == false )
         && ( mxLimbs.size() == 1 )
-        && ( iOperand > mxLimbs[ 0 ] ) )
+        && ( static_cast< uint64_t >( iOperand ) > mxLimbs[ 0 ] ) )
     {
         mbNegative = true;
         mxLimbs[ 0 ] = iOperand - mxLimbs[ 0 ];
