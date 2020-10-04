@@ -1,6 +1,6 @@
 #include "Parameters.h"
 
-void Test( const Parameters& xParameter )
+void Test( const Parameters& xParameters )
 {
 
 }
