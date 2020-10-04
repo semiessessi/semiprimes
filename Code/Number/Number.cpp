@@ -105,6 +105,13 @@ bool Number::operator >( const Number& xOperand ) const
     return mbNegative ? ( bEqual || !bResult ) : bResult;
 }
 
+Number Number::operator -() const
+{
+    Number xCopy( *this );
+    xCopy.mbNegative = !xCopy.mbNegative;
+    return xCopy;
+}
+
 uint64_t Number::operator &( const uint64_t uOperand ) const
 {
     return mxLimbs[ 0 ] & uOperand;
@@ -113,6 +120,11 @@ uint64_t Number::operator &( const uint64_t uOperand ) const
 Number& Number::operator +=( const int64_t iOperand )
 {
     // SE - TODO: handle the signed cases.
+
+    if( iOperand < 0 )
+    {
+        return operator -=( -iOperand );
+    }
 
     unsigned char ucCarry = 0;
     size_t uLimb = 0;
@@ -170,6 +182,63 @@ Number& Number::operator +=( const Number& xOperand )
         mxLimbs.push_back( 1 );
     
     }
+    return *this;
+}
+
+Number& Number::operator -=( const int64_t iOperand )
+{
+    // SE - TODO: handle the signed cases.
+
+    if( iOperand < 0 )
+    {
+        return operator +=( -iOperand );
+    }
+
+    // is iOperand largest?
+    if( ( mbNegative == false )
+        && ( mxLimbs.size() == 1 )
+        && ( iOperand > mxLimbs[ 0 ] ) )
+    {
+        mbNegative = true;
+        mxLimbs[ 0 ] = iOperand - mxLimbs[ 0 ];
+        return *this;
+    }
+
+    unsigned char ucBorrow = 0;
+    size_t uLimb = 0;
+    bool bContinueBorrow = true;
+    const size_t uLimbCount = mxLimbs.size();
+    do
+    {
+        if( uLimbCount <= uLimb )
+        {
+            mxLimbs.push_back( 1 );
+            break;
+        }
+
+        ucBorrow = _subborrow_u64(
+            ucBorrow,
+            mxLimbs[ uLimb ],
+            iOperand,
+            &( mxLimbs[ uLimb ] ) );
+        ++uLimb;
+        bContinueBorrow = ( ucBorrow > 0 )
+            && ( uLimbCount <= uLimb );
+    } while( bContinueBorrow );
+
+
+    // this should not happen due to removing the case where iOperand is larger...
+    //if( bContinueBorrow )
+    //{
+        // SE - TODO: flag some problem!
+    //}
+
+    return *this;
+}
+
+Number& Number::operator -=( const Number& xOperand )
+{
+    // SE - TODO: ...
     return *this;
 }
 

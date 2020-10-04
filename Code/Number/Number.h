@@ -25,13 +25,19 @@ public:
     Number& operator=( Number&& xNumber ) noexcept;
 
     bool operator >( const Number& xOperand ) const;
+    bool operator <( const Number& xOperand ) const { return -*this > -xOperand; }
+    bool operator <=( const Number& xOperand ) const { return xOperand > *this; }
+    bool operator >=( const Number& xOperand ) const { return xOperand < *this; }
 
     uint64_t operator &( const uint64_t uOperand ) const;
+
+    Number operator -() const;
 
     Number& operator +=( const int64_t iOperand );
     //Number& operator +=( const uint64_t iOperand );
     Number& operator +=( const Number& xOperand );
-    //Number& operator -=( const Number& xOperand );
+    Number& operator -=( const int64_t iOperand );
+    Number& operator -=( const Number& xOperand );
     Number& operator *=( const int64_t iOperand );
     //Number& operator *=( const Number& xOperand );
     Number& operator /=( const int64_t xOperand );
