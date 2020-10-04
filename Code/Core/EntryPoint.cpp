@@ -3,6 +3,7 @@
 
 void Help();
 void InteractiveMode( const Parameters& xParameters );
+void Test( const Parameters& xParameters );
 
 int main(
 	const int iArgumentCount,
@@ -13,6 +14,11 @@ int main(
 	{
 		Help();
 		return 0;
+	}
+
+	if( xParameters.Test() )
+	{
+		Test( xParameters );
 	}
 
 	for( int i = 0; i < xParameters.NumberCount(); ++i )
