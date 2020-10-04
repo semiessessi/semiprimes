@@ -105,6 +105,29 @@ bool Number::operator >( const Number& xOperand ) const
     return mbNegative ? ( bEqual || !bResult ) : bResult;
 }
 
+bool Number::operator ==( const Number& xOperand ) const
+{
+    if( mbNegative != xOperand.mbNegative )
+    {
+        return false;
+    }
+
+    if( mxLimbs.size() != xOperand.mxLimbs.size() )
+    {
+        return false;
+    }
+
+    for( size_t i = 0; i < mxLimbs.size(); ++i )
+    {
+        if( mxLimbs[ i ] != xOperand.mxLimbs[ i ] )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 Number Number::operator -() const
 {
     Number xCopy( *this );

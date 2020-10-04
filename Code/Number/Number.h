@@ -28,6 +28,8 @@ public:
     bool operator <( const Number& xOperand ) const { return -*this > -xOperand; }
     bool operator <=( const Number& xOperand ) const { return xOperand > *this; }
     bool operator >=( const Number& xOperand ) const { return xOperand < *this; }
+    bool operator ==( const Number& xOperand ) const;
+    bool operator !=( const Number& xOperand ) const { return !( *this == xOperand ); }
 
     uint64_t operator &( const uint64_t uOperand ) const;
 

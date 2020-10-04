@@ -22,7 +22,10 @@
       * [2.3.2.2 Small modular exponentiation](./2_Polish.md#2322-small-modular-exponentiation)
       * [2.3.2.3 Small SPRP Test](./2_Polish.md#2323-small-sprp-test)
       * [2.3.2.4 Bugfix](./2_Polish.md#2324-bugfix)
-
+* [2.4 Larger numbers](./2_Polish.md#24-larger-numbers)
+   * [2.4.1 Overdue functionality](./2_Polish.md#241-overdue-functionality)
+      * [2.4.1.1 Comparisons](./2_Polish.md#2411-comparisons)
+      * [2.4.1.2 Addition and subtraction](./2_Polish.md#2412-addition-subtraction)
 ## 2.1 Interface
 
 ### 2.1.1 Improving Parameters
@@ -958,61 +961,120 @@ We need to take care to propogate if a number is known composite or not.
 template< typename Algorithm >
 void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
 {
-	if( mbKnownPrime == true )
-	{
-		return;
-	}
+    if( mbKnownPrime == true )
+    {
+        return;
+    }
 
-	if( mxKnownFactors.size() == 0 )
-	{
-		mxKnownFactors.push_back( Factorisation( mxNumber ) );
-	}
+    if( mxKnownFactors.size() == 0 )
+    {
+        mxKnownFactors.push_back( Factorisation( mxNumber ) );
+    }
 
-	for( size_t u = 0; u < mxKnownFactors.size(); ++u )
-	{
-		// this might be breakable or prime and unknown...
-		if( mxKnownFactors[ u ].mbKnownComposite || !mxKnownFactors[ u ].mbKnownPrime )
-		{
-			Factorisation xNew = xAlgorithm( mxKnownFactors[ u ].mxNumber );
-			if( mxKnownFactors[ u ].mbKnownComposite )
-			{
-				xNew.mbKnownComposite = true;
-				mbKnownComposite = true;
-			}
-			// .. if we got factors substitute them.
-			if( xNew.mxKnownFactors.size() > 0 )
-			{
-				mxKnownFactors.erase( mxKnownFactors.begin() + u );
-				for( size_t v = 0; v < xNew.mxKnownFactors.size(); ++v )
-				{
-					mxKnownFactors.insert( mxKnownFactors.begin() + u + v, xNew.mxKnownFactors[ v ] );
-				}
-			}
-			else
-			{
-				mxKnownFactors[ u ] = xNew;
-			}
-		}
-	}
+    for( size_t u = 0; u < mxKnownFactors.size(); ++u )
+    {
+        // this might be breakable or prime and unknown...
+        if( mxKnownFactors[ u ].mbKnownComposite || !mxKnownFactors[ u ].mbKnownPrime )
+        {
+            Factorisation xNew = xAlgorithm( mxKnownFactors[ u ].mxNumber );
+            if( mxKnownFactors[ u ].mbKnownComposite )
+            {
+                xNew.mbKnownComposite = true;
+                mbKnownComposite = true;
+            }
+            // .. if we got factors substitute them.
+            if( xNew.mxKnownFactors.size() > 0 )
+            {
+                mxKnownFactors.erase( mxKnownFactors.begin() + u );
+                for( size_t v = 0; v < xNew.mxKnownFactors.size(); ++v )
+                {
+                    mxKnownFactors.insert( mxKnownFactors.begin() + u + v, xNew.mxKnownFactors[ v ] );
+                }
+            }
+            else
+            {
+                mxKnownFactors[ u ] = xNew;
+            }
+        }
+    }
 
-	// SE - TODO: sort/collapse/tidy results (?)
+    // SE - TODO: sort/collapse/tidy results (?)
 
-	// SE - NOTE: not sure how this happens...
-	if( ( mxKnownFactors.size() == 1 )
-		&& ( mxKnownFactors[ 0 ].miPower == 1 )
-		&& ( mxKnownFactors[ 0 ].mbKnownPrime == true ) )
-	{
-		mbKnownPrime = true;
-	}
+    // SE - NOTE: not sure how this happens...
+    if( ( mxKnownFactors.size() == 1 )
+        && ( mxKnownFactors[ 0 ].miPower == 1 )
+        && ( mxKnownFactors[ 0 ].mbKnownPrime == true ) )
+    {
+        mbKnownPrime = true;
+    }
 
-	if( mxKnownFactors.size() > 1 )
-	{
-		mbKnownComposite = true;
-	}
+    if( mxKnownFactors.size() > 1 )
+    {
+        mbKnownComposite = true;
+    }
 
-	if( mbKnownComposite && ( mxKnownFactors.size() == 1 ) )
-	{
-		mxKnownFactors[ 0 ].mbKnownComposite = true;
-	}
+    if( mbKnownComposite && ( mxKnownFactors.size() == 1 ) )
+    {
+        mxKnownFactors[ 0 ].mbKnownComposite = true;
+    }
 }
+```
+
+# 2.4 Larger numbers
+
+#2.4.1 Overdue functionality
+
+#2.4.1.1 Comparisions
+
+Adding the various less and greater thans based on the existing less than is quite easy, provided we can change the sign of our number when needed.
+
+```cpp
+    bool operator >( const Number& xOperand ) const;
+    bool operator <( const Number& xOperand ) const { return -*this > -xOperand; }
+    bool operator <=( const Number& xOperand ) const { return xOperand > *this; }
+    bool operator >=( const Number& xOperand ) const { return xOperand < *this; }
+```
+
+Negation:
+
+```cpp
+Number Number::operator -() const
+{
+    Number xCopy( *this );
+    xCopy.mbNegative = !xCopy.mbNegative;
+    return xCopy;
+}
+```
+
+The equality check is straightforwards:
+
+```cpp
+bool Number::operator ==( const Number& xOperand ) const
+{
+    if( mbNegative != xOperand.mbNegative )
+    {
+        return false;
+    }
+
+    if( mxLimbs.size() != xOperand.mxLimbs.size() )
+    {
+        return false;
+    }
+
+    for( size_t i = 0; i < mxLimbs.size(); ++i )
+    {
+        if( mxLimbs[ i ] != xOperand.mxLimbs[ i ] )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+```
+
+... and we can add a not for inequality:
+
+```cpp
+    bool operator !=( const Number& xOperand ) const { return !( *this == xOperand ); }
 ```
