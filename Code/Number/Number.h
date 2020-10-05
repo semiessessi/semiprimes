@@ -56,7 +56,7 @@ public:
     OPERATOR_FROM_INPLACE( + )
     OPERATOR_FROM_INPLACE( - )
     OPERATOR_FROM_INPLACE( * )
-    //OPERATOR_FROM_INPLACE( / )
+    OPERATOR_FROM_INPLACE( / )
     
     void InplaceLimbShiftLeft( const size_t uLimbs );
     void InplaceLimbShiftRight( const size_t uLimbs );
