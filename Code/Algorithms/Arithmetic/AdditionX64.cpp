@@ -18,7 +18,7 @@ void AddX64_BaseCase( std::vector< uint64_t >& xLimbs, const uint64_t uOperand )
     const size_t uLimbCount = xLimbs.size();
     size_t uLimb = 1;
 
-    while( ( ucCarry > 0 )
+    while( ( ucCarry != 0 )
         && ( uLimb < uLimbCount ) )
     {
         ucCarry = _addcarryx_u64(
@@ -29,7 +29,7 @@ void AddX64_BaseCase( std::vector< uint64_t >& xLimbs, const uint64_t uOperand )
         ++uLimb;
     }
 
-    if( ucCarry > 0 )
+    if( ucCarry != 0 )
     {
         xLimbs.push_back( 1 );
     }
@@ -54,7 +54,7 @@ void AddX64_Generic( std::vector< uint64_t >& xLimbs, const std::vector< uint64_
             &( xLimbs[ uLimb ] ) );
     }
 
-    if( ucCarry > 0 )
+    if( ucCarry != 0 )
     {
         xLimbs.push_back( 1 );
     }

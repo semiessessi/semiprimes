@@ -223,46 +223,26 @@ Number& Number::operator -=( const uint64_t uOperand )
 
 Number& Number::operator -=( const Number& xOperand )
 {
-    // is xOperand largest?
-    /*
-    if( ( mbNegative == false )
-        && ( mxLimbs.size() == 1 )
-        && ( static_cast< uint64_t >( iOperand ) > mxLimbs[ 0 ] ) )
+    
+    //if( mbNegative != xOperand.mbNegative )
+    //{
+        // SE - TODO: handle signs
+    //}
+
+    const bool bLargest = mbNegative
+        ? ( *this <= xOperand )
+        : ( *this >= xOperand );
+    if( bLargest )
     {
-        mbNegative = true;
-        mxLimbs[ 0 ] = iOperand - mxLimbs[ 0 ];
+        SubX64_SmallFromLarge( mxLimbs, xOperand.mxLimbs );
         return *this;
     }
-    */
 
-    unsigned char ucBorrow = 0;
-    size_t uLimb = 1;
-    ucBorrow = _subborrow_u64(
-        ucBorrow,
-        mxLimbs[ 0 ],
-        xOperand.mxLimbs[ 0 ],
-        &( mxLimbs[ 0 ] ) );
-    const size_t uLimbCount = mxLimbs.size();
-    bool bContinueBorrow = ( ucBorrow > 0 )
-        && ( uLimbCount <= uLimb );
-    while( bContinueBorrow )
-    {
-        ucBorrow = _subborrow_u64(
-            ucBorrow,
-            mxLimbs[ uLimb ],
-            xOperand.mxLimbs[ uLimb ],
-            &( mxLimbs[ uLimb ] ) );
-        ++uLimb;
-        bContinueBorrow = ( ucBorrow > 0 )
-            && ( uLimb < uLimbCount );
-    }
-
-
-    // this should not happen due to removing the case where iOperand is larger...
-    //if( bContinueBorrow )
-    //{
-        // SE - TODO: flag some problem!
-    //}
+    // SE - TODO: remove copy... ???
+    Number xCopy = *this;
+    *this = xOperand;
+    SubX64_SmallFromLarge( mxLimbs, xCopy.mxLimbs );
+    InplaceNegate();
 
     return *this;
 }

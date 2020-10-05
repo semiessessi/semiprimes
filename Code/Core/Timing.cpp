@@ -26,7 +26,7 @@ void StopTiming()
             sxEnd - sxStart ).count();
 
     printf(
-        "Took %d.%09d seconds\n",
+        "Took %lld.%09lld seconds\n",
         iDuration / 1000000000,
         iDuration % 1000000000 );
 }

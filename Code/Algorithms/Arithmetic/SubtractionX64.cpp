@@ -50,4 +50,10 @@ void SubX64_SmallFromLarge( std::vector< uint64_t >& xGreater, const std::vector
         bContinueBorrow = ( ucBorrow > 0 )
             && ( uLimb < uLimbCount );
     }
+
+    // this should not happen
+    //if( bContinueBorrow )
+    //{
+        // SE - TODO: flag some problem!
+    //}
 }
