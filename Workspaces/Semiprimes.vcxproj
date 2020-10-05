@@ -165,6 +165,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\AdditionX64.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\PowersOf2.cpp" />
     <ClCompile Include="..\Code\Algorithms\SPRP.cpp" />
     <ClCompile Include="..\Code\Algorithms\TrialDivision.cpp" />
@@ -178,8 +180,11 @@
     <ClCompile Include="..\Code\Core\Timing.cpp" />
     <ClCompile Include="..\Code\Number\Factorisation.cpp" />
     <ClCompile Include="..\Code\Number\Number.cpp" />
+    <ClCompile Include="..\Code\Tests\Tests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\AdditionX64.h" />
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\SubtractionX64.h" />
     <ClInclude Include="..\Code\Algorithms\PowersOf2.h" />
     <ClInclude Include="..\Code\Algorithms\PowersOfN.h" />
     <ClInclude Include="..\Code\Algorithms\SPRP.h" />
@@ -190,6 +195,7 @@
     <ClInclude Include="..\Code\Core\Timing.h" />
     <ClInclude Include="..\Code\Number\Factorisation.h" />
     <ClInclude Include="..\Code\Number\Number.h" />
+    <ClInclude Include="..\Code\Tests\Tests.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Code\Algorithms\PowersOfN.inl" />

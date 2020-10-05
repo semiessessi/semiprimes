@@ -1,5 +1,8 @@
 #include "Number.h"
 
+#include "../Algorithms/Arithmetic/AdditionX64.h"
+#include "../Algorithms/Arithmetic/SubtractionX64.h"
+
 #include <intrin.h>
 #include <utility>
 
@@ -142,69 +145,28 @@ uint64_t Number::operator &( const uint64_t uOperand ) const
 
 Number& Number::operator +=( const int64_t iOperand )
 {
-    // SE - TODO: handle the signed cases.
-
     if( iOperand < 0 )
     {
         return operator -=( -iOperand );
     }
 
-    unsigned char ucCarry = 0;
-    size_t uLimb = 0;
-    bool bContinueCarry = true;
-    const size_t uLimbCount = mxLimbs.size();
-    do
-    {
-        if( uLimbCount <= uLimb )
-        {
-            mxLimbs.push_back( 1 );
-            break;
-        }
+    // SE - TODO: handle the signed cases.
 
-        ucCarry = _addcarryx_u64(
-            ucCarry,
-            mxLimbs[ uLimb ],
-            iOperand,
-            &( mxLimbs[ uLimb ] ) );
-        ++uLimb;
-        bContinueCarry = ( ucCarry > 0 )
-            && ( uLimbCount <= uLimb );
-    }
-    while( bContinueCarry );
-
-    if( bContinueCarry )
-    {
-        mxLimbs.push_back( 1 );
-    }
+    AddX64_BaseCase( mxLimbs, static_cast< uint64_t >( iOperand ) );
 
     return *this;
 }
 
 Number& Number::operator +=( const Number& xOperand )
 {
-    // SE - TODO: handle the signed cases.
+    if( xOperand.mbNegative != mbNegative )
+    {
+        // signs differ, subtract instead
+        return operator -=( -xOperand );
+    }
 
-    const size_t uOperandSize = xOperand.mxLimbs.size();
-    if( uOperandSize > mxLimbs.size() )
-    {
-        mxLimbs.resize( uOperandSize );
-    }
-    const size_t uLimbCount = mxLimbs.size();
-    unsigned char ucCarry = 0;
-    for( size_t uLimb = 0; uLimb < uLimbCount; ++uLimb )
-    {
-        ucCarry = _addcarryx_u64(
-            ucCarry,
-            mxLimbs[ uLimb ],
-            xOperand.mxLimbs[ uLimb ],
-            &( mxLimbs[ uLimb ] ) );
-    }
-    
-    if( ucCarry != 0 )
-    {
-        mxLimbs.push_back( 1 );
-    
-    }
+    AddX64_Generic( mxLimbs, xOperand.mxLimbs );
+
     return *this;
 }
 
@@ -227,27 +189,46 @@ Number& Number::operator -=( const int64_t iOperand )
         return *this;
     }
 
-    unsigned char ucBorrow = 0;
-    size_t uLimb = 0;
-    bool bContinueBorrow = true;
-    const size_t uLimbCount = mxLimbs.size();
-    do
-    {
-        if( uLimbCount <= uLimb )
-        {
-            mxLimbs.push_back( 1 );
-            break;
-        }
+    SubX64_BaseCase( mxLimbs, static_cast< uint64_t >( iOperand ) );
 
+    return *this;
+}
+
+Number& Number::operator -=( const Number& xOperand )
+{
+    // is xOperand largest?
+    /*
+    if( ( mbNegative == false )
+        && ( mxLimbs.size() == 1 )
+        && ( static_cast< uint64_t >( iOperand ) > mxLimbs[ 0 ] ) )
+    {
+        mbNegative = true;
+        mxLimbs[ 0 ] = iOperand - mxLimbs[ 0 ];
+        return *this;
+    }
+    */
+
+    unsigned char ucBorrow = 0;
+    size_t uLimb = 1;
+    ucBorrow = _subborrow_u64(
+        ucBorrow,
+        mxLimbs[ 0 ],
+        xOperand.mxLimbs[ 0 ],
+        &( mxLimbs[ 0 ] ) );
+    const size_t uLimbCount = mxLimbs.size();
+    bool bContinueBorrow = ( ucBorrow > 0 )
+        && ( uLimbCount <= uLimb );
+    while( bContinueBorrow )
+    {
         ucBorrow = _subborrow_u64(
             ucBorrow,
             mxLimbs[ uLimb ],
-            iOperand,
+            xOperand.mxLimbs[ uLimb ],
             &( mxLimbs[ uLimb ] ) );
         ++uLimb;
         bContinueBorrow = ( ucBorrow > 0 )
-            && ( uLimbCount <= uLimb );
-    } while( bContinueBorrow );
+            && ( uLimb < uLimbCount );
+    }
 
 
     // this should not happen due to removing the case where iOperand is larger...
@@ -256,12 +237,6 @@ Number& Number::operator -=( const int64_t iOperand )
         // SE - TODO: flag some problem!
     //}
 
-    return *this;
-}
-
-Number& Number::operator -=( const Number& xOperand )
-{
-    // SE - TODO: ...
     return *this;
 }
 
@@ -291,6 +266,13 @@ Number& Number::operator *=( const int64_t iOperand )
     {
         mxLimbs.push_back( uCarry );
     }
+
+    return *this;
+}
+
+Number& Number::operator *=( const Number& xOperand )
+{
+    // SE - TODO: ...
 
     return *this;
 }
@@ -360,6 +342,7 @@ void Number::InplaceLimbShiftRight( const size_t uLimbs )
     }
     else
     {
+        mxLimbs.resize( 0 );
         mxLimbs[ 0 ] = 0;
     }
 }
@@ -387,13 +370,18 @@ Number Number::DivMod(
     const int64_t iDenominator,
     int64_t& iRemainder )
 {
+    const bool bNegativeDenominator = ( iDenominator < 0 );
     Number xReturnValue = DivMod( xNumerator,
         static_cast< uint64_t >(
-            ( iDenominator < 0 )
+            bNegativeDenominator
                 ? -iDenominator
                 : iDenominator ),
         reinterpret_cast< uint64_t& >( iRemainder ) );
     iRemainder = ( xNumerator.mbNegative ) ? -iRemainder : iRemainder;
+    xReturnValue.mbNegative =
+         bNegativeDenominator
+            ? !xNumerator.mbNegative
+            : xNumerator.mbNegative;
     return xReturnValue;
 }
 
@@ -416,6 +404,8 @@ Number Number::DivMod(
             uDenominator,
             &uRemainder );
     }
+
+    xReturnValue.mbNegative = xNumerator.mbNegative;
 
     return xReturnValue;
 }

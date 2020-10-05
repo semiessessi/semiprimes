@@ -26,6 +26,9 @@
    * [2.4.1 Overdue functionality](./2_Polish.md#241-overdue-functionality)
       * [2.4.1.1 Comparisons](./2_Polish.md#2411-comparisons)
       * [2.4.1.2 Addition and subtraction](./2_Polish.md#2412-addition-subtraction)
+      * [2.4.1.4 Multiplication](./2_Polish.md#2414-multiplication)
+      * [2.4.1.5 Division and remainder](./2_Polish.md#2415-division-and-remainder)
+	  
 ## 2.1 Interface
 
 ### 2.1.1 Improving Parameters
@@ -1046,6 +1049,10 @@ Number Number::operator -() const
 }
 ```
 
+```cpp
+    void InplaceNegate() { mbNegative = !mbNegative; }
+```
+
 The equality check is straightforwards:
 
 ```cpp
@@ -1077,4 +1084,66 @@ bool Number::operator ==( const Number& xOperand ) const
 
 ```cpp
     bool operator !=( const Number& xOperand ) const { return !( *this == xOperand ); }
+```
+
+#### 2.4.1.2 Addition and subtraction
+
+There are some remaining bugs in the implementations as well as missing functionality needing to be filled out.
+
+We might want to consider alternative implementations in future as well, so some refactoring with that in mind will be useful since Number.cpp is growing excessively large, almost 500 lines.
+
+Addition:
+
+```cpp
+void AddX64_BaseCase( std::vector< uint64_t >& xLimbs, uint64_t uOperand )
+{
+    unsigned char ucCarry = 0;
+    size_t uLimb = 1;
+    const size_t uLimbCount = xLimbs.size();
+    ucCarry = _addcarryx_u64(
+        ucCarry,
+        xLimbs[ 0 ],
+        uOperand,
+        &( xLimbs[ 0 ] ) );
+    while( ( uLimb < uLimbCount )
+        && ( ucCarry > 0 ) )
+    {
+        ucCarry = _addcarryx_u64(
+            ucCarry,
+            xLimbs[ uLimb ],
+            0,
+            &( xLimbs[ uLimb ] ) );
+        ++uLimb;
+    }
+
+    if( ucCarry > 0 )
+    {
+        xLimbs.push_back( 1 );
+    }
+}
+
+void AddX64_Generic( std::vector< uint64_t >& xLimbs, const std::vector< uint64_t >& xOperandLimbs )
+{
+    const size_t uOperandSize = xOperandLimbs.size();
+    if( uOperandSize > xLimbs.size() )
+    {
+        xLimbs.resize( uOperandSize, 0 );
+    }
+
+    const size_t uLimbCount = xLimbs.size();
+    unsigned char ucCarry = 0;
+    for( size_t uLimb = 0; uLimb < uLimbCount; ++uLimb )
+    {
+        ucCarry = _addcarryx_u64(
+            ucCarry,
+            xLimbs[ uLimb ],
+            xOperandLimbs[ uLimb ],
+            &( xLimbs[ uLimb ] ) );
+    }
+
+    if( ucCarry > 0 )
+    {
+        xLimbs.push_back( 1 );
+    }
+}
 ```

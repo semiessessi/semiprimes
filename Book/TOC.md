@@ -54,3 +54,4 @@
       * [2.4.1.3 Tests](./Chapters/2_Polish.md#2413-tests)
       * [2.4.1.4 Multiplication](./Chapters/2_Polish.md#2414-multiplication)
       * [2.4.1.5 Division and remainder](./Chapters/2_Polish.md#2415-division-and-remainder)
+### [3 - Iteration](./Chapters/3_Iteration.md)

@@ -10,6 +10,12 @@
     <Filter Include="Algorithms">
       <UniqueIdentifier>{49d69ed1-4853-4859-ae27-cbd643979337}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{d8c4debb-2e45-49dd-b8c2-d43ce9f70c2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithms\Arithmetic">
+      <UniqueIdentifier>{797fdd05-2fa9-4093-aae0-01c01ef1f6a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Core\EntryPoint.cpp">
@@ -51,6 +57,15 @@
     <ClCompile Include="..\Code\Core\Test.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Tests\Tests.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\AdditionX64.cpp">
+      <Filter>Algorithms\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.cpp">
+      <Filter>Algorithms\Arithmetic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -82,6 +97,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\SPRP.h">
       <Filter>Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Tests\Tests.h">
+      <Filter>Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\AdditionX64.h">
+      <Filter>Algorithms\Arithmetic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\SubtractionX64.h">
+      <Filter>Algorithms\Arithmetic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
