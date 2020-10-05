@@ -16,6 +16,7 @@ Parameters::Parameters(
 	mxFlags[ "timing" ] = false;
 	mxFlags[ "verbose" ] = false;
 	mxFlags[ "interactive" ] = false;
+	mxFlags[ "test" ] = false;
     for( int i = 0; i < iParameterCount; ++i )
     {
 		if( CheckFlag( "-v", iParameterCount, pszParameters[ i ] )

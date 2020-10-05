@@ -36,18 +36,31 @@ public:
     Number operator -() const;
 
     Number& operator +=( const int64_t iOperand );
-    //Number& operator +=( const uint64_t iOperand );
+    Number& operator +=( const uint64_t iOperand );
     Number& operator +=( const Number& xOperand );
     Number& operator -=( const int64_t iOperand );
+    Number& operator -=( const uint64_t iOperand );
     Number& operator -=( const Number& xOperand );
     Number& operator *=( const int64_t iOperand );
-    //Number& operator *=( const Number& xOperand );
+    Number& operator *=( const Number& xOperand );
     Number& operator /=( const int64_t xOperand );
     Number& operator /=( const Number& xOperand );
     int64_t operator %( const int64_t iOperand ) const;
+
+#define OPERATOR_FROM_INPLACE( op ) \
+    Number operator op( const Number& xOperand ) const \
+    { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; } \
+    Number operator op( const int64_t xOperand ) const \
+    { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; }
+
+    OPERATOR_FROM_INPLACE( + )
+    OPERATOR_FROM_INPLACE( - )
+    OPERATOR_FROM_INPLACE( * )
+    OPERATOR_FROM_INPLACE( / )
     
     void InplaceLimbShiftLeft( const size_t uLimbs );
     void InplaceLimbShiftRight( const size_t uLimbs );
+    void InplaceNegate() { mbNegative = !mbNegative; }
 
     size_t GetLimbCount() const { return mxLimbs.size(); }
     uint64_t LeastSignificantLimb() const { return mxLimbs[ 0 ]; }
