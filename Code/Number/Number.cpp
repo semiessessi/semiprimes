@@ -157,6 +157,15 @@ Number& Number::operator +=( const int64_t iOperand )
     return *this;
 }
 
+Number& Number::operator +=( const uint64_t uOperand )
+{
+    // SE - TODO: handle the signed cases.
+
+    AddX64_BaseCase( mxLimbs, uOperand );
+
+    return *this;
+}
+
 Number& Number::operator +=( const Number& xOperand )
 {
     if( xOperand.mbNegative != mbNegative )
@@ -190,6 +199,24 @@ Number& Number::operator -=( const int64_t iOperand )
     }
 
     SubX64_BaseCase( mxLimbs, static_cast< uint64_t >( iOperand ) );
+
+    return *this;
+}
+
+Number& Number::operator -=( const uint64_t uOperand )
+{
+    // SE - TODO: handle the signed cases.
+    // is iOperand largest?
+    if( ( mbNegative == false )
+        && ( mxLimbs.size() == 1 )
+        && ( uOperand > mxLimbs[ 0 ] ) )
+    {
+        mbNegative = true;
+        mxLimbs[ 0 ] = uOperand - mxLimbs[ 0 ];
+        return *this;
+    }
+
+    SubX64_BaseCase( mxLimbs, uOperand );
 
     return *this;
 }
