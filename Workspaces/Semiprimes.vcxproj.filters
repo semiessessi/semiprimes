@@ -19,6 +19,9 @@
     <Filter Include="Algorithms\Primality">
       <UniqueIdentifier>{51e13dae-b3e4-4e55-a91d-f912af406958}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Algorithms\Arithmetic\Multiplication">
+      <UniqueIdentifier>{41c8dfc2-b7e5-487e-ace6-a12de0172f15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Core\EntryPoint.cpp">
@@ -84,8 +87,8 @@
     <ClCompile Include="..\Code\Number\Number_Compare.cpp">
       <Filter>Number</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Algorithms\Arithmetic\MultiplyLimbX64.cpp">
-      <Filter>Algorithms\Arithmetic</Filter>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.cpp">
+      <Filter>Algorithms\Arithmetic\Multiplication</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,8 +131,8 @@
     <ClInclude Include="..\Code\Algorithms\Primality\Wheel.h">
       <Filter>Algorithms\Primality</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Algorithms\Arithmetic\MultiplyLimbX64.h">
-      <Filter>Algorithms\Arithmetic</Filter>
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.h">
+      <Filter>Algorithms\Arithmetic\Multiplication</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

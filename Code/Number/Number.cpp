@@ -1,6 +1,6 @@
 #include "Number.h"
 
-#include "../Algorithms/Arithmetic/MultiplyLimbX64.h"
+#include "../Algorithms/Arithmetic/Multiplication/MultiplyLimbX64.h"
 
 Number Number::operator -() const
 {
