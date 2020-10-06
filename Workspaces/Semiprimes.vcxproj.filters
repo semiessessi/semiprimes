@@ -90,6 +90,9 @@
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.cpp">
       <Filter>Algorithms\Arithmetic\Multiplication</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.cpp">
+      <Filter>Algorithms\Arithmetic\Multiplication</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -132,6 +135,9 @@
       <Filter>Algorithms\Primality</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.h">
+      <Filter>Algorithms\Arithmetic\Multiplication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.h">
       <Filter>Algorithms\Arithmetic\Multiplication</Filter>
     </ClInclude>
   </ItemGroup>

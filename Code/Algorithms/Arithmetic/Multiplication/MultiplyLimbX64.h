@@ -1,5 +1,5 @@
-#ifndef ADDITION_x64_H
-#define ADDITION_x64_H
+#ifndef MULTIPLY_LIMB_X64_H
+#define MULTIPLY_LIMB_X64_H
 
 #include <vector>
 

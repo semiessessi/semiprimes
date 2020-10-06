@@ -1,6 +1,7 @@
 #include "Number.h"
 
 #include "../Algorithms/Arithmetic/Multiplication/MultiplyLimbX64.h"
+#include "../Algorithms/Arithmetic/Multiplication/GrammarSchoolX64.h"
 
 Number Number::operator -() const
 {
@@ -33,8 +34,9 @@ Number& Number::operator *=( const uint64_t uOperand )
 
 Number& Number::operator *=( const Number& xOperand )
 {
-    // SE - TODO: ...
-
+    // handle the possible factor of -1 from the signs of the operands
+    mbNegative = xOperand.mbNegative != mbNegative;
+    MultiplyX64_GrammarSchool( mxLimbs, xOperand.mxLimbs );
     return *this;
 }
 
