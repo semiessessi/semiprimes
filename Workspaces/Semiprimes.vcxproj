@@ -169,11 +169,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Algorithms\Arithmetic\AdditionX64.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\MultiplyLimbX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.cpp" />
-    <ClCompile Include="..\Code\Algorithms\PowersOf2.cpp" />
-    <ClCompile Include="..\Code\Algorithms\SPRP.cpp" />
-    <ClCompile Include="..\Code\Algorithms\TrialDivision.cpp" />
-    <ClCompile Include="..\Code\Algorithms\Wheel.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Primality\PowersOf2.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Primality\SPRP.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Primality\TrialDivision.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Primality\Wheel.cpp" />
     <ClCompile Include="..\Code\Core\EntryPoint.cpp" />
     <ClCompile Include="..\Code\Core\Help.cpp" />
     <ClCompile Include="..\Code\Core\InteractiveMode.cpp" />
@@ -183,16 +184,22 @@
     <ClCompile Include="..\Code\Core\Timing.cpp" />
     <ClCompile Include="..\Code\Number\Factorisation.cpp" />
     <ClCompile Include="..\Code\Number\Number.cpp" />
+    <ClCompile Include="..\Code\Number\Number_AddSub.cpp" />
+    <ClCompile Include="..\Code\Number\Number_Compare.cpp" />
+    <ClCompile Include="..\Code\Number\Number_Copy.cpp" />
+    <ClCompile Include="..\Code\Number\Number_DivMod.cpp" />
+    <ClCompile Include="..\Code\Number\Number_Shift.cpp" />
     <ClCompile Include="..\Code\Tests\Tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Algorithms\Arithmetic\AdditionX64.h" />
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\MultiplyLimbX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\SubtractionX64.h" />
-    <ClInclude Include="..\Code\Algorithms\PowersOf2.h" />
-    <ClInclude Include="..\Code\Algorithms\PowersOfN.h" />
-    <ClInclude Include="..\Code\Algorithms\SPRP.h" />
-    <ClInclude Include="..\Code\Algorithms\TrialDivision.h" />
-    <ClInclude Include="..\Code\Algorithms\Wheel.h" />
+    <ClInclude Include="..\Code\Algorithms\Primality\PowersOf2.h" />
+    <ClInclude Include="..\Code\Algorithms\Primality\PowersOfN.h" />
+    <ClInclude Include="..\Code\Algorithms\Primality\SPRP.h" />
+    <ClInclude Include="..\Code\Algorithms\Primality\TrialDivision.h" />
+    <ClInclude Include="..\Code\Algorithms\Primality\Wheel.h" />
     <ClInclude Include="..\Code\Core\Parameters.h" />
     <ClInclude Include="..\Code\Core\ProcessNumber.h" />
     <ClInclude Include="..\Code\Core\Timing.h" />
@@ -201,8 +208,8 @@
     <ClInclude Include="..\Code\Tests\Tests.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Code\Algorithms\PowersOfN.inl" />
-    <None Include="..\Code\Algorithms\Wheel.inl" />
+    <None Include="..\Code\Algorithms\Primality\PowersOfN.inl" />
+    <None Include="..\Code\Algorithms\Primality\Wheel.inl" />
     <None Include="..\Code\Number\Factorisation.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

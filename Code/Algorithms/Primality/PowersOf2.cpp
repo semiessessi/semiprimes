@@ -1,7 +1,7 @@
 #include "PowersOf2.h"
 
-#include "../Number/Factorisation.h"
-#include "../Number/Number.h"
+#include "../../Number/Factorisation.h"
+#include "../../Number/Number.h"
 
 Factorisation PowersOf2( const Number& xNumber )
 {

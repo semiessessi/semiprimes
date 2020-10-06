@@ -1,7 +1,7 @@
 #include "SPRP.h"
 
-#include "../Number/Factorisation.h"
-#include "../Number/Number.h"
+#include "../../Number/Factorisation.h"
+#include "../../Number/Number.h"
 
 #include <intrin.h>
 

@@ -26,9 +26,11 @@
    * [2.4.1 Overdue functionality](./2_Polish.md#241-overdue-functionality)
       * [2.4.1.1 Comparisons](./2_Polish.md#2411-comparisons)
       * [2.4.1.2 Addition and subtraction](./2_Polish.md#2412-addition-subtraction)
-      * [2.4.1.4 Multiplication](./2_Polish.md#2414-multiplication)
-      * [2.4.1.5 Division and remainder](./2_Polish.md#2415-division-and-remainder)
-	  
+      * [2.4.1.3 Tests](./2_Polish.md#2413-tests)
+      * [2.4.1.4 Rearranging](./2_Polish.md#2414-rearranging)
+      * [2.4.1.5 Multiplication](./2_Polish.md#2415-multiplication)
+      * [2.4.1.6 Division and remainder](./2_Polish.md#2416-division-and-remainder)
+
 ## 2.1 Interface
 
 ### 2.1.1 Improving Parameters
@@ -1309,3 +1311,7 @@ bool RunTest( const std::string& xName, bool ( * const pfnTestFunction )() )
     return bPass;
 }
 ```
+
+### 2.4.1.4 Rearranging
+
+The algorithms and Number class are growing unwieldy so I spend some time reorganising the code into more files and folders so that it is faster to navigate.
