@@ -84,6 +84,9 @@
     <ClCompile Include="..\Code\Number\Number_Compare.cpp">
       <Filter>Number</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\MultiplyLimbX64.cpp">
+      <Filter>Algorithms\Arithmetic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\Primality\Wheel.h">
       <Filter>Algorithms\Primality</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\MultiplyLimbX64.h">
+      <Filter>Algorithms\Arithmetic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -40,7 +40,7 @@ Number::Number( const std::string& xString )
     const size_t uLength = xString.length();
     for( size_t uPosition = uStart; uPosition < uLength; ++uPosition )
     {
-        *this *= 10;
+        *this *= static_cast< uint64_t >( 10 );
         *this += static_cast< int64_t >( xString[ uPosition ] ) - '0';
     }
 }

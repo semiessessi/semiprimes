@@ -1,5 +1,7 @@
 #include "Number.h"
 
+#include "../Algorithms/Arithmetic/MultiplyLimbX64.h"
+
 Number Number::operator -() const
 {
     Number xCopy( *this );
@@ -18,27 +20,14 @@ Number& Number::operator *=( const int64_t iOperand )
     mbNegative = ( iOperand < 0 ) != mbNegative;
 
     const uint64_t uOperand = static_cast< uint64_t >( iOperand );
-    const size_t uLimbCount = mxLimbs.size();
-    uint64_t uUpperPart = 0;
-    uint64_t uCarry = 0;
-    for( size_t uLimb = 0; uLimb < uLimbCount; ++uLimb )
-    {
-        mxLimbs[ uLimb ] = _umul128(
-            uOperand, mxLimbs[ uLimb ], &uUpperPart )
-                + uCarry;   // add the previous carry as we go along
-                            // this shouldn't overflow since the biggest pair
-                            // of numbers multiply to:
-                            // (2^64-1)(2^64-1) = 2^128 - 2.2^64 + 1
-                            // ??? maybe? should verify that more.
+    MultiplyX64_BaseCase( mxLimbs, uOperand );
 
-        uCarry = uUpperPart;
-    }
+    return *this;
+}
 
-    if( uCarry > 0 )
-    {
-        mxLimbs.push_back( uCarry );
-    }
-
+Number& Number::operator *=( const uint64_t uOperand )
+{
+    MultiplyX64_BaseCase( mxLimbs, uOperand );
     return *this;
 }
 

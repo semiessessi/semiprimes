@@ -42,6 +42,7 @@ public:
     Number& operator -=( const uint64_t iOperand );
     Number& operator -=( const Number& xOperand );
     Number& operator *=( const int64_t iOperand );
+    Number& operator *=( const uint64_t uOperand );
     Number& operator *=( const Number& xOperand );
     Number& operator /=( const int64_t xOperand );
     Number& operator /=( const Number& xOperand );

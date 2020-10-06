@@ -169,6 +169,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Algorithms\Arithmetic\AdditionX64.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\MultiplyLimbX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Primality\PowersOf2.cpp" />
     <ClCompile Include="..\Code\Algorithms\Primality\SPRP.cpp" />
@@ -192,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Algorithms\Arithmetic\AdditionX64.h" />
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\MultiplyLimbX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\SubtractionX64.h" />
     <ClInclude Include="..\Code\Algorithms\Primality\PowersOf2.h" />
     <ClInclude Include="..\Code\Algorithms\Primality\PowersOfN.h" />
