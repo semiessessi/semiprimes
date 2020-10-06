@@ -1,7 +1,7 @@
 #include "Wheel.h"
 
-#include "../Number/Factorisation.h"
-#include "../Number/Number.h"
+#include "../../Number/Factorisation.h"
+#include "../../Number/Number.h"
 
 static const uint64_t uWheel3Cutoff = 150000;
 static const uint64_t uWheel5Cutoff = 200000;

@@ -1,7 +1,7 @@
 #include "TrialDivision.h"
 
-#include "../Number/Factorisation.h"
-#include "../Number/Number.h"
+#include "../../Number/Factorisation.h"
+#include "../../Number/Number.h"
 
 static const uint64_t uTrialDivisionCutoff = 100000;
 

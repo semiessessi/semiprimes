@@ -16,6 +16,9 @@
     <Filter Include="Algorithms\Arithmetic">
       <UniqueIdentifier>{797fdd05-2fa9-4093-aae0-01c01ef1f6a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Algorithms\Primality">
+      <UniqueIdentifier>{51e13dae-b3e4-4e55-a91d-f912af406958}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Core\EntryPoint.cpp">
@@ -33,26 +36,14 @@
     <ClCompile Include="..\Code\Number\Factorisation.cpp">
       <Filter>Number</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Algorithms\PowersOf2.cpp">
-      <Filter>Algorithms</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Core\Timing.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Algorithms\TrialDivision.cpp">
-      <Filter>Algorithms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Algorithms\Wheel.cpp">
-      <Filter>Algorithms</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Core\Parameters.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Core\ProcessNumber.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Algorithms\SPRP.cpp">
-      <Filter>Algorithms</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Core\Test.cpp">
       <Filter>Core</Filter>
@@ -66,6 +57,18 @@
     <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.cpp">
       <Filter>Algorithms\Arithmetic</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Primality\PowersOf2.cpp">
+      <Filter>Algorithms\Primality</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Primality\SPRP.cpp">
+      <Filter>Algorithms\Primality</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Primality\TrialDivision.cpp">
+      <Filter>Algorithms\Primality</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Primality\Wheel.cpp">
+      <Filter>Algorithms\Primality</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -74,29 +77,14 @@
     <ClInclude Include="..\Code\Number\Factorisation.h">
       <Filter>Number</Filter>
     </ClInclude>
-    <ClInclude Include="..\Code\Algorithms\PowersOf2.h">
-      <Filter>Algorithms</Filter>
-    </ClInclude>
     <ClInclude Include="..\Code\Core\Timing.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Algorithms\TrialDivision.h">
-      <Filter>Algorithms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Algorithms\Wheel.h">
-      <Filter>Algorithms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Algorithms\PowersOfN.h">
-      <Filter>Algorithms</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Core\Parameters.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Core\ProcessNumber.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Code\Algorithms\SPRP.h">
-      <Filter>Algorithms</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Tests\Tests.h">
       <Filter>Tests</Filter>
@@ -107,16 +95,31 @@
     <ClInclude Include="..\Code\Algorithms\Arithmetic\SubtractionX64.h">
       <Filter>Algorithms\Arithmetic</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Primality\PowersOf2.h">
+      <Filter>Algorithms\Primality</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Primality\PowersOfN.h">
+      <Filter>Algorithms\Primality</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Primality\SPRP.h">
+      <Filter>Algorithms\Primality</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Primality\TrialDivision.h">
+      <Filter>Algorithms\Primality</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Primality\Wheel.h">
+      <Filter>Algorithms\Primality</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Code\Number\Factorisation.inl">
       <Filter>Number</Filter>
     </None>
-    <None Include="..\Code\Algorithms\PowersOfN.inl">
-      <Filter>Algorithms</Filter>
+    <None Include="..\Code\Algorithms\Primality\PowersOfN.inl">
+      <Filter>Algorithms\Primality</Filter>
     </None>
-    <None Include="..\Code\Algorithms\Wheel.inl">
-      <Filter>Algorithms</Filter>
+    <None Include="..\Code\Algorithms\Primality\Wheel.inl">
+      <Filter>Algorithms\Primality</Filter>
     </None>
   </ItemGroup>
 </Project>

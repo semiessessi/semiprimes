@@ -2,11 +2,11 @@
 
 #include "Parameters.h"
 #include "Timing.h"
-#include "../Algorithms/PowersOf2.h"
-#include "../Algorithms/PowersOfN.h"
-#include "../Algorithms/SPRP.h"
-#include "../Algorithms/TrialDivision.h"
-#include "../Algorithms/Wheel.h"
+#include "../Algorithms/Primality/PowersOf2.h"
+#include "../Algorithms/Primality/PowersOfN.h"
+#include "../Algorithms/Primality/SPRP.h"
+#include "../Algorithms/Primality/TrialDivision.h"
+#include "../Algorithms/Primality/Wheel.h"
 #include "../Number/Factorisation.h"
 #include "../Number/Number.h"
 

@@ -1,8 +1,8 @@
 #ifndef WHEEL_INL
 #define WHEEL_INL
 
-#include "../Number/Factorisation.h"
-#include "../Number/Number.h"
+#include "../../Number/Factorisation.h"
+#include "../../Number/Number.h"
 
 #include "TrialDivision.h"
 
