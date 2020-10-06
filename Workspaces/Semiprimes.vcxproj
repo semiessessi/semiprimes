@@ -183,6 +183,11 @@
     <ClCompile Include="..\Code\Core\Timing.cpp" />
     <ClCompile Include="..\Code\Number\Factorisation.cpp" />
     <ClCompile Include="..\Code\Number\Number.cpp" />
+    <ClCompile Include="..\Code\Number\Number_AddSub.cpp" />
+    <ClCompile Include="..\Code\Number\Number_Compare.cpp" />
+    <ClCompile Include="..\Code\Number\Number_Copy.cpp" />
+    <ClCompile Include="..\Code\Number\Number_DivMod.cpp" />
+    <ClCompile Include="..\Code\Number\Number_Shift.cpp" />
     <ClCompile Include="..\Code\Tests\Tests.cpp" />
   </ItemGroup>
   <ItemGroup>
