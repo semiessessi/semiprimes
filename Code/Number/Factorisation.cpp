@@ -11,7 +11,7 @@ Factorisation::Factorisation( const Number& xNumber, const bool bPrime )
 {
 }
 
-void Factorisation::Report() const
+void Factorisation::Report( const bool bVerbose ) const
 {
     const std::string xNumberString = mxNumber.ToString();
     if( mbKnownPrime && ( miPower == 1 ) )
@@ -25,7 +25,15 @@ void Factorisation::Report() const
     {
         printf( "%s is a composite\n", xNumberString.c_str() );
         puts( "Factorisation: " );
-        printf( " " );
+        if( bVerbose )
+        {
+            puts( "==========================" );
+        }
+        else
+        {
+            printf( " " );
+        }
+
         for( size_t uFactor = 0; uFactor < mxKnownFactors.size(); ++uFactor )
         {
             if( mxKnownFactors[ uFactor ].miPower == 1 )
@@ -39,20 +47,34 @@ void Factorisation::Report() const
                     mxKnownFactors[ uFactor ].miPower );
             }
 
-            if( mxKnownFactors[ uFactor ].mbKnownComposite )
+            if( bVerbose )
             {
-                printf( "(C)" );
+                const char* const szType =
+                    mxKnownFactors[ uFactor ].mbKnownComposite
+                        ? "composite"
+                        : ( mxKnownFactors[ uFactor ].mbKnownPrime
+                            ? "prime"
+                            : "unknown" );
+                printf( " (%s)\n*\n", szType );
             }
-
-            if( !mxKnownFactors[ uFactor ].mbKnownComposite && !mxKnownFactors[ uFactor ].mbKnownPrime )
+            else
             {
-                printf( "(?)" );
-                bComplete = false;
-            }
 
-            if( uFactor != ( mxKnownFactors.size() - 1 ) )
-            {
-                printf( " * " );
+                if( mxKnownFactors[ uFactor ].mbKnownComposite )
+                {
+                    printf( "(C)" );
+                }
+
+                if( !mxKnownFactors[ uFactor ].mbKnownComposite && !mxKnownFactors[ uFactor ].mbKnownPrime )
+                {
+                    printf( "(?)" );
+                    bComplete = false;
+                }
+
+                if( uFactor != ( mxKnownFactors.size() - 1 ) )
+                {
+                    printf( " * " );
+                }
             }
         }
 
