@@ -12,7 +12,13 @@ void MultiplyX64_GrammarSchool(
     static std::vector< uint64_t > xLimbsCopy;
     static std::vector< uint64_t > xOperandCopy;
     xLimbsCopy = xLimbs;
-    xLimbs.resize( uNewLimbCount, 0 );
+
+    xLimbs.resize( uNewLimbCount );
+    for( size_t i = 0; i < uNewLimbCount; ++i )
+    {
+        xLimbs[ i ] = 0;
+    }
+
     for( size_t i = 0; i < uInitialLimbCount; ++i )
     {
         // base case multiply, add the result after shifting based on our place
