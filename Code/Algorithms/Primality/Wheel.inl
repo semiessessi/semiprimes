@@ -108,9 +108,9 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 
     const uint64_t uWheelLimit =
 #if _DEBUG
-        5500000
+        55000000
 #else
-        5500000000
+        2500000000
 #endif
             / ( xNumber.GetLimbCount() * 2 - 1 );
 

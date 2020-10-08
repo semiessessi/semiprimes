@@ -22,6 +22,9 @@
     <Filter Include="Algorithms\Arithmetic\Multiplication">
       <UniqueIdentifier>{41c8dfc2-b7e5-487e-ace6-a12de0172f15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Algorithms\Arithmetic\Division">
+      <UniqueIdentifier>{9e90b57e-b896-4c52-8bc0-fc413c50b117}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Core\EntryPoint.cpp">
@@ -93,6 +96,12 @@
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.cpp">
       <Filter>Algorithms\Arithmetic\Multiplication</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\BinaryDivision.cpp">
+      <Filter>Algorithms\Arithmetic\Division</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Number\Number_BitOps.cpp">
+      <Filter>Number</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -139,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.h">
       <Filter>Algorithms\Arithmetic\Multiplication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\BinaryDivision.h">
+      <Filter>Algorithms\Arithmetic\Division</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

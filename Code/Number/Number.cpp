@@ -10,11 +10,6 @@ Number Number::operator -() const
     return xCopy;
 }
 
-uint64_t Number::operator &( const uint64_t uOperand ) const
-{
-    return mxLimbs[ 0 ] & uOperand;
-}
-
 Number& Number::operator *=( const int64_t iOperand )
 {
     // handle the possible factor of -1 from the signs of the operands

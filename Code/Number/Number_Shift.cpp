@@ -1,5 +1,72 @@
 #include "Number.h"
 
+Number& Number::operator <<=( const uint64_t uOperand )
+{
+    const uint64_t uMSB = MostSignificantBitPosition();
+    //const uint64_t uNewMSB = uMSB + uOperand;
+    const uint64_t uLimbOffset = uOperand >> 6;
+    const uint64_t uBitOffset = uOperand & 63;
+    if( uBitOffset == 0 )
+    {
+        InplaceLimbShiftLeft( uLimbOffset );
+        return *this;
+    }
+
+    mxLimbs.resize( mxLimbs.size() + uLimbOffset, 0 );
+    const uint64_t uLimbCount = mxLimbs.size();
+    const uint64_t uInverseBitOffset = 64uLL - uBitOffset;
+    const uint64_t uNextMask = ( 1uLL << uInverseBitOffset ) - 1uLL;
+    const uint64_t uPreviousMask = ~uNextMask;
+    for( uint64_t i = uLimbCount - 1; i >= uLimbOffset; --i )
+    {
+        const uint64_t uSourceIndex = i - uLimbOffset;
+        mxLimbs[ i ] = ( ( mxLimbs[ uSourceIndex ] & uNextMask ) << uBitOffset )
+            | ( ( mxLimbs[ uSourceIndex - 1 ] & uPreviousMask ) >> uInverseBitOffset );
+    }
+
+    for( uint64_t i = 0; i < uLimbOffset; ++i )
+    {
+        mxLimbs[ i ] = 0;
+    }
+
+    return *this;
+}
+
+Number& Number::operator >>=( const uint64_t uOperand )
+{
+    const uint64_t uMSB = MostSignificantBitPosition();
+    if( uOperand >= uMSB )
+    {
+        mxLimbs.resize( 1 );
+        mxLimbs[ 0 ] = 0;
+        return *this;
+    }
+
+    //const uint64_t uNewMSB = uMSB - uOperand;
+    const uint64_t uLimbOffset = uOperand >> 6;
+    const uint64_t uBitOffset = uOperand & 63;
+    if( uBitOffset == 0 )
+    {
+        InplaceLimbShiftRight( uLimbOffset );
+        return *this;
+    }
+
+    const uint64_t uLimbCount = mxLimbs.size() - uLimbOffset;
+    const uint64_t uInverseBitOffset = 64uLL - uBitOffset;
+    const uint64_t uNextMask = ( 1uLL << ( 64uLL - uOperand ) ) - 1uLL;
+    const uint64_t uPreviousMask = ~uNextMask;
+    for( uint64_t i = 0; i < uLimbCount; ++i )
+    {
+        const uint64_t uSourceIndex = i + uLimbOffset;
+        mxLimbs[ i ] = ( ( mxLimbs[ uSourceIndex + 1 ] & uNextMask ) << uBitOffset )
+            | ( ( mxLimbs[ uSourceIndex ] & uPreviousMask ) >> uInverseBitOffset );
+    }
+
+    mxLimbs.resize( mxLimbs.size() - uLimbOffset );
+
+    return *this;
+}
+
 void Number::InplaceLimbShiftLeft( const size_t uLimbs )
 {
     // maintain zero as zero when shifted

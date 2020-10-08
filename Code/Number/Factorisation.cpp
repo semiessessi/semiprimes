@@ -24,13 +24,15 @@ void Factorisation::Report( const bool bVerbose ) const
     if( mbKnownComposite )
     {
         printf( "%s is a composite\n", xNumberString.c_str() );
-        puts( "Factorisation: " );
         if( bVerbose )
         {
-            puts( "==========================" );
+            puts( "\n========================" );
+            puts( "Details of factorisation" );
+            puts( "========================\n" );
         }
         else
         {
+            puts( "Factorisation: " );
             printf( " " );
         }
 
