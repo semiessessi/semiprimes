@@ -1,1 +1,12 @@
 #include "../Number/Number.h"
+
+bool MulTests()
+{
+    const Number xBig10Power =
+        1000000000000000000000000000000000000000000000000000z;
+    const Number xBigMultiplicand =
+        111111111111111111111111111111111111111111111111111z;
+    const Number xBigResult =
+        111111111111111111111111111111111111111111111111111000000000000000000000000000000000000000000000000000z;
+    return ( xBig10Power * xBigMultiplicand ) == xBigResult;
+}

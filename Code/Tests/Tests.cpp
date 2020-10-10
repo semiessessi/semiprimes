@@ -4,6 +4,8 @@
 #include <cstdio>
 #include <string>
 
+bool ModTests();
+bool MulTests();
 bool RunTest( const std::string& xName, bool ( * const pfnTestFunction )() );
 
 bool OnePlusOne()
@@ -33,8 +35,6 @@ bool StringTests()
     return true;
 }
 
-bool ModTests();
-
 void DoTests( const Parameters& xParameters )
 {
     puts( "Running tests..." );
@@ -48,6 +48,7 @@ void DoTests( const Parameters& xParameters )
         { "1 + 1 == 2", OnePlusOne },
         { "1 - 1 == 0", OneMinusOne },
         { "Converting string of ones and back again", StringTests },
+        { "a big multiplication", MulTests },
         { "(10^n - 1) / 9 mod 10 == 1 and similar", ModTests },
     };
     
