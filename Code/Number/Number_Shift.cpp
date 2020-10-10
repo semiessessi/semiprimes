@@ -12,21 +12,29 @@ Number& Number::operator <<=( const uint64_t uOperand )
         return *this;
     }
 
-    mxLimbs.resize( mxLimbs.size() + uLimbOffset, 0 );
+    mxLimbs.resize( mxLimbs.size() + uLimbOffset + 1, 0 );
     const uint64_t uLimbCount = mxLimbs.size();
     const uint64_t uInverseBitOffset = 64uLL - uBitOffset;
     const uint64_t uNextMask = ( 1uLL << uInverseBitOffset ) - 1uLL;
     const uint64_t uPreviousMask = ~uNextMask;
-    for( uint64_t i = uLimbCount - 1; i >= uLimbOffset; --i )
+    for( uint64_t i = uLimbCount - 1; i > uLimbOffset; --i )
     {
         const uint64_t uSourceIndex = i - uLimbOffset;
         mxLimbs[ i ] = ( ( mxLimbs[ uSourceIndex ] & uNextMask ) << uBitOffset )
             | ( ( mxLimbs[ uSourceIndex - 1 ] & uPreviousMask ) >> uInverseBitOffset );
     }
 
+    mxLimbs[ uLimbOffset ] <<= uBitOffset;
+
     for( uint64_t i = 0; i < uLimbOffset; ++i )
     {
         mxLimbs[ i ] = 0;
+    }
+
+    // SE - TODO: just don't make bigger if not needed (!)
+    if( mxLimbs.back() == 0 )
+    {
+        mxLimbs.resize( uLimbCount - 1 );
     }
 
     return *this;

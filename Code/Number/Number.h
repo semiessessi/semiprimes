@@ -58,6 +58,8 @@ public:
     Number& operator *=( const Number& xOperand );
     Number& operator /=( const int64_t xOperand );
     Number& operator /=( const Number& xOperand );
+    //Number& operator %=( const int64_t iOperand );
+    Number& operator %=( const Number& iOperand );
     int64_t operator %( const int64_t iOperand ) const;
 
 #define OPERATOR_FROM_INPLACE( op ) \
@@ -65,11 +67,15 @@ public:
     { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; } \
     Number operator op( const int64_t xOperand ) const \
     { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; }
+#define OPERATOR_FROM_INPLACE_NOINT( op ) \
+    Number operator op( const Number& xOperand ) const \
+    { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; }
 
-    OPERATOR_FROM_INPLACE( + )
+    OPERATOR_FROM_INPLACE( +)
     OPERATOR_FROM_INPLACE( - )
     OPERATOR_FROM_INPLACE( * )
     OPERATOR_FROM_INPLACE( / )
+    OPERATOR_FROM_INPLACE_NOINT( % )
     
     void InplaceLimbShiftLeft( const size_t uLimbs );
     void InplaceLimbShiftRight( const size_t uLimbs );

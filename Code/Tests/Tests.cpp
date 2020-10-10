@@ -33,21 +33,7 @@ bool StringTests()
     return true;
 }
 
-bool ModTests()
-{
-    const char* const szString =
-        "111111111111111111111111111111111111111111111111111111111";
-    const size_t uLength = strlen( szString );
-    for( int i = 0; i < strlen( szString ); ++i )
-    {
-        if( ( Number( szString + i ) % 10 ) != 1 )
-        {
-            return false;
-        }
-    }
-
-    return true;
-}
+bool ModTests();
 
 void DoTests( const Parameters& xParameters )
 {
@@ -62,7 +48,7 @@ void DoTests( const Parameters& xParameters )
         { "1 + 1 == 2", OnePlusOne },
         { "1 - 1 == 0", OneMinusOne },
         { "Converting string of ones and back again", StringTests },
-        { "(10^n - 1) / 9 mod 10 == 1", ModTests },
+        { "(10^n - 1) / 9 mod 10 == 1 and similar", ModTests },
     };
     
     const size_t uTestCount = sizeof( lsaxTests ) / sizeof( lsaxTests[ 0 ] );

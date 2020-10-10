@@ -49,6 +49,12 @@ Number& Number::operator /=( const Number& xOperand )
     return *this;
 }
 
+Number& Number::operator %=( const Number& xOperand )
+{
+    DivMod( Number( *this ), xOperand, *this );
+    return *this;
+}
+
 int64_t Number::operator %( const int64_t iOperand ) const
 {
     return Mod( *this, iOperand );

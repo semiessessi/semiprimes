@@ -1,5 +1,7 @@
 #include "Number.h"
 
+#include "../Algorithms/Arithmetic/Division/BinaryDivision.h"
+
 #include <intrin.h>
 
 Number Number::DivMod(
@@ -27,6 +29,12 @@ Number Number::DivMod(
     const uint64_t uDenominator,
     uint64_t& uRemainder )
 {
+    if( xNumerator < uDenominator )
+    {
+        uRemainder = xNumerator.MostSignificantLimb();
+        return 0;
+    }
+
     Number xReturnValue = 0;
     //xReturnValue.mxLimbs.reserve( xNumerator.mxLimbs.size() );
     size_t uLimb = xNumerator.mxLimbs.size();
@@ -52,14 +60,24 @@ Number Number::DivMod(
     const Number& xDenominator,
     Number& xRemainder )
 {
-    // SE - TODO: division innit...
-    return 0z;
+    if( xNumerator < xDenominator )
+    {
+        xRemainder = xNumerator;
+        return 0;
+    }
+
+    return BinaryDivision( xNumerator, xDenominator, xRemainder );
 }
 
 uint64_t Number::Mod(
     const Number& xNumerator,
     const uint64_t uDenominator )
 {
+    if( xNumerator < uDenominator )
+    {
+        return  xNumerator.MostSignificantLimb();
+    }
+
     uint64_t uRemainder = 0;
     for( size_t uLimb = xNumerator.mxLimbs.size();
         uLimb != 0; --uLimb )

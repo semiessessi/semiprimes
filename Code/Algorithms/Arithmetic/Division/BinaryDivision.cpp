@@ -4,15 +4,16 @@ Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Num
 {
     Number xQuotient;
     xRemainder = 0;
-    const size_t uBitCount = xNumerator.MostSignificantBitPosition();
-    for( size_t i = 0; i < uBitCount; ++i )
+    const size_t uBitCount = xNumerator.MostSignificantBitPosition() + 1;
+    for( size_t i = uBitCount; i != 0; --i )
     {
+        size_t uIndex = i - 1;
         xRemainder <<= 1;
-        xRemainder |= xNumerator.GetBit( uBitCount - i - 1 ) ? 1 : 0;
-        if( xRemainder > xDenominator )
+        xRemainder |= xNumerator.GetBit( uIndex ) ? 1 : 0;
+        if( xRemainder >= xDenominator )
         {
             xRemainder -= xDenominator;
-            xQuotient.SetBit( uBitCount - i - 1 );
+            xQuotient.SetBit( uIndex );
         }
     }
 
