@@ -18,6 +18,7 @@ public:
     Number( const int64_t iValue );
     Number( const uint64_t uValue );
     Number( const std::string& xString );
+    Number( const std::vector<uint64_t>& xLimbs, const bool bNegative = false );
     Number( const Number& xNumber );
     Number( Number&& xNumber ) noexcept;
 
