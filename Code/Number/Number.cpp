@@ -1,17 +1,13 @@
 #include "Number.h"
 
-#include "../Algorithms/Arithmetic/MultiplyLimbX64.h"
+#include "../Algorithms/Arithmetic/Multiplication/MultiplyLimbX64.h"
+#include "../Algorithms/Arithmetic/Multiplication/GrammarSchoolX64.h"
 
 Number Number::operator -() const
 {
     Number xCopy( *this );
     xCopy.mbNegative = !xCopy.mbNegative;
     return xCopy;
-}
-
-uint64_t Number::operator &( const uint64_t uOperand ) const
-{
-    return mxLimbs[ 0 ] & uOperand;
 }
 
 Number& Number::operator *=( const int64_t iOperand )
@@ -33,8 +29,9 @@ Number& Number::operator *=( const uint64_t uOperand )
 
 Number& Number::operator *=( const Number& xOperand )
 {
-    // SE - TODO: ...
-
+    // handle the possible factor of -1 from the signs of the operands
+    mbNegative = xOperand.mbNegative != mbNegative;
+    MultiplyX64_GrammarSchool( mxLimbs, xOperand.mxLimbs );
     return *this;
 }
 
@@ -49,6 +46,12 @@ Number& Number::operator /=( const Number& xOperand )
 {
     static Number xDeadRemainder; // :(
     *this = DivMod( *this, xOperand, xDeadRemainder );
+    return *this;
+}
+
+Number& Number::operator %=( const Number& xOperand )
+{
+    DivMod( Number( *this ), xOperand, *this );
     return *this;
 }
 

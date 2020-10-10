@@ -169,7 +169,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Algorithms\Arithmetic\AdditionX64.cpp" />
-    <ClCompile Include="..\Code\Algorithms\Arithmetic\MultiplyLimbX64.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\BinaryDivision.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Primality\PowersOf2.cpp" />
     <ClCompile Include="..\Code\Algorithms\Primality\SPRP.cpp" />
@@ -185,15 +187,20 @@
     <ClCompile Include="..\Code\Number\Factorisation.cpp" />
     <ClCompile Include="..\Code\Number\Number.cpp" />
     <ClCompile Include="..\Code\Number\Number_AddSub.cpp" />
+    <ClCompile Include="..\Code\Number\Number_BitOps.cpp" />
     <ClCompile Include="..\Code\Number\Number_Compare.cpp" />
     <ClCompile Include="..\Code\Number\Number_Copy.cpp" />
     <ClCompile Include="..\Code\Number\Number_DivMod.cpp" />
     <ClCompile Include="..\Code\Number\Number_Shift.cpp" />
     <ClCompile Include="..\Code\Tests\Tests.cpp" />
+    <ClCompile Include="..\Code\Tests\Test_Division.cpp" />
+    <ClCompile Include="..\Code\Tests\Test_Multiplication.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Algorithms\Arithmetic\AdditionX64.h" />
-    <ClInclude Include="..\Code\Algorithms\Arithmetic\MultiplyLimbX64.h" />
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\BinaryDivision.h" />
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.h" />
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\SubtractionX64.h" />
     <ClInclude Include="..\Code\Algorithms\Primality\PowersOf2.h" />
     <ClInclude Include="..\Code\Algorithms\Primality\PowersOfN.h" />

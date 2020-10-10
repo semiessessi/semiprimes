@@ -93,5 +93,5 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
         StopTiming();
     }
 
-    xTest.Report();
+    xTest.Report( xParameters.Verbose() );
 }

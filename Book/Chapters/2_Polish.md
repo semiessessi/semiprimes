@@ -1315,3 +1315,63 @@ bool RunTest( const std::string& xName, bool ( * const pfnTestFunction )() )
 ### 2.4.1.4 Rearranging
 
 The algorithms and Number class are growing unwieldy so I spend some time reorganising the code into more files and folders so that it is faster to navigate.
+
+### 2.4.1.5 Multiplicaiton
+
+Grammar school multiplication:
+
+```cpp
+
+```
+
+### 2.4.1.6 Division
+
+Binary long division:
+
+```cpp
+
+```
+
+Setting and getting bits is done with these helper functions:
+
+```cpp
+bool Number::GetBit( const uint64_t uIndex ) const
+{
+    return ( mxLimbs[ uIndex >> 6 ] & ( 1 << ( uIndex & 63 ) ) ) != 0;
+}
+
+void Number::SetBit( const uint64_t uIndex, const bool bValue = true )
+{
+    if( bValue )
+    {
+        mxLimbs[ uIndex >> 6 ] |= ( 1 << ( uIndex & 63 ) );
+    }
+    else
+    {
+        mxLimbs[ uIndex >> 6 ] &= ~( 1 << ( uIndex & 63 ) );
+    }
+}
+```
+
+The bitwise operators for `uint64_t` are implemented like this:
+
+```cpp
+Number& Number::operator &=( const uint64_t uOperand )
+{
+    mxLimbs.resize( 1 );
+    mxLimbs[ 0 ] &= uOperand;
+    return *this;
+}
+
+Number& Number::operator |=( const uint64_t uOperand )
+{
+    mxLimbs[ 0 ] |= uOperand;
+    return *this;
+}
+
+Number& Number::operator ^=( const uint64_t uOperand )
+{
+    mxLimbs[ 0 ] ^= uOperand;
+    return *this;
+}
+```

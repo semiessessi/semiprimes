@@ -6,6 +6,8 @@
 
 #include "TrialDivision.h"
 
+#include <utility>
+
 // SE - TODO: test these values
 static constexpr int aiWheelPrimes[] = {
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
@@ -104,7 +106,13 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 {
     GenerateWheel();
 
-    const uint64_t uWheelLimit = 5500000 / ( xNumber.GetLimbCount() * 2 - 1 );
+    const uint64_t uWheelLimit =
+#if _DEBUG
+        55000000
+#else
+        2500000000
+#endif
+            / ( xNumber.GetLimbCount() * 2 - 1 );
 
     Number xWorkingValue = xNumber;
     Factorisation xResult( xNumber );
@@ -117,12 +125,13 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
             xResult.mbKnownComposite = true;
             Factorisation xNew( uTest, true );
             xNew.miPower = 0;
-            while( ( xWorkingValue % uTest ) == 0 )
+            do
             {
                 ++xNew.miPower;
                 xWorkingValue /= uTest;
             }
-            xResult.mxKnownFactors.push_back( xNew );
+            while( ( xWorkingValue % uTest ) == 0 );
+            xResult.mxKnownFactors.push_back( std::move( xNew ) );
         }
 
         uTest += saiDifferences[ iDiff ];
