@@ -108,6 +108,9 @@
     <ClCompile Include="..\Code\Tests\Test_Multiplication.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Tests\Test_Addition.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">

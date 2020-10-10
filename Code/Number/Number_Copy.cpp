@@ -36,11 +36,12 @@ Number::Number( const std::string& xString )
 : mxLimbs( { 0 } ) // initialise limb vector
 , mbNegative( xString[ 0 ] == '-' ) // SE - TODO: robustness against dodgy inputs
 {
-    const size_t uStart = ( mbNegative || ( xString[ 0 ] == '+' ) ) ? 1 : 0;
+    size_t uStart = ( mbNegative || ( xString[ 0 ] == '+' ) ) ? 1 : 0;
     const size_t uLength = xString.length();
     if( ( uLength >= ( 2 + uStart ) ) && xString[ uStart + 1 ] == 'x' )
     {
         // hex.
+        uStart += 2;
         for( size_t uPosition = uStart; uPosition < uLength; ++uPosition )
         {
             *this *= static_cast< uint64_t >( 16 );
