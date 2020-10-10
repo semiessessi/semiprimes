@@ -5,6 +5,7 @@
 #include <string>
 
 bool SimpleAddCarryTest();
+bool BigAddCarryTest();
 bool ModTests();
 bool MulTests();
 bool RunTest( const std::string& xName, bool ( * const pfnTestFunction )() );
@@ -48,8 +49,9 @@ void DoTests( const Parameters& xParameters )
         // add tests here.
         { "1 + 1 == 2", OnePlusOne },
         { "1 - 1 == 0", OneMinusOne },
-        { "Converting string of ones and back again", StringTests },
-        { "Simple carry test for addition", SimpleAddCarryTest },
+        { "converting string of ones and back again", StringTests },
+        { "simple carry test for addition", SimpleAddCarryTest },
+        { "carry test for mutliple limb addition", BigAddCarryTest },
         { "a big multiplication", MulTests },
         { "(10^n - 1) / 9 mod 10 == 1 and similar", ModTests },
     };
