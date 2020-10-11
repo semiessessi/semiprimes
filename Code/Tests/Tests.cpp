@@ -60,7 +60,10 @@ void DoTests( const Parameters& xParameters )
     bool bGood = true;
     for( size_t i = 0; i < uTestCount; ++i )
     {
-        bGood = bGood && RunTest( lsaxTests[ i ].mxName, lsaxTests[ i ].mpfnTestFunction );
+        if( RunTest( lsaxTests[ i ].mxName, lsaxTests[ i ].mpfnTestFunction ) == false )
+        {
+            bGood = false;
+        }
     }
 
     puts( bGood
