@@ -13,7 +13,7 @@ void SubX64_BaseCase( std::vector< uint64_t >& xLimbs, uint64_t uOperand )
         &( xLimbs[ 0 ] ) );
     const size_t uLimbCount = xLimbs.size();
     bool bContinueBorrow = ( ucBorrow > 0 )
-        && ( uLimbCount <= uLimb );
+        && ( uLimb < uLimbCount );
     while( bContinueBorrow )
     {
         ucBorrow = _subborrow_u64(
