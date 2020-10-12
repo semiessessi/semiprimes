@@ -12,6 +12,15 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
 		return;
 	}
 
+	// is it a perfect power?
+	// (what about products of them??)
+	if( ( mbKnownComposite == true )
+		&& ( mxKnownFactors.size() == 1 )
+		&& ( mxKnownFactors[ 0 ].mbKnownPrime == true ) )
+	{
+		return;
+	}
+
 	if( mxKnownFactors.size() == 0 )
 	{
 		mxKnownFactors.push_back( Factorisation( mxNumber ) );
@@ -48,10 +57,11 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
 
 	// SE - NOTE: not sure how this happens...
 	if( ( mxKnownFactors.size() == 1 )
-		&& ( mxKnownFactors[ 0 ].miPower == 1 )
+		//&& ( mxKnownFactors[ 0 ].miPower == 1 )
 		&& ( mxKnownFactors[ 0 ].mbKnownPrime == true ) )
 	{
-		mbKnownPrime = true;
+		mbKnownPrime = mxKnownFactors[ 0 ].miPower == 1;
+		mbKnownComposite = !mbKnownPrime;
 	}
 
 	if( mxKnownFactors.size() > 1 )

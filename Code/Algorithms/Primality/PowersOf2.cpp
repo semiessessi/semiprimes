@@ -31,7 +31,6 @@ Factorisation PowersOf2( const Number& xNumber )
         xTwoFactorisation.mbKnownPrime = true;
         xTwoFactorisation.miPower = iPowers;
         xResult.mxKnownFactors.push_back( xTwoFactorisation );
-        // SE - TODO: equality test.
         if( xWorkingValue > 1 )
         {
             xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
