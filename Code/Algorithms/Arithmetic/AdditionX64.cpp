@@ -45,12 +45,28 @@ void AddX64_Generic( std::vector< uint64_t >& xLimbs, const std::vector< uint64_
 
     const size_t uLimbCount = xLimbs.size();
     unsigned char ucCarry = 0;
-    for( size_t uLimb = 0; uLimb < uLimbCount; ++uLimb )
+    size_t uLimb = 0;
+
+    for( ; uLimb < uOperandSize; ++uLimb )
     {
         ucCarry = _addcarryx_u64(
             ucCarry,
             xLimbs[ uLimb ],
             xOperandLimbs[ uLimb ],
+            &( xLimbs[ uLimb ] ) );
+    }
+
+    for( uLimb = uOperandSize; uLimb < uLimbCount; ++uLimb )
+    {
+        if( ucCarry == 0 )
+        {
+            break;
+        }
+
+        ucCarry = _addcarryx_u64(
+            ucCarry,
+            xLimbs[ uLimb ],
+            0,
             &( xLimbs[ uLimb ] ) );
     }
 

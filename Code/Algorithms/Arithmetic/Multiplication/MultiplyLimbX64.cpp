@@ -9,14 +9,10 @@ void MultiplyX64_BaseCase( std::vector< uint64_t >& xLimbs, const uint64_t uOper
     for( size_t uLimb = 0; uLimb < uLimbCount; ++uLimb )
     {
         xLimbs[ uLimb ] = _umul128(
-            uOperand, xLimbs[ uLimb ], &uUpperPart )
-            + uCarry;   // add the previous carry as we go along
-                        // this shouldn't overflow since the biggest pair
-                        // of numbers multiply to:
-                        // (2^64-1)(2^64-1) = 2^128 - 2.2^64 + 1
-                        // ??? maybe? should verify that more.
-
-        uCarry = uUpperPart;
+            uOperand, xLimbs[ uLimb ], &uUpperPart );
+        const uint64_t uAddCarry = _addcarryx_u64(
+            0, xLimbs[ uLimb ], uCarry, &( xLimbs[ uLimb ] ) );
+        uCarry = uUpperPart + uAddCarry;
     }
 
     if( uCarry > 0 )

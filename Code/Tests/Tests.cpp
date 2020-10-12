@@ -4,6 +4,11 @@
 #include <cstdio>
 #include <string>
 
+bool SimpleAddCarryTest();
+bool BigAddCarryTest();
+bool BigSubBorrowTest();
+bool ModTests();
+bool MulTests();
 bool RunTest( const std::string& xName, bool ( * const pfnTestFunction )() );
 
 bool OnePlusOne()
@@ -33,8 +38,6 @@ bool StringTests()
     return true;
 }
 
-bool ModTests();
-
 void DoTests( const Parameters& xParameters )
 {
     puts( "Running tests..." );
@@ -47,7 +50,11 @@ void DoTests( const Parameters& xParameters )
         // add tests here.
         { "1 + 1 == 2", OnePlusOne },
         { "1 - 1 == 0", OneMinusOne },
-        { "Converting string of ones and back again", StringTests },
+        { "converting string of ones and back again", StringTests },
+        { "carry for base case addition", SimpleAddCarryTest },
+        { "carry for mutliple limb addition", BigAddCarryTest },
+        { "borrow for subtraction", BigSubBorrowTest },
+        { "multiple limb multiplication", MulTests },
         { "(10^n - 1) / 9 mod 10 == 1 and similar", ModTests },
     };
     
@@ -55,7 +62,10 @@ void DoTests( const Parameters& xParameters )
     bool bGood = true;
     for( size_t i = 0; i < uTestCount; ++i )
     {
-        bGood = bGood && RunTest( lsaxTests[ i ].mxName, lsaxTests[ i ].mpfnTestFunction );
+        if( RunTest( lsaxTests[ i ].mxName, lsaxTests[ i ].mpfnTestFunction ) == false )
+        {
+            bGood = false;
+        }
     }
 
     puts( bGood

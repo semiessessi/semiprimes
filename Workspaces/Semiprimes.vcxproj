@@ -193,6 +193,7 @@
     <ClCompile Include="..\Code\Number\Number_DivMod.cpp" />
     <ClCompile Include="..\Code\Number\Number_Shift.cpp" />
     <ClCompile Include="..\Code\Tests\Tests.cpp" />
+    <ClCompile Include="..\Code\Tests\Test_Addition.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Division.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Multiplication.cpp" />
   </ItemGroup>
