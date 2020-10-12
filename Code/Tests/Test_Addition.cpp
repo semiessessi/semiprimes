@@ -36,8 +36,19 @@ bool BigAddCarryTest()
         0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000z;
     const Number xBig6 =
         0x10000000000000000000000000000000000000000000000000000000000000000000000000000z;
-    return
+    if( (
         ( ( xBig1 + xAddend ) == xBig2 )
         && ( ( xBig3 + xAddend2 ) == xBig4 )
-        && ( ( xBig5 + xAddend ) == xBig6 );
+        && ( ( xBig5 + xAddend ) == xBig6 ) ) == false )
+    {
+        return false;
+    }
+
+    const Number xTestAgain = 0x100000000000000FFFFFFFFFFFFFFFFFz;
+    if( ( xTestAgain + xTestAgain ) != 0x200000000000001ffffffffffffffffez )
+    {
+        return false;
+    }
+
+    return true;
 }
