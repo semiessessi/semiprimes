@@ -52,3 +52,24 @@ bool BigAddCarryTest()
 
     return true;
 }
+
+bool BigSubBorrowTest()
+{
+    const Number xBig1 =
+        0xFFFFFFFFFFFFFFFF0000000000000000z;
+    const Number xBig2 =
+        0x10000000000000000000000000001z;
+    if( ( xBig1 - 1 )
+        != 0xFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFFz )
+    {
+        return false;
+    }
+
+    if( ( xBig1 - xBig2 )
+        != 0xfffefffffffffffeffffffffffffffffz )
+    {
+        return false;
+    }
+
+    return true;
+}
