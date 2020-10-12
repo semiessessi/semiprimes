@@ -26,6 +26,7 @@ void MultiplyX64_GrammarSchool(
         // base case multiply, add the result after shifting based on our place
         xOperandCopy = xOperandLimbs;
         MultiplyX64_BaseCase( xOperandCopy, xLimbsCopy[ i ] );
+        // SE - TODO: add at offset instead.
         xOperandCopy.insert( xOperandCopy.begin(), i, 0 );
         //printf( "%s + %s\n", Number( xLimbs ).ToString().c_str(), Number( xOperandCopy ).ToString().c_str() );
         AddX64_Generic( xLimbs, xOperandCopy );
