@@ -61,13 +61,13 @@ Number& Number::operator >>=( const uint64_t uOperand )
 
     const uint64_t uLimbCount = mxLimbs.size() - uLimbOffset;
     const uint64_t uInverseBitOffset = 64uLL - uBitOffset;
-    const uint64_t uNextMask = ( 1uLL << ( 64uLL - uOperand ) ) - 1uLL;
+    const uint64_t uNextMask = ( 1uLL << uBitOffset ) - 1uLL;
     const uint64_t uPreviousMask = ~uNextMask;
-    for( uint64_t i = 0; i < uLimbCount - 1; ++i )
+    for( uint64_t i = uLimbOffset + 1; i < uLimbCount; ++i )
     {
-        const uint64_t uSourceIndex = i + uLimbOffset;
-        mxLimbs[ i ] = ( ( mxLimbs[ uSourceIndex + 1 ] & uNextMask ) << uInverseBitOffset )
-            | ( ( mxLimbs[ uSourceIndex ] & uPreviousMask ) >> uBitOffset );
+        const uint64_t uSourceIndex = i - uLimbOffset;
+        mxLimbs[ i - 1 ] = ( ( mxLimbs[ uSourceIndex ] & uNextMask ) << uInverseBitOffset)
+            | ( ( mxLimbs[ uSourceIndex - 1 ] & uPreviousMask ) >> uBitOffset );
     }
 
     mxLimbs.back() >>= uBitOffset;

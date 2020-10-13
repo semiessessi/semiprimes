@@ -71,11 +71,16 @@ public:
 #define OPERATOR_FROM_INPLACE_NOINT( op ) \
     Number operator op( const Number& xOperand ) const \
     { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; }
+#define OPERATOR_FROM_INPLACE_NOZ( op ) \
+    Number operator op( const int64_t xOperand ) const \
+    { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; }
 
-    OPERATOR_FROM_INPLACE( +)
+    OPERATOR_FROM_INPLACE( + )
     OPERATOR_FROM_INPLACE( - )
     OPERATOR_FROM_INPLACE( * )
     OPERATOR_FROM_INPLACE( / )
+    OPERATOR_FROM_INPLACE_NOZ( >> )
+    OPERATOR_FROM_INPLACE_NOZ( << )
     OPERATOR_FROM_INPLACE_NOINT( % )
     
     void InplaceLimbShiftLeft( const size_t uLimbs );
