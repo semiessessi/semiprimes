@@ -9,7 +9,8 @@ bool BigAddCarryTest();
 bool BigSubBorrowTest();
 bool ModTests();
 bool MulTests();
-bool ShiftTests();
+bool LeftShiftTests();
+bool RightShiftTests();
 bool RunTest( const std::string& xName, bool ( * const pfnTestFunction )() );
 
 bool OnePlusOne()
@@ -55,7 +56,8 @@ void DoTests( const Parameters& xParameters )
         { "carry for base case addition", SimpleAddCarryTest },
         { "carry for mutliple limb addition", BigAddCarryTest },
         { "borrow for subtraction", BigSubBorrowTest },
-        { "multiple limb bit shifts", ShiftTests },
+        { "multiple limb left shifts", LeftShiftTests },
+        { "multiple limb right shifts", RightShiftTests },
         { "multiple limb multiplication", MulTests },
         { "(10^n - 1) / 9 mod 10 == 1 and similar", ModTests },
     };
