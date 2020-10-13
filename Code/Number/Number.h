@@ -72,7 +72,7 @@ public:
     Number operator op( const Number& xOperand ) const \
     { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; }
 
-    OPERATOR_FROM_INPLACE( +)
+    OPERATOR_FROM_INPLACE( + )
     OPERATOR_FROM_INPLACE( - )
     OPERATOR_FROM_INPLACE( * )
     OPERATOR_FROM_INPLACE( / )
