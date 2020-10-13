@@ -18,8 +18,7 @@ Factorisation PowersOf2( const Number& xNumber )
     while( ( xWorkingValue.LeastSignificantLimb() != 0 )
         && ( ( xWorkingValue & 0x1 ) == 0 ) )
     {
-        //xWorkingValue >>= 1;
-        xWorkingValue /= 2;
+        xWorkingValue >>= 1;
         ++iPowers;
     }
 
