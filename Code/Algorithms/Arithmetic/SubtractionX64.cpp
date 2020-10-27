@@ -30,13 +30,18 @@ void SubX64_BaseCase( std::vector< uint64_t >& xLimbs, uint64_t uOperand )
 void SubX64_SmallFromLarge( std::vector< uint64_t >& xGreater, const std::vector< uint64_t >& xSmaller )
 {
     unsigned char ucBorrow = 0;
-    size_t uLimb = 1;
-    ucBorrow = _subborrow_u64(
-        ucBorrow,
-        xGreater[ 0 ],
-        xSmaller[ 0 ],
-        &( xGreater[ 0 ] ) );
+    size_t uLimb = 0;
     const size_t uLimbCount = xGreater.size();
+    const size_t uSmallerLimbCount = xSmaller.size();
+    for( ; uLimb < uSmallerLimbCount; ++uLimb )
+    {
+        ucBorrow = _subborrow_u64(
+            ucBorrow,
+            xGreater[ uLimb ],
+            xSmaller[ uLimb ],
+            &( xGreater[ uLimb ] ) );
+    }
+
     bool bContinueBorrow = ( ucBorrow > 0 )
         && ( uLimb < uLimbCount );
     while( bContinueBorrow )
@@ -44,7 +49,7 @@ void SubX64_SmallFromLarge( std::vector< uint64_t >& xGreater, const std::vector
         ucBorrow = _subborrow_u64(
             ucBorrow,
             xGreater[ uLimb ],
-            xSmaller[ uLimb ],
+            0,
             &( xGreater[ uLimb ] ) );
         ++uLimb;
         bContinueBorrow = ( ucBorrow > 0 )

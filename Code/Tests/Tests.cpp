@@ -7,6 +7,7 @@
 bool SimpleAddCarryTest();
 bool BigAddCarryTest();
 bool BigSubBorrowTest();
+bool SpecificSubTest();
 bool ModTests();
 bool MulTests();
 bool LeftShiftTests();
@@ -56,6 +57,7 @@ void DoTests( const Parameters& xParameters )
         { "carry for base case addition", SimpleAddCarryTest },
         { "carry for mutliple limb addition", BigAddCarryTest },
         { "borrow for subtraction", BigSubBorrowTest },
+        { "one highly specific subtraction", SpecificSubTest },
         { "multiple limb left shifts", LeftShiftTests },
         { "multiple limb right shifts", RightShiftTests },
         { "multiple limb multiplication", MulTests },

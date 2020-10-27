@@ -5,7 +5,7 @@ Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Num
     Number xQuotient;
     xRemainder = 0;
     const size_t uBitCount = xNumerator.MostSignificantBitPosition() + 1;
-    for( size_t i = uBitCount; i != 0; --i )
+    for( size_t i = uBitCount; i > 0; --i )
     {
         size_t uIndex = i - 1;
         xRemainder <<= 1;
@@ -13,6 +13,12 @@ Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Num
         if( xRemainder >= xDenominator )
         {
             xRemainder -= xDenominator;
+            // debug...
+            if( xRemainder >= xDenominator )
+            {
+                return -1;
+            }
+
             xQuotient.SetBit( uIndex );
         }
     }
