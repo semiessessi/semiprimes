@@ -73,3 +73,17 @@ bool BigSubBorrowTest()
 
     return true;
 }
+
+bool SpecificSubTest()
+{
+    const Number xFirst = 0x48573ee2112346670fc810976a856e0f80807ca0a14z;
+    const Number xSecond = 0x2ac3a4edbbfb8014e3ba83411e915e8000000000000z;
+
+    if( ( xFirst - xSecond )
+        != 0x1d9399f45527c6522c0d8d564bf40f8f80807ca0a14z )
+    {
+        return false;
+    }
+
+    return true;
+}
