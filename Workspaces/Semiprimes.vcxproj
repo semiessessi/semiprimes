@@ -173,6 +173,7 @@
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.cpp" />
+    <ClCompile Include="..\Code\Algorithms\General\EuclideanGCD.cpp" />
     <ClCompile Include="..\Code\Algorithms\Primality\PowersOf2.cpp" />
     <ClCompile Include="..\Code\Algorithms\Primality\SPRP.cpp" />
     <ClCompile Include="..\Code\Algorithms\Primality\TrialDivision.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\SubtractionX64.h" />
+    <ClInclude Include="..\Code\Algorithms\General\EuclideanGCD.h" />
     <ClInclude Include="..\Code\Algorithms\Primality\PowersOf2.h" />
     <ClInclude Include="..\Code\Algorithms\Primality\PowersOfN.h" />
     <ClInclude Include="..\Code\Algorithms\Primality\SPRP.h" />
