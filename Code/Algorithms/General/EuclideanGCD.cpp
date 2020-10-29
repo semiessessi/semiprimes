@@ -9,7 +9,7 @@ Number GCD_Euclidean( const Number& xA, const Number& xB )
 	{
 		xTemp = xQ;
 		xQ = xP % xQ;
-		xP = xQ;
+		xP = xTemp;
 	}
 
 	return xP;

@@ -2,6 +2,7 @@
 
 #include "../Algorithms/Arithmetic/Multiplication/MultiplyLimbX64.h"
 #include "../Algorithms/Arithmetic/Multiplication/GrammarSchoolX64.h"
+#include "../Algorithms/General/EuclideanGCD.h"
 
 Number Number::operator -() const
 {
@@ -116,4 +117,9 @@ void Number::InplaceModMul(
 {
     *this *= xMultiplicand;
     *this %= xDenominator;
+}
+
+Number Number::GCD( const Number& xOther ) const
+{
+    return GCD_Euclidean( *this, xOther );
 }

@@ -35,6 +35,12 @@ Number Number::DivMod(
         return 0;
     }
 
+    if( uDenominator == 1 )
+    {
+        uRemainder = 0;
+        return xNumerator;
+    }
+
     Number xReturnValue = 0;
     //xReturnValue.mxLimbs.reserve( xNumerator.mxLimbs.size() );
     size_t uLimb = xNumerator.mxLimbs.size();
@@ -64,6 +70,12 @@ Number Number::DivMod(
     {
         xRemainder = xNumerator;
         return 0;
+    }
+
+    if( xDenominator == 1 )
+    {
+        xRemainder = 0;
+        return xNumerator;
     }
 
     return BinaryDivision( xNumerator, xDenominator, xRemainder );

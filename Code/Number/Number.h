@@ -27,7 +27,7 @@ public:
 
     bool operator >( const Number& xOperand ) const;
     bool operator >( const uint64_t uOperand ) const { return ( mxLimbs.size() > 1 ) || ( mxLimbs[ 0 ] > uOperand ); }
-    bool operator <( const Number& xOperand ) const { return -*this > -xOperand; }
+    bool operator <( const Number& xOperand ) const { return xOperand  > *this ; }
     //bool operator <( const uint64_t uOperand ) const { return -*this > -uOperand; }
     bool operator <=( const Number& xOperand ) const { return xOperand > * this; }
     bool operator <=( const uint64_t uOperand ) const { return ( mxLimbs.size() == 1 ) && ( uOperand > mxLimbs[ 0 ] ); }
@@ -129,6 +129,8 @@ public:
     void InplaceModMul(
         const Number& xMultiplicand,
         const Number& xDenominator );
+
+    Number GCD( const Number& xOther ) const;
 
 private:
 

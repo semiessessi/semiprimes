@@ -2,6 +2,7 @@
 
 #include "Parameters.h"
 #include "Timing.h"
+#include "../Algorithms/Factorisation/PollardRho.h"
 #include "../Algorithms/Primality/PowersOf2.h"
 #include "../Algorithms/Primality/PowersOfN.h"
 #include "../Algorithms/Primality/SPRP.h"

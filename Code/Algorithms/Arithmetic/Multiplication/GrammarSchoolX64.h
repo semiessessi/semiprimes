@@ -4,5 +4,6 @@
 #include <vector>
 
 void MultiplyX64_GrammarSchool( std::vector< uint64_t >& xLimbs, const std::vector< uint64_t >& xOperandLimbs );
+void SquareX64_GrammarSchool( std::vector< uint64_t >& xLimbs );
 
 #endif
