@@ -2,6 +2,11 @@
 
 #include <cstdio>
 
+void Tidy( Factorisation& xFactorisation )
+{
+
+}
+
 Factorisation::Factorisation( const Number& xNumber, const bool bPrime )
 : mxKnownFactors()
 , mxNumber( xNumber )
@@ -11,8 +16,10 @@ Factorisation::Factorisation( const Number& xNumber, const bool bPrime )
 {
 }
 
-void Factorisation::Report( const bool bVerbose ) const
+void Factorisation::Report( const bool bVerbose )
 {
+    Tidy( *this );
+
     const std::string xNumberString = mxNumber.ToString();
     if( mbKnownPrime && ( miPower == 1 ) )
     {

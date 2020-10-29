@@ -89,3 +89,31 @@ uint64_t Number::ModMul(
     xProduct *= uMultiplicand;
     return xProduct % uDenominator;
 }
+
+Number Number::ModMul(
+    const Number& xNumerator,
+    const Number& xMultiplicand,
+    const Number& xDenominator )
+{
+    // SE - TODO: better algorithms?
+// .. avoid the copy?
+    Number xProduct = xNumerator;
+    xProduct *= xMultiplicand;
+    return xProduct % xDenominator;
+}
+
+void Number::InplaceModMul(
+    const uint64_t uMultiplicand,
+    const uint64_t uDenominator )
+{
+    *this *= uMultiplicand;
+    *this %= uDenominator;
+}
+
+void Number::InplaceModMul(
+    const Number& xMultiplicand,
+    const Number& xDenominator )
+{
+    *this *= xMultiplicand;
+    *this %= xDenominator;
+}

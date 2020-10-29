@@ -15,7 +15,7 @@ struct Factorisation
 	
 	Factorisation( const Number& xNumber = 0z, const bool bPrime = false );
 
-	void Report( const bool bVerbose = false ) const;
+	void Report( const bool bVerbose = false );
 		
 	template< typename Algorithm >
 	void ContinueWithAlgorithm( const Algorithm& xAlgorithm );

@@ -13,12 +13,6 @@ Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Num
         if( xRemainder >= xDenominator )
         {
             xRemainder -= xDenominator;
-            // debug...
-            if( xRemainder >= xDenominator )
-            {
-                return -1;
-            }
-
             xQuotient.SetBit( uIndex );
         }
     }

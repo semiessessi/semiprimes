@@ -118,6 +118,17 @@ public:
         const Number& xNumerator,
         const uint64_t uMultiplicand,
         const uint64_t uDenominator );
+    static Number ModMul(
+        const Number& xNumerator,
+        const Number& xMultiplicand,
+        const Number& xDenominator );
+
+    void InplaceModMul(
+        const uint64_t uMultiplicand,
+        const uint64_t uDenominator );
+    void InplaceModMul(
+        const Number& xMultiplicand,
+        const Number& xDenominator );
 
 private:
 
