@@ -78,6 +78,12 @@ Number Number::DivMod(
         return xNumerator;
     }
 
+    if( xDenominator.mxLimbs.size() == 1 )
+    {
+        xRemainder.mxLimbs.resize( 1 );
+        return DivMod( xNumerator, xDenominator.mxLimbs[ 0 ], xRemainder.mxLimbs[ 0 ] );
+    }
+
     return BinaryDivision( xNumerator, xDenominator, xRemainder );
 }
 
@@ -88,6 +94,11 @@ uint64_t Number::Mod(
     if( xNumerator < uDenominator )
     {
         return  xNumerator.MostSignificantLimb();
+    }
+
+    if( xNumerator == uDenominator )
+    {
+        return 0;
     }
 
     uint64_t uRemainder = 0;

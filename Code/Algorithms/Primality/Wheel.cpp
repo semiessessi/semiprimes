@@ -94,4 +94,14 @@ Factorisation Wheel5( const Number& xNumber )
     return xResult;
 }
 
+static int siWheelBound = 0;
 
+void SetWheelBound( const int iBound )
+{
+    siWheelBound = iBound;
+}
+
+uint64_t GetWheelBound()
+{
+    return siWheelBound;
+}

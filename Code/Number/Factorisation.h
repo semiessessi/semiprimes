@@ -18,7 +18,7 @@ struct Factorisation
 	void Report( const bool bVerbose = false );
 		
 	template< typename Algorithm >
-	void ContinueWithAlgorithm( const Algorithm& xAlgorithm );
+	void ContinueWithAlgorithm( const Algorithm& xAlgorithm, const bool bRepeat = false );
 };
 
 #include "Factorisation.inl"

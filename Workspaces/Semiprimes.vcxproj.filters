@@ -129,6 +129,9 @@
     <ClCompile Include="..\Code\Algorithms\Factorisation\PollardRho.cpp">
       <Filter>Algorithms\Factorisation</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Tests\Test_Rho.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">

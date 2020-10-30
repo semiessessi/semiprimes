@@ -112,7 +112,7 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 #else
         2500000000
 #endif
-            / ( xNumber.GetLimbCount() * 2 - 1 );
+            / ( xNumber.GetLimbCount() * xNumber.GetLimbCount() * 2 - 1 );
 
     Number xWorkingValue = xNumber;
     Factorisation xResult( xNumber );
@@ -147,6 +147,10 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
             return xResult;
         }
     }
+
+    void SetWheelBound( const int iBound );
+
+    SetWheelBound( uTest * uTest - 1 );
 
     if( xResult.mxKnownFactors.empty() )
     {

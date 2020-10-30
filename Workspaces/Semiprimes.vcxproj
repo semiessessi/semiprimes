@@ -199,6 +199,7 @@
     <ClCompile Include="..\Code\Tests\Test_Addition.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Division.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Multiplication.cpp" />
+    <ClCompile Include="..\Code\Tests\Test_Rho.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Shifts.cpp" />
   </ItemGroup>
   <ItemGroup>
