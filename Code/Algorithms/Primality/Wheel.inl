@@ -104,6 +104,8 @@ Factorisation WheelUpTo( const Number& xNumber )
 template< int N >
 Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 {
+    void SetWheelBound( const int iBound );
+
     GenerateWheel();
 
     const uint64_t uWheelLimit =
@@ -124,6 +126,8 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
         {
             xResult.mbKnownComposite = true;
             Factorisation xNew( uTest, true );
+            xNew.szFactoringAlgorithm = "trial divison with wheel";
+            xNew.szProofName = "trial divison with wheel";
             xNew.miPower = 0;
             do
             {
@@ -134,6 +138,7 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
             xResult.mxKnownFactors.push_back( std::move( xNew ) );
         }
 
+        const uint64_t uOldTest = uTest;
         uTest += saiDifferences[ iDiff ];
         ++iDiff;
         if( iDiff >= siWheelLength )
@@ -143,21 +148,24 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 
         if( uTest > uWheelLimit )
         {
+            SetWheelBound( uOldTest * uOldTest - 1ULL );
+
             xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
             return xResult;
         }
     }
-
-    void SetWheelBound( const int iBound );
 
     SetWheelBound( uTest * uTest - 1 );
 
     if( xResult.mxKnownFactors.empty() )
     {
         xResult.mbKnownPrime = true;
+        xResult.szProofName = "trial divison with wheel";
     }
     else if( xWorkingValue > 1 )
     {
+        xResult.szProofName = "trial divison with wheel";
+        xResult.szFactoringAlgorithm = "trial divison with wheel";
         xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue, true ) );
     }
 

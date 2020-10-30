@@ -9,6 +9,8 @@ struct Factorisation
 {
 	std::vector< Factorisation > mxKnownFactors;
 	Number mxNumber;
+	const char* szProofName;
+	const char* szFactoringAlgorithm;
 	int miPower;
 	bool mbKnownPrime;
 	bool mbKnownComposite;

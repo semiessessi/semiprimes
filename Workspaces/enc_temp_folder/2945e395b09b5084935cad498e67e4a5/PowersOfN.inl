@@ -15,7 +15,7 @@ Factorisation PowersOf( const Number& xNumber )
     }
 
     static const std::string xName =
-        std::string( "power of " ) + std::to_string( N ) + " removal";
+        std::string( "Power of " ) + std::to_string( N ) + " removal";
     Factorisation xResult( xNumber );
     xResult.mbKnownComposite = iPowers > 0;
     if( xResult.mbKnownComposite )

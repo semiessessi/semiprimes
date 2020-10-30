@@ -71,8 +71,12 @@ Number& Number::operator >>=( const uint64_t uOperand )
     }
 
     mxLimbs.back() >>= uBitOffset;
-
+    
     mxLimbs.resize( mxLimbs.size() - uLimbOffset );
+    if( mxLimbs.back() == 0 )
+    {
+        mxLimbs.pop_back();
+    }
 
     return *this;
 }

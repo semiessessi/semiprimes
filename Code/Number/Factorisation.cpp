@@ -2,6 +2,8 @@
 
 #include <cstdio>
 
+const char* const kszDefaultName = "";
+
 void Tidy( Factorisation& xFactorisation )
 {
 
@@ -10,6 +12,8 @@ void Tidy( Factorisation& xFactorisation )
 Factorisation::Factorisation( const Number& xNumber, const bool bPrime )
 : mxKnownFactors()
 , mxNumber( xNumber )
+, szProofName( kszDefaultName )
+, szFactoringAlgorithm( kszDefaultName )
 , miPower( 1 )
 , mbKnownPrime( bPrime )
 , mbKnownComposite( false )
@@ -64,7 +68,27 @@ void Factorisation::Report( const bool bVerbose )
                         : ( mxKnownFactors[ uFactor ].mbKnownPrime
                             ? "prime"
                             : "unknown" );
-                printf( " (%s)\n*\n", szType );
+                printf( " (%s", szType );
+                if( mxKnownFactors[ uFactor ].mbKnownPrime
+                    && ( mxKnownFactors[ uFactor ].szProofName[ 0 ] != 0 ) )
+                {
+                    printf( " proven prime by %s", mxKnownFactors[ uFactor ].szProofName );
+                }
+
+                if( mxKnownFactors[ uFactor ].mbKnownComposite
+                    && ( mxKnownFactors[ uFactor ].szProofName[ 0 ] != 0 ) )
+                {
+                    printf( " proven composite by %s", mxKnownFactors[ uFactor ].szProofName );
+                }
+
+                if( mxKnownFactors[ uFactor ].szFactoringAlgorithm[ 0 ] != 0 )
+                {
+                    printf( " - found using %s", mxKnownFactors[ uFactor ].szFactoringAlgorithm );
+                }
+
+                printf( ")\n%s\n", ( uFactor != ( mxKnownFactors.size() - 1 ) )
+                        ? "*"
+                        : "" );
             }
             else
             {

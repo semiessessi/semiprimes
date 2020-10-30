@@ -29,7 +29,7 @@ Factorisation PowersOf2( const Number& xNumber )
         Factorisation xTwoFactorisation( 2z );
         xTwoFactorisation.mbKnownPrime = true;
         xTwoFactorisation.miPower = iPowers;
-        xTwoFactorisation.szFactoringAlgorithm = "power of 2 removal";
+        xTwoFactorisation.szFactoringAlgorithm = "Power of 2 removal";
         xTwoFactorisation.szProofName = "2 is prime";
         xResult.mxKnownFactors.push_back( xTwoFactorisation );
         if( xWorkingValue > 1 )

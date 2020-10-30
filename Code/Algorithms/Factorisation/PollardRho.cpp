@@ -43,11 +43,17 @@ Factorisation PollardRho( const Number& xNumber )
         if( xD != 1 )
         {
             xResult.mbKnownComposite = true;
-            Factorisation xNew( xD, xD < GetWheelBound() );
+            const bool bPrimeByWheel = xD < GetWheelBound();
+            Factorisation xNew( xD, bPrimeByWheel );
             xNew.miPower = 1;
+            xNew.szFactoringAlgorithm = "Pollard's rho";
+            if( bPrimeByWheel )
+            {
+                xNew.szProofName = "bound set by trial division";
+            }
+            xNew.szFactoringAlgorithm = "Pollard's rho";
             xRemainingValue /= xD;
             xResult.mxKnownFactors.push_back( xNew );
-
             break;
         }
 
@@ -84,7 +90,8 @@ Factorisation PollardRho( const Number& xNumber )
 
     if( xRemainingValue > 1 )
     {
-        xResult.mxKnownFactors.push_back( xRemainingValue );
+        xResult.mxKnownFactors.push_back( Factorisation(
+            xRemainingValue, xRemainingValue < GetWheelBound() ) );
     }
 
     return xResult;
