@@ -41,5 +41,5 @@ void MultiplyX64_GrammarSchool(
 void SquareX64_GrammarSchool(
     std::vector< uint64_t >& xLimbs )
 {
-    MultiplyX64_GrammarSchool( xLimbs, xLimbs );
+    MultiplyX64_GrammarSchool( xLimbs, std::vector< uint64_t >( xLimbs ) );
 }
