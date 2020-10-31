@@ -1,9 +1,9 @@
 #include "../../Number/Number.h"
 
-Number BinarySquareRoot( const Number& xNumber )
+Number BinarySquareRoot( const Number& xNumber, Number& xRemainder )
 {
     Number xResult = 0;
-    Number xRemainder = 0;
+    xRemainder = 0;
     const uint64_t uPowerOf4BitCount =
         xNumber.MostSignificantBitPosition() & 0xFFFFFFFFFFFFFFFEULL;
     Number xWorkingValue = xNumber;

@@ -3,6 +3,6 @@
 
 class Number;
 
-Number BinarySquareRoot( const Number& xNumber );
+Number BinarySquareRoot( const Number& xNumber, Number& xRemainder );
 
 #endif

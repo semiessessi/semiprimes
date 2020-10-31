@@ -72,9 +72,22 @@ uint64_t Number::GetPerfectPower() const
     return 1;
 }
 
+bool Number::IsPerfectSquare() const
+{
+    Number xRemainder;
+    SquareRoot( xRemainder );
+    return xRemainder == 0;
+}
+
 Number Number::SquareRoot() const
 {
-    return BinarySquareRoot( *this );
+    Number xRemainder;
+    return SquareRoot( xRemainder );
+}
+
+Number Number::SquareRoot( Number& xRemainder ) const
+{
+    return BinarySquareRoot( *this, xRemainder );
 }
 
 std::string Number::ToString() const
