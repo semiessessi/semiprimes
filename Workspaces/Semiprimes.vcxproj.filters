@@ -132,6 +132,12 @@
     <ClCompile Include="..\Code\Tests\Test_Rho.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Tests\Test_SquareRoot.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Factorisation\Fermat.cpp">
+      <Filter>Algorithms\Factorisation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -189,6 +195,9 @@
       <Filter>Algorithms\General</Filter>
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\Factorisation\PollardRho.h">
+      <Filter>Algorithms\Factorisation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Factorisation\Fermat.h">
       <Filter>Algorithms\Factorisation</Filter>
     </ClInclude>
   </ItemGroup>

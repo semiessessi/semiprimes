@@ -12,6 +12,7 @@ bool ModTests();
 bool MulTests();
 bool LeftShiftTests();
 bool RightShiftTests();
+bool TestSquareRoot();
 bool TestRho();
 
 bool RunTest( const std::string& xName, bool ( * const pfnTestFunction )() );
@@ -64,6 +65,7 @@ void DoTests( const Parameters& xParameters )
         { "multiple limb right shifts", RightShiftTests },
         { "multiple limb multiplication", MulTests },
         { "(10^n - 1) / 9 mod 10 == 1 and similar", ModTests },
+        { "Square root tests", TestSquareRoot },
         { "Pollard rho algorithm tests", TestRho },
     };
     

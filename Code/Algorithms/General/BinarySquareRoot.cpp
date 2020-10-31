@@ -1,24 +1,26 @@
 #include "../../Number/Number.h"
 
-Number BinarySquareRoot( const Number& xNumber )
+Number BinarySquareRoot( const Number& xNumber, Number& xRemainder )
 {
     Number xResult = 0;
-    Number xRemainder = 0;
+    xRemainder = xNumber;
     const uint64_t uPowerOf4BitCount =
         xNumber.MostSignificantBitPosition() & 0xFFFFFFFFFFFFFFFEULL;
-    Number xWorkingValue = xNumber;
     Number xTestValue = 1z << uPowerOf4BitCount;
+        //( ( uPowerOf4BitCount < 1 ) ? 1 : uPowerOf4BitCount );
     while( xTestValue > 0 )
     {
-        if( xWorkingValue > ( xResult + xTestValue ) )
+        xRemainder -= xTestValue;
+        if( xRemainder >= xResult )
         {
-            xWorkingValue -= xTestValue;
-            xWorkingValue -= xResult;
+            
+            xRemainder -= xResult;
             xResult >>= 1;
             xResult += xTestValue;
         }
         else
         {
+            xRemainder += xTestValue;
             xResult >>= 1;
         }
 

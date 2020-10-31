@@ -2,6 +2,7 @@
 
 #include "../Algorithms/Arithmetic/Multiplication/MultiplyLimbX64.h"
 #include "../Algorithms/Arithmetic/Multiplication/GrammarSchoolX64.h"
+#include "../Algorithms/General/BinarySquareRoot.h"
 #include "../Algorithms/General/EuclideanGCD.h"
 
 Number Number::operator -() const
@@ -69,6 +70,24 @@ uint64_t Number::GetPerfectPower() const
         // todo...
     }
     return 1;
+}
+
+bool Number::IsPerfectSquare() const
+{
+    Number xRemainder;
+    SquareRoot( xRemainder );
+    return xRemainder == 0;
+}
+
+Number Number::SquareRoot() const
+{
+    Number xRemainder;
+    return SquareRoot( xRemainder );
+}
+
+Number Number::SquareRoot( Number& xRemainder ) const
+{
+    return BinarySquareRoot( *this, xRemainder );
 }
 
 std::string Number::ToString() const

@@ -31,7 +31,7 @@ Number& Number::operator <<=( const uint64_t uOperand )
             | ( ( mxLimbs[ uSourceIndex - 1 ] & uPreviousMask ) >> uInverseBitOffset );
     }
 
-    mxLimbs[ uLimbOffset ] <<= uBitOffset;
+    mxLimbs[ uLimbOffset ] = mxLimbs[ 0 ] << uBitOffset;
 
     for( uint64_t i = 0; i < uLimbOffset; ++i )
     {
@@ -44,7 +44,7 @@ Number& Number::operator <<=( const uint64_t uOperand )
 Number& Number::operator >>=( const uint64_t uOperand )
 {
     const uint64_t uMSB = MostSignificantBitPosition();
-    if( uOperand >= uMSB )
+    if( uOperand > uMSB )
     {
         mxLimbs.resize( 1 );
         mxLimbs[ 0 ] = 0;

@@ -29,7 +29,7 @@ public:
     bool operator >( const uint64_t uOperand ) const { return ( mxLimbs.size() > 1 ) || ( mxLimbs[ 0 ] > uOperand ); }
     bool operator <( const Number& xOperand ) const { return xOperand  > *this ; }
     //bool operator <( const uint64_t uOperand ) const { return -*this > -uOperand; }
-    bool operator <=( const Number& xOperand ) const { return !( xOperand > * this ); }
+    bool operator <=( const Number& xOperand ) const { return !( * this > xOperand ); }
     bool operator <=( const uint64_t uOperand ) const { return ( mxLimbs.size() == 1 ) && ( uOperand > mxLimbs[ 0 ] ); }
     bool operator >=( const Number& xOperand ) const { return !( *this < xOperand ); }
     bool operator >=( const uint64_t uOperand ) const { return ( mxLimbs.size() > 1 ) || ( mxLimbs[ 0 ] >= uOperand ); }
@@ -63,6 +63,8 @@ public:
     Number& operator %=( const Number& iOperand );
     int64_t operator %( const int64_t iOperand ) const;
 
+    Number& operator ++() { return *this += 1ULL; }
+
 #define OPERATOR_FROM_INPLACE( op ) \
     Number operator op( const Number& xOperand ) const \
     { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; } \
@@ -91,6 +93,9 @@ public:
     void SetBit( const uint64_t uIndex, const bool bValue = true );
 
     uint64_t GetPerfectPower() const;
+    bool IsPerfectSquare() const;
+    Number SquareRoot() const;
+    Number SquareRoot( Number& xRemainder ) const;
 
     size_t GetLimbCount() const { return mxLimbs.size(); }
     uint64_t LeastSignificantLimb() const { return mxLimbs[ 0 ]; }
