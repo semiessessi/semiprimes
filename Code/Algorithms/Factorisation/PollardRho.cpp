@@ -2,12 +2,18 @@
 #include "../../Number/Factorisation.h"
 #include "../../Number/Number.h"
 
-static const int kiRhoTestLimit = 500000;
+static const int kiRhoTestLimit =
+#if _DEBUG
+    25000
+#else
+    1250000
+#endif
+;
 static const int kiSubTestLimit = 100;
 
 #define MOD_INNER_LOOP (1)
 
-uint64_t GetWheelBound();
+Number GetWheelBound();
 
 Factorisation PollardRho( const Number& xNumber )
 {
@@ -21,7 +27,7 @@ Factorisation PollardRho( const Number& xNumber )
         for( int j = i; j < i + kiSubTestLimit; ++j )
         {
             xX = ( xX * xX + 1 ) % xNumber;
-            xY = ( xY * xY + 1 ) % xNumber;
+            xY = ( xY * xY + 1 );//% xNumber;
             xY = ( xY * xY + 1 ) % xNumber;
             xD *= ( xX > xY )
                 ? xX - xY
@@ -40,22 +46,6 @@ Factorisation PollardRho( const Number& xNumber )
         }
 
         xD = xNumber.GCD( xD );
-        if( xD != 1 )
-        {
-            xResult.mbKnownComposite = true;
-            const bool bPrimeByWheel = xD < GetWheelBound();
-            Factorisation xNew( xD, bPrimeByWheel );
-            xNew.miPower = 1;
-            xNew.szFactoringAlgorithm = "Pollard's rho";
-            if( bPrimeByWheel )
-            {
-                xNew.szProofName = "bound set by trial division";
-            }
-            xNew.szFactoringAlgorithm = "Pollard's rho";
-            xRemainingValue /= xD;
-            xResult.mxKnownFactors.push_back( xNew );
-            break;
-        }
 
         if( xD == xNumber )
         {
@@ -72,8 +62,14 @@ Factorisation PollardRho( const Number& xNumber )
                 if( xD != 1 )
                 {
                     xResult.mbKnownComposite = true;
-                    Factorisation xNew( xD, false );
+                    const bool bPrimeByWheel = xD < GetWheelBound();
+                    Factorisation xNew( xD, bPrimeByWheel );
                     xNew.miPower = 1;
+                    xNew.szFactoringAlgorithm = "Pollard's rho";
+                    if( bPrimeByWheel )
+                    {
+                        xNew.szProofName = "bound set by trial division";
+                    }
                     xRemainingValue /= xD;
                     xResult.mxKnownFactors.push_back( xNew );
 
@@ -85,6 +81,22 @@ Factorisation PollardRho( const Number& xNumber )
             {
                 break;
             }
+        }
+
+        if( xD != 1 )
+        {
+            xResult.mbKnownComposite = true;
+            const bool bPrimeByWheel = xD < GetWheelBound();
+            Factorisation xNew( xD, bPrimeByWheel );
+            xNew.miPower = 1;
+            xNew.szFactoringAlgorithm = "Pollard's rho";
+            if( bPrimeByWheel )
+            {
+                xNew.szProofName = "bound set by trial division";
+            }
+            xRemainingValue /= xD;
+            xResult.mxKnownFactors.push_back( xNew );
+            break;
         }
     }
 

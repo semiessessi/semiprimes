@@ -13,7 +13,7 @@ static constexpr int aiWheelPrimes[] = {
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
     47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103,
     107, 109, 113, 127, 131, 137, 139, 149,151, 157, 163,
-    167, 176, 179, 181, 191, 193, 197, 199, 211, 223, 227,
+    167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227,
     229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281,
     283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353,
     359, 367, 373, 379, 383, 389, 397, 401, 409,
@@ -104,15 +104,15 @@ Factorisation WheelUpTo( const Number& xNumber )
 template< int N >
 Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 {
-    void SetWheelBound( const int iBound );
+    void SetWheelBound( const Number& iBound );
 
     GenerateWheel();
 
     const uint64_t uWheelLimit =
 #if _DEBUG
-        55000000
+        25000000
 #else
-        2500000000
+        1250000000
 #endif
             / ( xNumber.GetLimbCount() * xNumber.GetLimbCount() * 2 - 1 );
 
@@ -120,7 +120,7 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
     Factorisation xResult( xNumber );
     uint64_t uTest = SieveLength * 2 + 1;;
     int iDiff = 0;
-    while( xWorkingValue > ( ( uTest * uTest ) - 1 ) )
+    while( xWorkingValue > ( ( Number( uTest ) * uTest ) - 1 ) )
     {
         if( ( xWorkingValue % uTest ) == 0 )
         {
@@ -148,14 +148,14 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 
         if( uTest > uWheelLimit )
         {
-            SetWheelBound( uOldTest * uOldTest - 1ULL );
+            SetWheelBound( ( Number( uOldTest ) * uOldTest ) - 1 );
 
             xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
             return xResult;
         }
     }
 
-    SetWheelBound( uTest * uTest - 1 );
+    SetWheelBound( Number( uTest ) * uTest - 1 );
 
     if( xResult.mxKnownFactors.empty() )
     {
