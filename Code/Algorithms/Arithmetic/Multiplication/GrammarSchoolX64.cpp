@@ -32,8 +32,14 @@ void MultiplyX64_GrammarSchool(
         AddX64_Generic( xLimbs, xOperandCopy );
     }
 
-    while( xLimbs.back() == 0 )
+    while( ( xLimbs.size() > 1 ) && ( xLimbs.back() == 0 ) )
     {
         xLimbs.pop_back();
     }
+}
+
+void SquareX64_GrammarSchool(
+    std::vector< uint64_t >& xLimbs )
+{
+    MultiplyX64_GrammarSchool( xLimbs, std::vector< uint64_t >( xLimbs ) );
 }

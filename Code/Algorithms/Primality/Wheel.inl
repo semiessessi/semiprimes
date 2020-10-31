@@ -13,7 +13,7 @@ static constexpr int aiWheelPrimes[] = {
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
     47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103,
     107, 109, 113, 127, 131, 137, 139, 149,151, 157, 163,
-    167, 176, 179, 181, 191, 193, 197, 199, 211, 223, 227,
+    167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227,
     229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281,
     283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353,
     359, 367, 373, 379, 383, 389, 397, 401, 409,
@@ -104,26 +104,30 @@ Factorisation WheelUpTo( const Number& xNumber )
 template< int N >
 Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 {
+    void SetWheelBound( const Number& iBound );
+
     GenerateWheel();
 
     const uint64_t uWheelLimit =
 #if _DEBUG
-        55000000
+        25000000
 #else
-        2500000000
+        1250000000
 #endif
-            / ( xNumber.GetLimbCount() * 2 - 1 );
+            / ( xNumber.GetLimbCount() * xNumber.GetLimbCount() * 2 - 1 );
 
     Number xWorkingValue = xNumber;
     Factorisation xResult( xNumber );
     uint64_t uTest = SieveLength * 2 + 1;;
     int iDiff = 0;
-    while( xWorkingValue > ( ( uTest * uTest ) - 1 ) )
+    while( xWorkingValue > ( ( Number( uTest ) * uTest ) - 1 ) )
     {
         if( ( xWorkingValue % uTest ) == 0 )
         {
             xResult.mbKnownComposite = true;
             Factorisation xNew( uTest, true );
+            xNew.szFactoringAlgorithm = "trial divison with wheel";
+            xNew.szProofName = "trial divison with wheel";
             xNew.miPower = 0;
             do
             {
@@ -134,6 +138,7 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
             xResult.mxKnownFactors.push_back( std::move( xNew ) );
         }
 
+        const uint64_t uOldTest = uTest;
         uTest += saiDifferences[ iDiff ];
         ++iDiff;
         if( iDiff >= siWheelLength )
@@ -143,17 +148,24 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 
         if( uTest > uWheelLimit )
         {
+            SetWheelBound( ( Number( uOldTest ) * uOldTest ) - 1 );
+
             xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
             return xResult;
         }
     }
 
+    SetWheelBound( Number( uTest ) * uTest - 1 );
+
     if( xResult.mxKnownFactors.empty() )
     {
         xResult.mbKnownPrime = true;
+        xResult.szProofName = "trial divison with wheel";
     }
     else if( xWorkingValue > 1 )
     {
+        xResult.szProofName = "trial divison with wheel";
+        xResult.szFactoringAlgorithm = "trial divison with wheel";
         xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue, true ) );
     }
 

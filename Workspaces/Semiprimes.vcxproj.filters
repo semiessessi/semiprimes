@@ -25,6 +25,12 @@
     <Filter Include="Algorithms\Arithmetic\Division">
       <UniqueIdentifier>{9e90b57e-b896-4c52-8bc0-fc413c50b117}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Algorithms\General">
+      <UniqueIdentifier>{f60acfb8-c24e-4cae-a4c6-2ffdb2e6e26f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithms\Factorisation">
+      <UniqueIdentifier>{b1c885a7-ec15-4a98-99d4-8e157c406a75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Core\EntryPoint.cpp">
@@ -114,6 +120,18 @@
     <ClCompile Include="..\Code\Tests\Test_Shifts.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\General\EuclideanGCD.cpp">
+      <Filter>Algorithms\General</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\General\BinarySquareRoot.cpp">
+      <Filter>Algorithms\General</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Factorisation\PollardRho.cpp">
+      <Filter>Algorithms\Factorisation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Tests\Test_Rho.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -163,6 +181,15 @@
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\BinaryDivision.h">
       <Filter>Algorithms\Arithmetic\Division</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\General\EuclideanGCD.h">
+      <Filter>Algorithms\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\General\BinarySquareRoot.h">
+      <Filter>Algorithms\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Factorisation\PollardRho.h">
+      <Filter>Algorithms\Factorisation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

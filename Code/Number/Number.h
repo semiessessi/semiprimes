@@ -27,11 +27,11 @@ public:
 
     bool operator >( const Number& xOperand ) const;
     bool operator >( const uint64_t uOperand ) const { return ( mxLimbs.size() > 1 ) || ( mxLimbs[ 0 ] > uOperand ); }
-    bool operator <( const Number& xOperand ) const { return -*this > -xOperand; }
+    bool operator <( const Number& xOperand ) const { return xOperand  > *this ; }
     //bool operator <( const uint64_t uOperand ) const { return -*this > -uOperand; }
-    bool operator <=( const Number& xOperand ) const { return xOperand > * this; }
+    bool operator <=( const Number& xOperand ) const { return !( xOperand > * this ); }
     bool operator <=( const uint64_t uOperand ) const { return ( mxLimbs.size() == 1 ) && ( uOperand > mxLimbs[ 0 ] ); }
-    bool operator >=( const Number& xOperand ) const { return xOperand < *this; }
+    bool operator >=( const Number& xOperand ) const { return !( *this < xOperand ); }
     bool operator >=( const uint64_t uOperand ) const { return ( mxLimbs.size() > 1 ) || ( mxLimbs[ 0 ] >= uOperand ); }
     bool operator ==( const Number& xOperand ) const;
     bool operator ==( const uint64_t uOperand ) const { return ( mxLimbs.size() == 1 ) && ( mxLimbs[ 0 ] == uOperand ); }
@@ -90,6 +90,8 @@ public:
     bool GetBit( const uint64_t uIndex ) const;
     void SetBit( const uint64_t uIndex, const bool bValue = true );
 
+    uint64_t GetPerfectPower() const;
+
     size_t GetLimbCount() const { return mxLimbs.size(); }
     uint64_t LeastSignificantLimb() const { return mxLimbs[ 0 ]; }
     uint64_t MostSignificantLimb() const { return mxLimbs.back(); }
@@ -118,6 +120,19 @@ public:
         const Number& xNumerator,
         const uint64_t uMultiplicand,
         const uint64_t uDenominator );
+    static Number ModMul(
+        const Number& xNumerator,
+        const Number& xMultiplicand,
+        const Number& xDenominator );
+
+    void InplaceModMul(
+        const uint64_t uMultiplicand,
+        const uint64_t uDenominator );
+    void InplaceModMul(
+        const Number& xMultiplicand,
+        const Number& xDenominator );
+
+    Number GCD( const Number& xOther ) const;
 
 private:
 

@@ -2,6 +2,7 @@
 
 #include "../Algorithms/Arithmetic/Multiplication/MultiplyLimbX64.h"
 #include "../Algorithms/Arithmetic/Multiplication/GrammarSchoolX64.h"
+#include "../Algorithms/General/EuclideanGCD.h"
 
 Number Number::operator -() const
 {
@@ -60,6 +61,16 @@ int64_t Number::operator %( const int64_t iOperand ) const
     return Mod( *this, iOperand );
 }
 
+uint64_t Number::GetPerfectPower() const
+{
+    uint64_t uLog2 = MostSignificantBitPosition();
+    for( uint64_t u = 1; u < uLog2; ++u )
+    {
+        // todo...
+    }
+    return 1;
+}
+
 std::string Number::ToString() const
 {
     std::string xReturnValue = "";
@@ -88,4 +99,37 @@ uint64_t Number::ModMul(
     Number xProduct = xNumerator;
     xProduct *= uMultiplicand;
     return xProduct % uDenominator;
+}
+
+Number Number::ModMul(
+    const Number& xNumerator,
+    const Number& xMultiplicand,
+    const Number& xDenominator )
+{
+    // SE - TODO: better algorithms?
+// .. avoid the copy?
+    Number xProduct = xNumerator;
+    xProduct *= xMultiplicand;
+    return xProduct % xDenominator;
+}
+
+void Number::InplaceModMul(
+    const uint64_t uMultiplicand,
+    const uint64_t uDenominator )
+{
+    *this *= uMultiplicand;
+    *this %= uDenominator;
+}
+
+void Number::InplaceModMul(
+    const Number& xMultiplicand,
+    const Number& xDenominator )
+{
+    *this *= xMultiplicand;
+    *this %= xDenominator;
+}
+
+Number Number::GCD( const Number& xOther ) const
+{
+    return GCD_Euclidean( *this, xOther );
 }

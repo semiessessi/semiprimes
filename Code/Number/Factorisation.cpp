@@ -1,18 +1,35 @@
 #include "Factorisation.h"
 
+#include <algorithm>
 #include <cstdio>
+
+const char* const kszDefaultName = "";
+
+void Tidy( Factorisation& xFactorisation )
+{
+    std::sort(
+        xFactorisation.mxKnownFactors.begin(),
+        xFactorisation.mxKnownFactors.end(),
+        []( const Factorisation& xA, const Factorisation& xB ) -> bool { return xA.mxNumber < xB.mxNumber; } );
+}
 
 Factorisation::Factorisation( const Number& xNumber, const bool bPrime )
 : mxKnownFactors()
 , mxNumber( xNumber )
+, szProofName( kszDefaultName )
+, szFactoringAlgorithm( kszDefaultName )
 , miPower( 1 )
+, miFactoringTimeNS( 0 )
+, miProofTimeNS( 0 )
 , mbKnownPrime( bPrime )
 , mbKnownComposite( false )
 {
 }
 
-void Factorisation::Report( const bool bVerbose ) const
+void Factorisation::Report( const bool bVerbose )
 {
+    Tidy( *this );
+
     const std::string xNumberString = mxNumber.ToString();
     if( mbKnownPrime && ( miPower == 1 ) )
     {
@@ -57,7 +74,26 @@ void Factorisation::Report( const bool bVerbose ) const
                         : ( mxKnownFactors[ uFactor ].mbKnownPrime
                             ? "prime"
                             : "unknown" );
-                printf( " (%s)\n*\n", szType );
+                printf( " (%s", szType );
+                if( mxKnownFactors[ uFactor ].mbKnownPrime
+                    && ( mxKnownFactors[ uFactor ].szProofName[ 0 ] != 0 ) )
+                {
+                    printf( " - proven by %s", mxKnownFactors[ uFactor ].szProofName );
+                }
+                else if( mxKnownFactors[ uFactor ].mbKnownComposite
+                    && ( mxKnownFactors[ uFactor ].szProofName[ 0 ] != 0 ) )
+                {
+                    printf( " - proven by %s", mxKnownFactors[ uFactor ].szProofName );
+                }
+
+                if( mxKnownFactors[ uFactor ].szFactoringAlgorithm[ 0 ] != 0 )
+                {
+                    printf( " - found using %s", mxKnownFactors[ uFactor ].szFactoringAlgorithm );
+                }
+
+                printf( ")\n%s\n", ( uFactor != ( mxKnownFactors.size() - 1 ) )
+                        ? "*"
+                        : "" );
             }
             else
             {

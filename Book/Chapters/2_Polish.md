@@ -30,6 +30,7 @@
       * [2.4.1.4 Rearranging](./2_Polish.md#2414-rearranging)
       * [2.4.1.5 Multiplication](./2_Polish.md#2415-multiplication)
       * [2.4.1.6 Division and remainder](./2_Polish.md#2416-division-and-remainder)
+      * [2.4.1.7 Bugfixing](./2_Polish.md#2417-bugfixing)
 
 ## 2.1 Interface
 
@@ -1324,12 +1325,58 @@ Grammar school multiplication:
 
 ```
 
-### 2.4.1.6 Division
+### 2.4.1.6 Division and remainder
 
 Binary long division:
 
 ```cpp
+Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Number& xRemainder )
+{
+    Number xQuotient;
+    xRemainder = 0;
+    const size_t uBitCount = xNumerator.MostSignificantBitPosition() + 1;
+    for( size_t i = uBitCount; i > 0; --i )
+    {
+        size_t uIndex = i - 1;
+        xRemainder <<= 1;
+        xRemainder |= xNumerator.GetBit( uIndex ) ? 1 : 0;
+        if( xRemainder >= xDenominator )
+        {
+            xRemainder -= xDenominator;
+            xQuotient.SetBit( uIndex );
+        }
+    }
 
+    return xQuotient;
+}
+```
+
+```cpp
+Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Number& xRemainder )
+{
+    Number xQuotient;
+    xRemainder = 0;
+    const size_t uBitCount = xNumerator.MostSignificantBitPosition() + 1;
+    for( size_t i = uBitCount; i > 0; --i )
+    {
+        size_t uIndex = i - 1;
+        xRemainder <<= 1;
+        xRemainder |= xNumerator.GetBit( uIndex ) ? 1 : 0;
+        if( xRemainder >= xDenominator )
+        {
+            xRemainder -= xDenominator;
+            // debug...
+            if( xRemainder >= xDenominator )
+            {
+                return -1;
+            }
+
+            xQuotient.SetBit( uIndex );
+        }
+    }
+
+    return xQuotient;
+}
 ```
 
 Setting and getting bits is done with these helper functions:
@@ -1374,4 +1421,41 @@ Number& Number::operator ^=( const uint64_t uOperand )
     mxLimbs[ 0 ] ^= uOperand;
     return *this;
 }
+```
+
+### 2.4.1.7 Bugfixing
+
+As it stands, the tests do not pass due to bugs. Adding more tests as the bugs are found and fixed helps to prevent them being reintroduced or occuring when swapping algorithms later.
+
+The division algorithm is correct however, there are bugs in the subtraction conditional on the inputs, which cause the tests to fail. Identifying and fixing this was typical of identifying and fixing bugs in compound functionality.
+
+```cpp
+Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Number& xRemainder )
+{
+    Number xQuotient;
+    xRemainder = 0;
+    const size_t uBitCount = xNumerator.MostSignificantBitPosition() + 1;
+    for( size_t i = uBitCount; i > 0; --i )
+    {
+        size_t uIndex = i - 1;
+        xRemainder <<= 1;
+        xRemainder |= xNumerator.GetBit( uIndex ) ? 1 : 0;
+        if( xRemainder >= xDenominator )
+        {
+            xRemainder -= xDenominator;
+            // debug...
+            if( xRemainder >= xDenominator )
+            {
+                return -1;
+            }
+
+            xQuotient.SetBit( uIndex );
+        }
+    }
+
+    return xQuotient;
+}
+```
+
+```cpp
 ```

@@ -44,6 +44,27 @@ uint64_t ModExpRightToLeft( const uint64_t uNumber, const uint64_t uExponent, co
     return uReturnValue;
 }
 
+Number ModExpRightToLeft( const uint64_t uNumber, const Number& xExponent, const Number& xModulus )
+{
+    Number xReturnValue = 1;
+    Number xRemainingPower = xExponent;
+    while( true )
+    {
+        if( ( xRemainingPower & 0x1 ) == 1 )
+        {
+            xReturnValue.InplaceModMul( uNumber, xModulus );
+        }
+        xRemainingPower >>= 1;
+        if( xRemainingPower == 0 )
+        {
+            break;
+        }
+        xReturnValue.InplaceModMul( Number( xReturnValue ), xModulus );
+    }
+
+    return xReturnValue;
+}
+
 template< int N >
 bool SmallSPRP( const uint64_t uNumber )
 {
@@ -81,9 +102,47 @@ bool SmallSPRP( const uint64_t uNumber )
     return false;
 }
 
+template< int N >
+bool SPRP( const Number& xNumber )
+{
+    // find a * 2^b + 1 == xNumber
+    Number xA = ( xNumber - 1 ) >> 1;
+    uint64_t uB = 1;
+
+    while( ( xA & 0x1 ) == 0 )
+    {
+        ++uB;
+        xA >>= 1;
+    }
+
+    Number xPowerTest = ModExpRightToLeft( N, xA, xNumber );
+    if( xPowerTest == 1 )
+    {
+        return true;
+    }
+
+    const Number xMinusOne = xNumber - 1;
+    if( xPowerTest == xMinusOne )
+    {
+        return true;
+    }
+
+    for( uint64_t i = 0; i < uB; ++i )
+    {
+        xPowerTest.InplaceModMul( xPowerTest, xNumber );
+        if( xPowerTest == xMinusOne )
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 Factorisation SPRPTests( const Number& xNumber )
 {
     Factorisation xResult( xNumber );
+    xResult.szProofName = "strong Fermat probable prime tests";
     if( xNumber.GetLimbCount() == 1 )
     {
         uint64_t uNumber = xNumber.LeastSignificantLimb();
@@ -208,7 +267,71 @@ Factorisation SPRPTests( const Number& xNumber )
         return xResult;
     }
 
-    // SE - TODO: test bigger numbers.
+    xResult.mbKnownComposite = !SPRP< 2 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+
+    // SE - TODO: PSW thingy
+
+    // SE - TODO: refactor
+
+    xResult.mbKnownComposite = !SPRP< 3 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 5 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 7 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 11 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 13 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 17 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 19 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 23 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 29 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 31 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 37 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
 
     return xResult;
 }

@@ -2,9 +2,16 @@
 
 Number& Number::operator <<=( const uint64_t uOperand )
 {
+    if( ( mxLimbs.size() == 1 )
+        && ( mxLimbs.back() == 0 ) )
+    {
+        return *this;
+    }
+
     const uint64_t uMSB = MostSignificantBitPosition();
-    //const uint64_t uNewMSB = uMSB + uOperand;
+    const uint64_t uNewMSB = uMSB + uOperand;
     const uint64_t uLimbOffset = uOperand >> 6;
+    const uint64_t uLimbsNeeded = ( uNewMSB >> 6 ) + 1;
     const uint64_t uBitOffset = uOperand & 63;
     if( uBitOffset == 0 )
     {
@@ -12,7 +19,7 @@ Number& Number::operator <<=( const uint64_t uOperand )
         return *this;
     }
 
-    mxLimbs.resize( mxLimbs.size() + uLimbOffset + 1, 0 );
+    mxLimbs.resize( uLimbsNeeded, 0 );
     const uint64_t uLimbCount = mxLimbs.size();
     const uint64_t uInverseBitOffset = 64uLL - uBitOffset;
     const uint64_t uNextMask = ( 1uLL << uInverseBitOffset ) - 1uLL;
@@ -29,12 +36,6 @@ Number& Number::operator <<=( const uint64_t uOperand )
     for( uint64_t i = 0; i < uLimbOffset; ++i )
     {
         mxLimbs[ i ] = 0;
-    }
-
-    // SE - TODO: just don't make bigger if not needed (!)
-    if( mxLimbs.back() == 0 )
-    {
-        mxLimbs.resize( uLimbCount - 1 );
     }
 
     return *this;
@@ -71,8 +72,12 @@ Number& Number::operator >>=( const uint64_t uOperand )
     }
 
     mxLimbs.back() >>= uBitOffset;
-
+    
     mxLimbs.resize( mxLimbs.size() - uLimbOffset );
+    if( mxLimbs.back() == 0 )
+    {
+        mxLimbs.pop_back();
+    }
 
     return *this;
 }

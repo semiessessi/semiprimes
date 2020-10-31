@@ -2,6 +2,7 @@
 
 #include "Parameters.h"
 #include "Timing.h"
+#include "../Algorithms/Factorisation/PollardRho.h"
 #include "../Algorithms/Primality/PowersOf2.h"
 #include "../Algorithms/Primality/PowersOfN.h"
 #include "../Algorithms/Primality/SPRP.h"
@@ -87,6 +88,11 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
     Helper< iWheelPrimeCount - 1, ( 2 * 3 * 5 * 7 * 11 ) >::ContinueFactorisation( xTest );
     // do wheel
     xTest.ContinueWithAlgorithm( WheelUpTo< 11 > );
+   
+    xTest.ContinueWithAlgorithm( PollardRho, true );
+
+    // sprp tests to identify composites
+    xTest.ContinueWithAlgorithm( SPRPTests );
 
     if( xParameters.Timing() )
     {

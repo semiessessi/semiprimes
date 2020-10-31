@@ -5,7 +5,7 @@
 #include "Factorisation.h"
 
 template< typename Algorithm >
-void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
+void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm, const bool bRepeat )
 {
 	if( mbKnownPrime == true )
 	{
@@ -26,7 +26,8 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm )
 		mxKnownFactors.push_back( Factorisation( mxNumber ) );
 	}
 
-	for( size_t u = 0; u < mxKnownFactors.size(); ++u )
+	const size_t uSize = mxKnownFactors.size();
+	for( size_t u = 0; u < ( bRepeat ? mxKnownFactors.size() : uSize ); ++u )
 	{
 		// this might be breakable or prime and unknown...
 		if( mxKnownFactors[ u ].mbKnownComposite || !mxKnownFactors[ u ].mbKnownPrime )

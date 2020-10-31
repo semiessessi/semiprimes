@@ -14,6 +14,8 @@ Factorisation PowersOf( const Number& xNumber )
         ++iPowers;
     }
 
+    static const std::string xName =
+        std::string( "power of " ) + std::to_string( N ) + " removal";
     Factorisation xResult( xNumber );
     xResult.mbKnownComposite = iPowers > 0;
     if( xResult.mbKnownComposite )
@@ -21,6 +23,8 @@ Factorisation PowersOf( const Number& xNumber )
         Factorisation xFactorisation( N );
         xFactorisation.mbKnownPrime = true;
         xFactorisation.miPower = iPowers;
+        xFactorisation.szFactoringAlgorithm = xName.c_str();
+        xFactorisation.szProofName = "wheel setup";
         xResult.mxKnownFactors.push_back( xFactorisation );
         // SE - TODO: equality test.
         if( xWorkingValue > 1 )
