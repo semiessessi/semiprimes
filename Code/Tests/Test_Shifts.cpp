@@ -21,5 +21,10 @@ bool RightShiftTests()
         return false;
     }
 
+    if( ( 4z >> 2 ) != 1 )
+    {
+        return false;
+    }
+
     return true;
 }

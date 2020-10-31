@@ -44,7 +44,7 @@ Number& Number::operator <<=( const uint64_t uOperand )
 Number& Number::operator >>=( const uint64_t uOperand )
 {
     const uint64_t uMSB = MostSignificantBitPosition();
-    if( uOperand >= uMSB )
+    if( uOperand > uMSB )
     {
         mxLimbs.resize( 1 );
         mxLimbs[ 0 ] = 0;
