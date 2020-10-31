@@ -61,6 +61,16 @@ int64_t Number::operator %( const int64_t iOperand ) const
     return Mod( *this, iOperand );
 }
 
+uint64_t Number::GetPerfectPower() const
+{
+    uint64_t uLog2 = MostSignificantBitPosition();
+    for( uint64_t u = 1; u < uLog2; ++u )
+    {
+        // todo...
+    }
+    return 1;
+}
+
 std::string Number::ToString() const
 {
     std::string xReturnValue = "";

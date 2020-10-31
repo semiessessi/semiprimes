@@ -90,6 +90,8 @@ public:
     bool GetBit( const uint64_t uIndex ) const;
     void SetBit( const uint64_t uIndex, const bool bValue = true );
 
+    uint64_t GetPerfectPower() const;
+
     size_t GetLimbCount() const { return mxLimbs.size(); }
     uint64_t LeastSignificantLimb() const { return mxLimbs[ 0 ]; }
     uint64_t MostSignificantLimb() const { return mxLimbs.back(); }
