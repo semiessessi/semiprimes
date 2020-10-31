@@ -91,6 +91,7 @@ public:
     void SetBit( const uint64_t uIndex, const bool bValue = true );
 
     uint64_t GetPerfectPower() const;
+    Number SquareRoot() const;
 
     size_t GetLimbCount() const { return mxLimbs.size(); }
     uint64_t LeastSignificantLimb() const { return mxLimbs[ 0 ]; }

@@ -10,7 +10,7 @@ Number BinarySquareRoot( const Number& xNumber )
     Number xTestValue = 1z << uPowerOf4BitCount;
     while( xTestValue > 0 )
     {
-        if( xWorkingValue > ( xResult + xTestValue ) )
+        if( xWorkingValue >= ( xResult + xTestValue ) )
         {
             xWorkingValue -= xTestValue;
             xWorkingValue -= xResult;
