@@ -4,6 +4,8 @@
 // SE - NOTE: for intellisense.. urg
 #include "Factorisation.h"
 
+Number GetWheelBound();
+
 template< typename Algorithm >
 void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm, const bool bRepeat )
 {
@@ -29,6 +31,16 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm, const bo
 	const size_t uSize = mxKnownFactors.size();
 	for( size_t u = 0; u < ( bRepeat ? mxKnownFactors.size() : uSize ); ++u )
 	{
+		// maybe the wheel bound has increased
+		if( mxKnownFactors[ u ].mbKnownPrime == false )
+		{
+			if( mxKnownFactors[ u ].mxNumber < GetWheelBound() )
+			{
+				mxKnownFactors[ u ].mbKnownPrime = true;
+				mxKnownFactors[ u ].szProofName = "bound set by trial division";
+			}
+		}
+
 		// this might be breakable or prime and unknown...
 		if( mxKnownFactors[ u ].mbKnownComposite || !mxKnownFactors[ u ].mbKnownPrime )
 		{
@@ -46,6 +58,7 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm, const bo
 				mxKnownFactors.erase( mxKnownFactors.begin() + u );
 				for( size_t v = 0; v < xNew.mxKnownFactors.size(); ++v )
 				{
+					xNew.mxKnownFactors[ v ].miPower *= xNew.miPower;
 					mxKnownFactors.insert( mxKnownFactors.begin() + u + v, xNew.mxKnownFactors[ v ] );
 				}
 

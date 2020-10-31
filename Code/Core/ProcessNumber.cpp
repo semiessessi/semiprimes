@@ -2,6 +2,7 @@
 
 #include "Parameters.h"
 #include "Timing.h"
+#include "../Algorithms/Factorisation/Fermat.h"
 #include "../Algorithms/Factorisation/PollardRho.h"
 #include "../Algorithms/Primality/PowersOf2.h"
 #include "../Algorithms/Primality/PowersOfN.h"
@@ -62,6 +63,10 @@ struct Helper< X, 2 >
 
 void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
 {
+    void SetWheelBound( const Number & xNumber );
+
+    SetWheelBound( 0 );
+
     if( ( xNumber.GetLimbCount() == 1 )
         && ( xNumber.LeastSignificantLimb() == 0 ) )
     {
@@ -78,6 +83,9 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
 
     Factorisation xTest( xNumber );
 
+    // first pass fermat first, because its hard to find big factors that it can find (!)
+    xTest.ContinueWithAlgorithm( Fermat );
+
     // remove any powers of 2 first.
     xTest.ContinueWithAlgorithm( PowersOf2 );
 
@@ -90,6 +98,8 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
     xTest.ContinueWithAlgorithm( WheelUpTo< 11 > );
    
     xTest.ContinueWithAlgorithm( PollardRho, true );
+
+    xTest.ContinueWithAlgorithm( Fermat, true );
 
     // sprp tests to identify composites
     xTest.ContinueWithAlgorithm( SPRPTests );

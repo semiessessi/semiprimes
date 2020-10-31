@@ -173,6 +173,7 @@
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Factorisation\Fermat.cpp" />
     <ClCompile Include="..\Code\Algorithms\Factorisation\PollardRho.cpp" />
     <ClCompile Include="..\Code\Algorithms\General\BinarySquareRoot.cpp" />
     <ClCompile Include="..\Code\Algorithms\General\EuclideanGCD.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\SubtractionX64.h" />
+    <ClInclude Include="..\Code\Algorithms\Factorisation\Fermat.h" />
     <ClInclude Include="..\Code\Algorithms\Factorisation\PollardRho.h" />
     <ClInclude Include="..\Code\Algorithms\General\BinarySquareRoot.h" />
     <ClInclude Include="..\Code\Algorithms\General\EuclideanGCD.h" />
