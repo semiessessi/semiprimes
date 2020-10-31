@@ -33,9 +33,11 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm, const bo
 		if( mxKnownFactors[ u ].mbKnownComposite || !mxKnownFactors[ u ].mbKnownPrime )
 		{
 			Factorisation xNew = xAlgorithm( mxKnownFactors[ u ].mxNumber );
+			xNew.miPower = mxKnownFactors[ u ].miPower;
 			if( mxKnownFactors[ u ].mbKnownComposite )
 			{
 				xNew.mbKnownComposite = true;
+				xNew.szProofName = mxKnownFactors[ u ].szProofName;
 				mbKnownComposite = true;
 			}
 			// .. if we got factors substitute them.
@@ -46,6 +48,14 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm, const bo
 				{
 					mxKnownFactors.insert( mxKnownFactors.begin() + u + v, xNew.mxKnownFactors[ v ] );
 				}
+
+				// go again on the new factor (?)
+				/*
+				if( bRepeat && !mxKnownFactors[ u ].mbKnownPrime )
+				{
+					--u;
+				}
+				*/
 			}
 			else
 			{
