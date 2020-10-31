@@ -3,17 +3,17 @@
 Number BinarySquareRoot( const Number& xNumber, Number& xRemainder )
 {
     Number xResult = 0;
-    xRemainder = 0;
+    xRemainder = xNumber;
     const uint64_t uPowerOf4BitCount =
         xNumber.MostSignificantBitPosition() & 0xFFFFFFFFFFFFFFFEULL;
-    Number xWorkingValue = xNumber;
-    Number xTestValue = 1z << uPowerOf4BitCount;
+    Number xTestValue = 1z <<
+        ( ( uPowerOf4BitCount < 1 ) ? 1 : uPowerOf4BitCount );
     while( xTestValue > 0 )
     {
-        if( xWorkingValue >= ( xResult + xTestValue ) )
+        if( xRemainder >= ( xResult + xTestValue ) )
         {
-            xWorkingValue -= xTestValue;
-            xWorkingValue -= xResult;
+            xRemainder -= xTestValue;
+            xRemainder -= xResult;
             xResult >>= 1;
             xResult += xTestValue;
         }

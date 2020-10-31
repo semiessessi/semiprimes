@@ -26,5 +26,17 @@ bool TestSquareRoot()
         xTest /= 10;
     }
 
+    xTest =
+        0x10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000z;
+
+    while( xTest > 1 )
+    {
+        if( !TestSquareRootNumber( xTest ) )
+        {
+            return false;
+        }
+        xTest >>= 1;
+    }
+
     return true;
 }
