@@ -1,12 +1,16 @@
 #include "Factorisation.h"
 
+#include <algorithm>
 #include <cstdio>
 
 const char* const kszDefaultName = "";
 
 void Tidy( Factorisation& xFactorisation )
 {
-
+    std::sort(
+        xFactorisation.mxKnownFactors.begin(),
+        xFactorisation.mxKnownFactors.end(),
+        []( const Factorisation& xA, const Factorisation& xB ) -> bool { return xA.mxNumber < xB.mxNumber; } );
 }
 
 Factorisation::Factorisation( const Number& xNumber, const bool bPrime )
@@ -15,6 +19,8 @@ Factorisation::Factorisation( const Number& xNumber, const bool bPrime )
 , szProofName( kszDefaultName )
 , szFactoringAlgorithm( kszDefaultName )
 , miPower( 1 )
+, miFactoringTimeNS( 0 )
+, miProofTimeNS( 0 )
 , mbKnownPrime( bPrime )
 , mbKnownComposite( false )
 {
@@ -72,13 +78,12 @@ void Factorisation::Report( const bool bVerbose )
                 if( mxKnownFactors[ uFactor ].mbKnownPrime
                     && ( mxKnownFactors[ uFactor ].szProofName[ 0 ] != 0 ) )
                 {
-                    printf( " proven prime by %s", mxKnownFactors[ uFactor ].szProofName );
+                    printf( " - proven by %s", mxKnownFactors[ uFactor ].szProofName );
                 }
-
-                if( mxKnownFactors[ uFactor ].mbKnownComposite
+                else if( mxKnownFactors[ uFactor ].mbKnownComposite
                     && ( mxKnownFactors[ uFactor ].szProofName[ 0 ] != 0 ) )
                 {
-                    printf( " proven composite by %s", mxKnownFactors[ uFactor ].szProofName );
+                    printf( " - proven by %s", mxKnownFactors[ uFactor ].szProofName );
                 }
 
                 if( mxKnownFactors[ uFactor ].szFactoringAlgorithm[ 0 ] != 0 )

@@ -12,6 +12,8 @@ struct Factorisation
 	const char* szProofName;
 	const char* szFactoringAlgorithm;
 	int miPower;
+	int64_t miFactoringTimeNS;
+	int64_t miProofTimeNS;
 	bool mbKnownPrime;
 	bool mbKnownComposite;
 	
