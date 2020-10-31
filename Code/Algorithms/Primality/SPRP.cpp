@@ -268,42 +268,66 @@ Factorisation SPRPTests( const Number& xNumber )
     }
 
     xResult.mbKnownComposite = !SPRP< 2 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
 
     // SE - TODO: PSW thingy
 
     // SE - TODO: refactor
 
-    xResult.mbKnownComposite = SPRP< 3 >( xNumber );
+    xResult.mbKnownComposite = !SPRP< 3 >( xNumber );
     if( xResult.mbKnownComposite == true )
     {
         return xResult;
     }
-    xResult.mbKnownComposite = SPRP< 5 >( xNumber );
+    xResult.mbKnownComposite = !SPRP< 5 >( xNumber );
     if( xResult.mbKnownComposite == true )
     {
         return xResult;
     }
-    xResult.mbKnownComposite = SPRP< 7 >( xNumber );
+    xResult.mbKnownComposite = !SPRP< 7 >( xNumber );
     if( xResult.mbKnownComposite == true )
     {
         return xResult;
     }
-    xResult.mbKnownComposite = SPRP< 11 >( xNumber );
+    xResult.mbKnownComposite = !SPRP< 11 >( xNumber );
     if( xResult.mbKnownComposite == true )
     {
         return xResult;
     }
-    xResult.mbKnownComposite = SPRP< 13 >( xNumber );
+    xResult.mbKnownComposite = !SPRP< 13 >( xNumber );
     if( xResult.mbKnownComposite == true )
     {
         return xResult;
     }
-    xResult.mbKnownComposite = SPRP< 17 >( xNumber );
+    xResult.mbKnownComposite = !SPRP< 17 >( xNumber );
     if( xResult.mbKnownComposite == true )
     {
         return xResult;
     }
-    xResult.mbKnownComposite = SPRP< 19 >( xNumber );
+    xResult.mbKnownComposite = !SPRP< 19 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 23 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 29 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 31 >( xNumber );
+    if( xResult.mbKnownComposite == true )
+    {
+        return xResult;
+    }
+    xResult.mbKnownComposite = !SPRP< 37 >( xNumber );
     if( xResult.mbKnownComposite == true )
     {
         return xResult;
