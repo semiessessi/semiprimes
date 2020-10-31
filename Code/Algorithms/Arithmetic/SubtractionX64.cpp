@@ -56,6 +56,11 @@ void SubX64_SmallFromLarge( std::vector< uint64_t >& xGreater, const std::vector
             && ( uLimb < uLimbCount );
     }
 
+    while( ( xGreater.back() == 0 ) && ( xGreater.size() > 1 ) )
+    {
+        xGreater.pop_back();
+    }
+
     // this should not happen
     //if( bContinueBorrow )
     //{
