@@ -6,6 +6,7 @@
 
 static std::chrono::steady_clock::time_point sxStart;
 static std::chrono::steady_clock::time_point sxEnd;
+static std::chrono::steady_clock::time_point sxSampler;
 
 void StartTiming( const bool bVerbose )
 {
@@ -29,4 +30,13 @@ void StopTiming()
         "Took %lld.%09lld seconds\n",
         iDuration / 1000000000,
         iDuration % 1000000000 );
+}
+
+int64_t GetTimingNS()
+{
+    sxSampler = std::chrono::high_resolution_clock::now();
+
+    return
+        std::chrono::duration_cast< std::chrono::nanoseconds >(
+            sxSampler - sxStart ).count();
 }
