@@ -138,6 +138,12 @@
     <ClCompile Include="..\Code\Algorithms\Factorisation\Fermat.cpp">
       <Filter>Algorithms\Factorisation</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Tests\Test_SPRP.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Tests\Test_ModExp.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">

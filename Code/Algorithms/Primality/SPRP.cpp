@@ -27,18 +27,19 @@ uint64_t ModExpRightToLeft( const uint64_t uNumber, const uint64_t uExponent, co
 {
     uint64_t uReturnValue = 1;
     uint64_t uRemainingPower = uExponent;
+    uint64_t uBase = uNumber % uModulus;
     while( true )
     {
         if( ( uRemainingPower & 0x1 ) == 1 )
         {
-            uReturnValue = ModMul( uReturnValue, uNumber, uModulus );
+            uReturnValue = ModMul( uReturnValue, uBase, uModulus );
         }
         uRemainingPower >>= 1;
         if( uRemainingPower == 0 )
         {
             break;
         }
-        uReturnValue = ModMul( uReturnValue, uReturnValue, uModulus );
+        uBase = ModMul( uBase, uBase, uModulus );
     }
     
     return uReturnValue;
@@ -48,18 +49,19 @@ Number ModExpRightToLeft( const uint64_t uNumber, const Number& xExponent, const
 {
     Number xReturnValue = 1;
     Number xRemainingPower = xExponent;
+    Number xBase = Number( uNumber ) % xModulus;
     while( true )
     {
         if( ( xRemainingPower & 0x1 ) == 1 )
         {
-            xReturnValue.InplaceModMul( uNumber, xModulus );
+            xReturnValue.InplaceModMul( xBase, xModulus );
         }
         xRemainingPower >>= 1;
         if( xRemainingPower == 0 )
         {
             break;
         }
-        xReturnValue.InplaceModMul( Number( xReturnValue ), xModulus );
+        xBase.InplaceModMul( Number( xBase ), xModulus );
     }
 
     return xReturnValue;
@@ -71,6 +73,11 @@ bool SmallSPRP( const uint64_t uNumber )
     // find a * 2^b + 1 == uNumber
     uint64_t uA = ( uNumber - 1 ) >> 1;
     uint64_t uB = 1;
+
+    if( uA < 2 )
+    {
+        return false;
+    }
 
     while( ( uA & 0x1 ) == 0 )
     {
@@ -109,6 +116,11 @@ bool SPRP( const Number& xNumber )
     Number xA = ( xNumber - 1 ) >> 1;
     uint64_t uB = 1;
 
+    if( xA < 2 )
+    {
+        return false;
+    }
+
     while( ( xA & 0x1 ) == 0 )
     {
         ++uB;
@@ -129,13 +141,28 @@ bool SPRP( const Number& xNumber )
 
     for( uint64_t i = 0; i < uB; ++i )
     {
-        xPowerTest.InplaceModMul( xPowerTest, xNumber );
+        xPowerTest.InplaceModMul( Number( xPowerTest ), xNumber );
         if( xPowerTest == xMinusOne )
         {
             return true;
         }
     }
 
+    return false;
+}
+
+// for testing
+bool SPRP2( const Number& xNumber )
+{
+    return SPRP< 2 >( xNumber );
+}
+
+bool SmallSPRP2( const Number& xNumber )
+{
+    if( xNumber.GetLimbCount() == 1 )
+    {
+        return SmallSPRP< 2 >( xNumber.LeastSignificantLimb() );
+    }
     return false;
 }
 

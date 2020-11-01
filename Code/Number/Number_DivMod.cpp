@@ -91,16 +91,6 @@ uint64_t Number::Mod(
     const Number& xNumerator,
     const uint64_t uDenominator )
 {
-    if( xNumerator < uDenominator )
-    {
-        return  xNumerator.MostSignificantLimb();
-    }
-
-    if( xNumerator == uDenominator )
-    {
-        return 0;
-    }
-
     uint64_t uRemainder = 0;
     for( size_t uLimb = xNumerator.mxLimbs.size();
         uLimb != 0; --uLimb )

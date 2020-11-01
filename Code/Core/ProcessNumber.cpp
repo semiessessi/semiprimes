@@ -83,6 +83,9 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
 
     Factorisation xTest( xNumber );
 
+    // sprp tests to identify composites
+    xTest.ContinueWithAlgorithm( SPRPTests );
+
     // first pass fermat first, because its hard to find big factors that it can find (!)
     xTest.ContinueWithAlgorithm( Fermat );
 
@@ -98,6 +101,9 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
     xTest.ContinueWithAlgorithm( WheelUpTo< 11 > );
    
     xTest.ContinueWithAlgorithm( PollardRho, true );
+
+    // sprp tests to identify composites
+    xTest.ContinueWithAlgorithm( SPRPTests );
 
     xTest.ContinueWithAlgorithm( Fermat, true );
 

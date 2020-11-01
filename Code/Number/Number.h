@@ -64,6 +64,7 @@ public:
     int64_t operator %( const int64_t iOperand ) const;
 
     Number& operator ++() { return *this += 1ULL; }
+    Number& operator --() { return *this -= 1ULL; }
 
 #define OPERATOR_FROM_INPLACE( op ) \
     Number operator op( const Number& xOperand ) const \
