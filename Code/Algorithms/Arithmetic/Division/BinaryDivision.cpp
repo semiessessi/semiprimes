@@ -8,7 +8,7 @@ Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Num
     for( size_t i = uBitCount; i > 0; --i )
     {
         size_t uIndex = i - 1;
-        xRemainder <<= 1;
+        xRemainder.InplaceMultiplyBy2();// <<= 1;
         xRemainder |= xNumerator.GetBit( uIndex ) ? 1 : 0;
         if( xRemainder >= xDenominator )
         {

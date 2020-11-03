@@ -64,6 +64,7 @@ public:
     int64_t operator %( const int64_t iOperand ) const;
 
     Number& operator ++() { return *this += 1ULL; }
+    Number& operator --() { return *this -= 1ULL; }
 
 #define OPERATOR_FROM_INPLACE( op ) \
     Number operator op( const Number& xOperand ) const \
@@ -85,12 +86,16 @@ public:
     OPERATOR_FROM_INPLACE_NOZ( << )
     OPERATOR_FROM_INPLACE_NOINT( % )
     
+    void InplaceMultiplyBy2();
     void InplaceLimbShiftLeft( const size_t uLimbs );
     void InplaceLimbShiftRight( const size_t uLimbs );
     void InplaceNegate() { mbNegative = !mbNegative; }
 
     bool GetBit( const uint64_t uIndex ) const;
     void SetBit( const uint64_t uIndex, const bool bValue = true );
+
+    uint64_t& GetLimb( const uint64_t uIndex ) { return mxLimbs[ uIndex ]; }
+    uint64_t GetLimb( const uint64_t uIndex ) const { return mxLimbs[ uIndex ]; }
 
     uint64_t GetPerfectPower() const;
     bool IsPerfectSquare() const;
@@ -101,6 +106,7 @@ public:
     uint64_t LeastSignificantLimb() const { return mxLimbs[ 0 ]; }
     uint64_t MostSignificantLimb() const { return mxLimbs.back(); }
     uint64_t MostSignificantBitPosition() const;
+    void AddZeroLeadingLimb() { mxLimbs.push_back( 0 ); }
 
     std::string ToString() const;
 
@@ -136,6 +142,8 @@ public:
     void InplaceModMul(
         const Number& xMultiplicand,
         const Number& xDenominator );
+
+    Number ModExp( const Number& xExponent, const Number& xModulus ) const;
 
     Number GCD( const Number& xOther ) const;
 

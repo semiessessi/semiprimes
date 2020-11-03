@@ -101,6 +101,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,7 +111,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -123,6 +124,8 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,6 +140,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,7 +150,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -159,6 +163,8 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -169,11 +175,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Algorithms\Arithmetic\AdditionX64.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\AlgorithmD.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\BinaryDivision.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.cpp" />
     <ClCompile Include="..\Code\Algorithms\Factorisation\Fermat.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Factorisation\PollardPMinus1.cpp" />
     <ClCompile Include="..\Code\Algorithms\Factorisation\PollardRho.cpp" />
     <ClCompile Include="..\Code\Algorithms\General\BinarySquareRoot.cpp" />
     <ClCompile Include="..\Code\Algorithms\General\EuclideanGCD.cpp" />
@@ -199,18 +207,22 @@
     <ClCompile Include="..\Code\Tests\Tests.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Addition.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Division.cpp" />
+    <ClCompile Include="..\Code\Tests\Test_ModExp.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Multiplication.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Rho.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Shifts.cpp" />
+    <ClCompile Include="..\Code\Tests\Test_SPRP.cpp" />
     <ClCompile Include="..\Code\Tests\Test_SquareRoot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Algorithms\Arithmetic\AdditionX64.h" />
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\AlgorithmD.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\BinaryDivision.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\SubtractionX64.h" />
     <ClInclude Include="..\Code\Algorithms\Factorisation\Fermat.h" />
+    <ClInclude Include="..\Code\Algorithms\Factorisation\PollardPMinus1.h" />
     <ClInclude Include="..\Code\Algorithms\Factorisation\PollardRho.h" />
     <ClInclude Include="..\Code\Algorithms\General\BinarySquareRoot.h" />
     <ClInclude Include="..\Code\Algorithms\General\EuclideanGCD.h" />
@@ -230,6 +242,9 @@
     <None Include="..\Code\Algorithms\Primality\PowersOfN.inl" />
     <None Include="..\Code\Algorithms\Primality\Wheel.inl" />
     <None Include="..\Code\Number\Factorisation.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="..\Code\Algorithms\Arithmetic\Multiplication\Multiply2X64.asm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

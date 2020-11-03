@@ -13,7 +13,10 @@ bool MulTests();
 bool LeftShiftTests();
 bool RightShiftTests();
 bool TestSquareRoot();
+bool ModExpTests();
 bool TestRho();
+bool SPRPTests();
+bool AlgorithmDTests();
 
 bool RunTest( const std::string& xName, bool ( * const pfnTestFunction )() );
 
@@ -66,7 +69,10 @@ void DoTests( const Parameters& xParameters )
         { "multiple limb multiplication", MulTests },
         { "(10^n - 1) / 9 mod 10 == 1 and similar", ModTests },
         { "Square root tests", TestSquareRoot },
+        { "Modular exponentiation tests", ModExpTests },
         { "Pollard rho algorithm tests", TestRho },
+        { "Strong Fermat psuedoprime tests", SPRPTests },
+        { "Algorithm D tests", AlgorithmDTests },
     };
     
     const size_t uTestCount = sizeof( lsaxTests ) / sizeof( lsaxTests[ 0 ] );

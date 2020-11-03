@@ -118,9 +118,10 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 
     Number xWorkingValue = xNumber;
     Factorisation xResult( xNumber );
-    uint64_t uTest = SieveLength * 2 + 1;;
+    uint64_t uTest = SieveLength * 2 + 1;
     int iDiff = 0;
-    while( xWorkingValue > ( ( Number( uTest ) * uTest ) - 1 ) )
+    Number xTestSquare = 0;
+    while( xWorkingValue > xTestSquare )
     {
         if( ( xWorkingValue % uTest ) == 0 )
         {
@@ -153,6 +154,10 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
             xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
             return xResult;
         }
+
+        xTestSquare = uTest;
+        xTestSquare *= uTest;
+        --xTestSquare;
     }
 
     SetWheelBound( Number( uTest ) * uTest - 1 );

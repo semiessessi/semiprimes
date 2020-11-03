@@ -46,6 +46,7 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm, const bo
 		{
 			Factorisation xNew = xAlgorithm( mxKnownFactors[ u ].mxNumber );
 			xNew.miPower = mxKnownFactors[ u ].miPower;
+			xNew.szFactoringAlgorithm = mxKnownFactors[ u ].szFactoringAlgorithm;
 			if( mxKnownFactors[ u ].mbKnownComposite )
 			{
 				xNew.mbKnownComposite = true;

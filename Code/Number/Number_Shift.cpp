@@ -1,5 +1,7 @@
 #include "Number.h"
 
+#include <intrin.h>
+
 Number& Number::operator <<=( const uint64_t uOperand )
 {
     if( ( mxLimbs.size() == 1 )
@@ -21,14 +23,17 @@ Number& Number::operator <<=( const uint64_t uOperand )
 
     mxLimbs.resize( uLimbsNeeded, 0 );
     const uint64_t uLimbCount = mxLimbs.size();
-    const uint64_t uInverseBitOffset = 64uLL - uBitOffset;
-    const uint64_t uNextMask = ( 1uLL << uInverseBitOffset ) - 1uLL;
-    const uint64_t uPreviousMask = ~uNextMask;
+    //const uint64_t uInverseBitOffset = 64uLL - uBitOffset;
+    //const uint64_t uNextMask = ( 1uLL << uInverseBitOffset ) - 1uLL;
+   // const uint64_t uPreviousMask = ~uNextMask;
     for( uint64_t i = uLimbCount - 1; i > uLimbOffset; --i )
     {
         const uint64_t uSourceIndex = i - uLimbOffset;
-        mxLimbs[ i ] = ( ( mxLimbs[ uSourceIndex ] & uNextMask ) << uBitOffset )
-            | ( ( mxLimbs[ uSourceIndex - 1 ] & uPreviousMask ) >> uInverseBitOffset );
+       // mxLimbs[ i ] = ( ( mxLimbs[ uSourceIndex ] & uNextMask ) << uBitOffset )
+       //     | ( ( mxLimbs[ uSourceIndex - 1 ] & uPreviousMask ) >> uInverseBitOffset );
+        mxLimbs[ i ] = __shiftleft128(
+            mxLimbs[ uSourceIndex - 1 ], mxLimbs[ uSourceIndex ],
+            static_cast< unsigned char >( uBitOffset ) );
     }
 
     mxLimbs[ uLimbOffset ] = mxLimbs[ 0 ] << uBitOffset;
@@ -61,14 +66,17 @@ Number& Number::operator >>=( const uint64_t uOperand )
     }
 
     const uint64_t uLimbCount = mxLimbs.size() - uLimbOffset;
-    const uint64_t uInverseBitOffset = 64uLL - uBitOffset;
-    const uint64_t uNextMask = ( 1uLL << uBitOffset ) - 1uLL;
-    const uint64_t uPreviousMask = ~uNextMask;
+    //const uint64_t uInverseBitOffset = 64uLL - uBitOffset;
+    //const uint64_t uNextMask = ( 1uLL << uBitOffset ) - 1uLL;
+    //const uint64_t uPreviousMask = ~uNextMask;
     for( uint64_t i = uLimbOffset + 1; i < uLimbCount; ++i )
     {
         const uint64_t uSourceIndex = i - uLimbOffset;
-        mxLimbs[ i - 1 ] = ( ( mxLimbs[ uSourceIndex ] & uNextMask ) << uInverseBitOffset)
-            | ( ( mxLimbs[ uSourceIndex - 1 ] & uPreviousMask ) >> uBitOffset );
+        //mxLimbs[ i - 1 ] = ( ( mxLimbs[ uSourceIndex ] & uNextMask ) << uInverseBitOffset)
+        //    | ( ( mxLimbs[ uSourceIndex - 1 ] & uPreviousMask ) >> uBitOffset );
+        mxLimbs[ i - 1 ] = __shiftright128(
+            mxLimbs[ uSourceIndex - 1 ], mxLimbs[ uSourceIndex ],
+            static_cast< unsigned char >( uBitOffset ) );
     }
 
     mxLimbs.back() >>= uBitOffset;
@@ -80,6 +88,32 @@ Number& Number::operator >>=( const uint64_t uOperand )
     }
 
     return *this;
+}
+
+//extern "C" bool Mul2X64( const uint64_t uCount, uint64_t* const pxBase );
+
+void Number::InplaceMultiplyBy2()
+{
+    // SE - TODO: work out how to shift with carry, sure it can be faster.
+    const size_t uSize = mxLimbs.size();
+    // only grow if we need to.
+    if( ( MostSignificantBitPosition() & 63 ) == 63 )
+    {
+        mxLimbs.push_back( 1 );
+    }
+    
+    for( size_t i = uSize - 1; i > 0; --i )
+    {
+        mxLimbs[ i ] = __shiftleft128( mxLimbs[ i - 1 ], mxLimbs[ i ], 1 );
+    }
+    
+    mxLimbs[ 0 ] <<= 1;
+
+    // SE - NOTE: this is slower (!)
+    //if( Mul2X64( uSize, &mxLimbs[ 0 ] ) )
+    //{
+    //    mxLimbs.push_back( 1 );
+    //}
 }
 
 void Number::InplaceLimbShiftLeft( const size_t uLimbs )

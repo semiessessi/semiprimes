@@ -138,6 +138,18 @@
     <ClCompile Include="..\Code\Algorithms\Factorisation\Fermat.cpp">
       <Filter>Algorithms\Factorisation</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Tests\Test_SPRP.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Tests\Test_ModExp.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Factorisation\PollardPMinus1.cpp">
+      <Filter>Algorithms\Factorisation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\AlgorithmD.cpp">
+      <Filter>Algorithms\Arithmetic\Division</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -200,6 +212,12 @@
     <ClInclude Include="..\Code\Algorithms\Factorisation\Fermat.h">
       <Filter>Algorithms\Factorisation</Filter>
     </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Factorisation\PollardPMinus1.h">
+      <Filter>Algorithms\Factorisation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\AlgorithmD.h">
+      <Filter>Algorithms\Arithmetic\Division</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Code\Number\Factorisation.inl">
@@ -211,5 +229,10 @@
     <None Include="..\Code\Algorithms\Primality\Wheel.inl">
       <Filter>Algorithms\Primality</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="..\Code\Algorithms\Arithmetic\Multiplication\Multiply2X64.asm">
+      <Filter>Algorithms\Arithmetic\Multiplication</Filter>
+    </MASM>
   </ItemGroup>
 </Project>

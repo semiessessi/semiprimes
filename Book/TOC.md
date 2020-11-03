@@ -57,4 +57,5 @@
       * [2.4.1.6 Division and remainder](./Chapters/2_Polish.md#2416-division-and-remainder)
       * [2.4.1.7 Bugfixing](./Chapters/2_Polish.md#2417-bugfixing)
    * [2.4.2 Faster factorisation](./Chapters/2_Polish.md#242-faster-factorisation)
+      * [2.4.2.1 Pollard's rho method](./Chapters/2_Polish.md#2421-pollards-rho-method)
 ### [3 - Iteration](./Chapters/3_Iteration.md)
