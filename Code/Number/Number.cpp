@@ -148,6 +148,28 @@ void Number::InplaceModMul(
     *this %= xDenominator;
 }
 
+Number Number::ModExp( const Number& xExponent, const Number& xModulus ) const
+{
+    Number xReturnValue = 1;
+    Number xRemainingPower = xExponent;
+    Number xBase = *this % xModulus;
+    while( true )
+    {
+        if( ( xRemainingPower & 0x1 ) == 1 )
+        {
+            xReturnValue.InplaceModMul( xBase, xModulus );
+        }
+        xRemainingPower >>= 1;
+        if( xRemainingPower == 0 )
+        {
+            break;
+        }
+        xBase.InplaceModMul( Number( xBase ), xModulus );
+    }
+
+    return xReturnValue;
+}
+
 Number Number::GCD( const Number& xOther ) const
 {
     return GCD_Euclidean( *this, xOther );

@@ -47,24 +47,7 @@ uint64_t ModExpRightToLeft( const uint64_t uNumber, const uint64_t uExponent, co
 
 Number ModExpRightToLeft( const uint64_t uNumber, const Number& xExponent, const Number& xModulus )
 {
-    Number xReturnValue = 1;
-    Number xRemainingPower = xExponent;
-    Number xBase = Number( uNumber ) % xModulus;
-    while( true )
-    {
-        if( ( xRemainingPower & 0x1 ) == 1 )
-        {
-            xReturnValue.InplaceModMul( xBase, xModulus );
-        }
-        xRemainingPower >>= 1;
-        if( xRemainingPower == 0 )
-        {
-            break;
-        }
-        xBase.InplaceModMul( Number( xBase ), xModulus );
-    }
-
-    return xReturnValue;
+    return Number( uNumber ).ModExp( xExponent, xModulus );
 }
 
 template< int N >
