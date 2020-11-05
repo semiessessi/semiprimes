@@ -2,16 +2,11 @@
 
 #include <intrin.h>
 
+// this is based on Knuth's Algorithm D
 // the original implementation does something clever and a bit faster to
-// fix up the guess at the quotient digit.
+// fix up the initial guess at the quotient digit.
 // this alternative implementation does something simpler in its place
 // and is still guaranteed to be faster than binary division
-// (and the current implementation doesn't quite work)
-#define PREFIXING_LOOP (0)
-
-// this is based on something I believe to be 'Knuth's Algorithm D'
-// .. finding good reference on the internet is difficult so the
-// rough algorithm has been adapted to 128/64-bit arithmetic
 Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number& xRemainder )
 {
     Number xQuotient = 0;
@@ -29,8 +24,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
 
     const uint64_t uM = xRemainder.GetLimbCount();
     const uint64_t uN = xDivisor.GetLimbCount();
-    uint64_t uDummy;
-    // unconditionally add an extra limb for the  divisionloop to be safe.
+    // unconditionally add an extra limb for the division loop to be safe.
     xRemainder.AddZeroLeadingLimb();
 
     // 'school' division
@@ -48,7 +42,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
         uint64_t uApproximateQuotient = _udiv128(
             xRemainder.GetLimb( uN + iJ ),
             xRemainder.GetLimb( uN + iJ - 1 ),
-            uMostSignificantLimb, &uDummy );
+            uMostSignificantLimb, &uMostSignificantLimb );
 
         // multiply to test if its right, noting the approximate quotient fits in 64-bits
         // ... but if the result is negative we need to be careful later.
