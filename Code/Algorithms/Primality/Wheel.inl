@@ -120,7 +120,10 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
     Factorisation xResult( xNumber );
     uint64_t uTest = SieveLength * 2 + 1;
     int iDiff = 0;
-    Number xTestSquare = 0;
+    // starting square value ...
+    Number xTestSquare = uTest;
+    xTestSquare *= uTest;
+    --xTestSquare;
     while( xWorkingValue > xTestSquare )
     {
         if( ( xWorkingValue % uTest ) == 0 )
@@ -140,7 +143,8 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
         }
 
         const uint64_t uOldTest = uTest;
-        uTest += saiDifferences[ iDiff ];
+        int iStep = saiDifferences[ iDiff ];
+        uTest += iStep;
         ++iDiff;
         if( iDiff >= siWheelLength )
         {
@@ -155,9 +159,10 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
             return xResult;
         }
 
-        xTestSquare = uTest;
-        xTestSquare *= uTest;
-        --xTestSquare;
+        //xTestSquare = uTest;
+        //xTestSquare *= uTest;
+        //--xTestSquare;
+        xTestSquare += iStep * ( ( uOldTest << 1 ) + iStep );
     }
 
     SetWheelBound( Number( uTest ) * uTest - 1ULL );

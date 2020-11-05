@@ -17,7 +17,18 @@ Number BabylonianSquareRoot_NoRemainder( const Number& xNumber )
             : ( ( xTestValue - xResult ) > 1 );
     }
 
-    return ( xResult > xTestValue ) ? xTestValue : xResult;
+    if( xResult > xTestValue )
+    {
+        // this is a pain i guess...
+        if( xResult * xResult == xNumber )
+        {
+            return xResult;
+        }
+
+        return xTestValue;
+    }
+    
+    return xResult;
 }
 
 Number BabylonianSquareRoot( const Number& xNumber, Number& xRemainder )

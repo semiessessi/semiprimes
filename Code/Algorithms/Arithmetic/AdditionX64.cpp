@@ -75,3 +75,44 @@ void AddX64_Generic( std::vector< uint64_t >& xLimbs, const std::vector< uint64_
         xLimbs.push_back( 1 );
     }
 }
+
+void AddX64_Generic_Placed( std::vector< uint64_t >& xLimbs, const std::vector< uint64_t >& xOperandLimbs, uint64_t uPlace )
+{
+    const size_t uOperandSize = xOperandLimbs.size();
+    if( uOperandSize + uPlace > xLimbs.size() )
+    {
+        xLimbs.resize( uOperandSize + uPlace, 0 );
+    }
+
+    const size_t uLimbCount = xLimbs.size();
+    unsigned char ucCarry = 0;
+    size_t uLimb = 0;
+
+    for( ; uLimb < uOperandSize; ++uLimb )
+    {
+        ucCarry = _addcarryx_u64(
+            ucCarry,
+            xLimbs[ uLimb + uPlace ],
+            xOperandLimbs[ uLimb ],
+            &( xLimbs[ uLimb + uPlace ] ) );
+    }
+
+    for( uLimb = uOperandSize + uPlace; uLimb < uLimbCount; ++uLimb )
+    {
+        if( ucCarry == 0 )
+        {
+            break;
+        }
+
+        ucCarry = _addcarryx_u64(
+            ucCarry,
+            xLimbs[ uLimb ],
+            0,
+            &( xLimbs[ uLimb ] ) );
+    }
+
+    if( ucCarry != 0 )
+    {
+        xLimbs.push_back( 1 );
+    }
+}

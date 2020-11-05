@@ -88,7 +88,7 @@ Number Number::SquareRoot() const
     {
         // do double precision sqrt and round.
         return static_cast< uint64_t >(
-            sqrt( static_cast< double >( mxLimbs[ 0 ] ) ) );
+            sqrtl( static_cast< long double >( mxLimbs[ 0 ] ) ) );
     }
 
     Number xRemainder;
