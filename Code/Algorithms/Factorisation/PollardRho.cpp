@@ -26,9 +26,9 @@ Factorisation PollardRho( const Number& xNumber )
     {
         for( int j = i; j < i + kiSubTestLimit; ++j )
         {
-            xX = ( xX * xX + 1 ) % xNumber;
-            xY = ( xY * xY + 1 );//% xNumber;
-            xY = ( xY * xY + 1 ) % xNumber;
+            xX = ( xX * xX + 1ULL ) % xNumber;
+            xY = ( xY * xY + 1ULL );//% xNumber;
+            xY = ( xY * xY + 1ULL ) % xNumber;
             xD *= ( xX > xY )
                 ? xX - xY
                 : xY - xX;
@@ -52,9 +52,9 @@ Factorisation PollardRho( const Number& xNumber )
             // rewind...
             for( int j = i; j < i + kiSubTestLimit; ++j )
             {
-                xX = ( xX * xX + 1 ) % xNumber;
-                xY = ( xY * xY + 1 ) % xNumber;
-                xY = ( xY * xY + 1 ) % xNumber;
+                xX = ( xX * xX + 1ULL ) % xNumber;
+                xY = ( xY * xY + 1ULL ) % xNumber;
+                xY = ( xY * xY + 1ULL ) % xNumber;
                 xD = xNumber.GCD(
                     ( xX > xY )
                     ? xX - xY

@@ -5,7 +5,7 @@
 bool TestSquareRootNumber( const Number& xA )
 {
     Number xLowTest = xA.SquareRoot();
-    Number xHighTest = xLowTest + 1;
+    Number xHighTest = xLowTest + 1ULL;
     xLowTest = xLowTest * xLowTest;
     xHighTest = xHighTest * xHighTest;
 

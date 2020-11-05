@@ -15,9 +15,9 @@ bool SimpleAddCarryTest()
     const Number xBig6 =
         0x1000000000000000000000000000000000000000000000000000000000000z;
     return
-        ( ( xBig1 + 1 ) == xBig2 )
-        && ( ( xBig3 + 1 ) == xBig4 )
-        && ( ( xBig5 + 1 ) == xBig6 );
+        ( ( xBig1 + 1ULL ) == xBig2 )
+        && ( ( xBig3 + 1ULL ) == xBig4 )
+        && ( ( xBig5 + 1ULL ) == xBig6 );
 }
 
 bool BigAddCarryTest()
@@ -59,7 +59,7 @@ bool BigSubBorrowTest()
         0xFFFFFFFFFFFFFFFF0000000000000000z;
     const Number xBig2 =
         0x10000000000000000000000000001z;
-    if( ( xBig1 - 1 )
+    if( ( xBig1 - 1ULL )
         != 0xFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFFz )
     {
         return false;

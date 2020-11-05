@@ -48,7 +48,7 @@ bool MulTests()
 
     Number xDoubley = xBigMultiplicand;
     xDoubley.InplaceMultiplyBy2();
-    if( xDoubley != xBigMultiplicand * 2 )
+    if( xDoubley != xBigMultiplicand * 2ULL )
     {
         return false;
     }

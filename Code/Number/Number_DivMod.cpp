@@ -1,5 +1,6 @@
 #include "Number.h"
 
+#include "../Algorithms/Arithmetic/Division/AlgorithmD.h"
 #include "../Algorithms/Arithmetic/Division/BinaryDivision.h"
 
 #include <intrin.h>
@@ -84,7 +85,8 @@ Number Number::DivMod(
         return DivMod( xNumerator, xDenominator.mxLimbs[ 0 ], xRemainder.mxLimbs[ 0 ] );
     }
 
-    return BinaryDivision( xNumerator, xDenominator, xRemainder );
+    //return BinaryDivision( xNumerator, xDenominator, xRemainder );
+    return AlgorithmD( xNumerator, xDenominator, xRemainder );
 }
 
 uint64_t Number::Mod(

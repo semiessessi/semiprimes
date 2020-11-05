@@ -69,8 +69,10 @@ public:
 #define OPERATOR_FROM_INPLACE( op ) \
     Number operator op( const Number& xOperand ) const \
     { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; } \
-    Number operator op( const int64_t xOperand ) const \
-    { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; }
+    Number operator op( const int64_t iOperand ) const \
+    { Number xReturnValue = *this; xReturnValue op##= iOperand; return xReturnValue; } \
+    Number operator op( const uint64_t uOperand ) const \
+    { Number xReturnValue = *this; xReturnValue op## = uOperand; return xReturnValue; }
 #define OPERATOR_FROM_INPLACE_NOINT( op ) \
     Number operator op( const Number& xOperand ) const \
     { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; }

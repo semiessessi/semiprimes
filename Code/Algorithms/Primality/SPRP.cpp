@@ -96,7 +96,7 @@ template< int N >
 bool SPRP( const Number& xNumber )
 {
     // find a * 2^b + 1 == xNumber
-    Number xA = ( xNumber - 1 ) >> 1;
+    Number xA = ( xNumber - 1ULL ) >> 1;
     uint64_t uB = 1;
 
     if( xA < 2 )
@@ -116,7 +116,7 @@ bool SPRP( const Number& xNumber )
         return true;
     }
 
-    const Number xMinusOne = xNumber - 1;
+    const Number xMinusOne = xNumber - 1ULL;
     if( xPowerTest == xMinusOne )
     {
         return true;

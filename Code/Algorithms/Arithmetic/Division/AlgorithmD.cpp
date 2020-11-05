@@ -115,65 +115,11 @@ private:
     uint64_t muLowPart;
 };
 
-class int128d_t
-{
-
-public:
-
-    int128d_t( const uint64_t u = 0 )
-    : muAbsoluteValue( 0, u )
-    , mbNegative( false )
-    {
-
-    }
-
-    int128d_t( const uint64_t uHigh, const uint64_t uLow )
-    : muAbsoluteValue( uHigh, uLow )
-    , mbNegative( false )
-    {
-
-    }
-
-    int128d_t( const uint128d_t uValue )
-    : muAbsoluteValue( uValue )
-    , mbNegative( false )
-    {
-
-    }
-
-    bool operator >( const int128d_t& xOther ) const
-    {
-        return ( mbNegative != xOther.mbNegative )
-            ? xOther.mbNegative
-            : ( mbNegative
-                ? ( muAbsoluteValue > xOther.muAbsoluteValue )
-                : ( xOther.muAbsoluteValue > muAbsoluteValue ) );
-    }
-
-    int128d_t operator -( const int128d_t& xOther ) const
-    {
-        int128d_t xResult = *this;
-        if( xOther > * this )
-        {
-            xResult.muAbsoluteValue = xOther.muAbsoluteValue - muAbsoluteValue;
-            xResult.mbNegative = true;
-        }
-        return xResult;
-    }
-
-    uint64_t LowLimb() const { return muAbsoluteValue.LowLimb(); }
-    uint64_t HighLimb() const { return muAbsoluteValue.HighLimb(); }
-
-private:
-
-    uint128d_t muAbsoluteValue;
-    bool mbNegative;
-};
-
 // the original implementation does something clever and a bit faster to
 // fix up the guess at the quotient digit.
 // the alternative implementation does something simpler in its place
 // and is still  guaranteed to be faster than binary division
+// (and the current implementation doesn't quite work)
 #define PREFIXING_LOOP (0)
 
 // this is based on something I believe to be 'Knuth's Algorithm D'
@@ -203,7 +149,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
     // 'school' division
     for( int iJ = static_cast< int >( uM - uN ); iJ >= 0; --iJ )
     {
-        uint128d_t uDoubleLimb( xDividend.GetLimb( uN + iJ ), xDividend.GetLimb( uN + iJ - 1 ) );
+        uint128d_t uApproximateQuotient( xDividend.GetLimb( uN + iJ ), xDividend.GetLimb( uN + iJ - 1 ) );
         // note the top part can be any value, so the worst case large result has the high bits as:
         //   0xFFFFFFFFFFFFFFFF
         // the divisor being normalised is somewhere between values:
@@ -217,8 +163,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
         uint64_t uMostSignificantLimb = xDivisor.MostSignificantLimb();
         // SE - NOTE: i feel this division can avoid the second div by careful
         // handling of the overflow case
-        uint128d_t uApproximateQuotient =
-            uDoubleLimb.Divide( uMostSignificantLimb, uApproximateRemainder.muLowPart );
+        uApproximateQuotient.InplaceDivide( uMostSignificantLimb, uApproximateRemainder.muLowPart );
 
         // SE - TOOD: this seems overly generic and amenable to careful construction
         // ... and is it necessary since we can correct later ??
@@ -273,17 +218,25 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
         }
         else
         {
-            // we got the guess right...
-            xQuotient.SetLimb( iJ, uApproximateQuotient.LowLimb() );
+            // we got the guess right... set the digit if we need to.
+            if( uApproximateQuotient.LowLimb() != 0 )
+            {
+                xQuotient.SetLimb( iJ, uApproximateQuotient.LowLimb() );
+            }
+
             // subtract the test from the dividend and its done.
             xDividend.InplaceSubAtLimbOffset( xApproximationTest, iJ );
         }
     }
 
-    while( xQuotient.MostSignificantLimb() == 0 )
+    while( ( xQuotient.MostSignificantLimb() == 0 )
+        && ( xQuotient.GetLimbCount() > 1 ) )
     {
         xQuotient.InplaceRemoveLeadingLimb();
     }
+
+    // fixup remainder.
+    xRemainder = xDividend >> uShifts;
 
     return xQuotient;
 }
