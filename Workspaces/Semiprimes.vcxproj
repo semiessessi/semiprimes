@@ -188,8 +188,19 @@
     </ClCompile>
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\AlgorithmD.cpp" />
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\BinaryDivision.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\RepeatedMod.inl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.cpp" />
-    <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.cpp" />
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.inl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.inl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -267,6 +278,7 @@
     <ClInclude Include="..\Code\Algorithms\Arithmetic\AdditionX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\AlgorithmD.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\BinaryDivision.h" />
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\RepeatedMod.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.h" />
     <ClInclude Include="..\Code\Algorithms\Arithmetic\SubtractionX64.h" />

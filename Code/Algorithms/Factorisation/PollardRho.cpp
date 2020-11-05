@@ -1,6 +1,7 @@
 
 #include "../../Number/Factorisation.h"
 #include "../../Number/Number.h"
+//#include "../Arithmetic/Division/RepeatedMod.h"
 
 static const int kiRhoTestLimit =
 #if _DEBUG
@@ -20,6 +21,7 @@ Factorisation PollardRho( const Number& xNumber )
     Number xX = 2;
     Number xY = 2;
     Number xD = 1;
+    //Number xR = GeneralisedReciprocal( xNumber );
     Number xRemainingValue = xNumber;
     Factorisation xResult( xNumber );
     for( int i = 0; i < kiRhoTestLimit; i += kiSubTestLimit )

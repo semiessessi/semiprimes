@@ -75,9 +75,6 @@
     <ClCompile Include="..\Code\Algorithms\Primality\Wheel.cpp">
       <Filter>Algorithms\Primality</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.cpp">
-      <Filter>Algorithms\Arithmetic\Multiplication</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\GrammarSchoolX64.cpp">
       <Filter>Algorithms\Arithmetic\Multiplication</Filter>
     </ClCompile>
@@ -159,6 +156,12 @@
     <ClCompile Include="..\Code\Number\Number_BitOps.inl">
       <Filter>Number</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.inl">
+      <Filter>Algorithms\Arithmetic\Multiplication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\RepeatedMod.inl">
+      <Filter>Algorithms\Arithmetic\Division</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\Primality\Erastothenes.h">
       <Filter>Algorithms\Primality</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\RepeatedMod.h">
+      <Filter>Algorithms\Arithmetic\Division</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
