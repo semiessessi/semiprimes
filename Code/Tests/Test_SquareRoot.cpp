@@ -2,6 +2,9 @@
 #include "../Number/Number.h"
 #include "../Algorithms/Factorisation/PollardRho.h"
 
+#include "../Algorithms/General/BabylonianSquareRoot.h"
+#include "../Algorithms/General/BinarySquareRoot.h"
+
 bool TestSquareRootNumber( const Number& xA )
 {
     Number xLowTest = xA.SquareRoot();
@@ -32,6 +35,37 @@ bool TestSquareRoot()
     while( xTest > 1 )
     {
         if( !TestSquareRootNumber( xTest ) )
+        {
+            return false;
+        }
+        xTest >>= 1;
+    }
+
+    return true;
+}
+
+bool TestBabylonianSquareRoot()
+{
+    Number xTest =
+        11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111z;
+    Number xDummy;
+    while( xTest > 1 )
+    {
+        if( BinarySquareRoot( xTest, xDummy )
+            != BabylonianSquareRoot_NoRemainder( xTest ) )
+        {
+            return false;
+        }
+        xTest /= 10;
+    }
+
+    xTest =
+        0x10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000z;
+
+    while( xTest > 1 )
+    {
+        if( BinarySquareRoot( xTest, xDummy )
+            != BabylonianSquareRoot_NoRemainder( xTest ) )
         {
             return false;
         }

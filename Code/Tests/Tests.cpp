@@ -13,6 +13,7 @@ bool MulTests();
 bool LeftShiftTests();
 bool RightShiftTests();
 bool TestSquareRoot();
+bool TestBabylonianSquareRoot();
 bool ModExpTests();
 bool TestFermat();
 bool TestRho();
@@ -71,6 +72,7 @@ void DoTests( const Parameters& xParameters )
         { "(10^n - 1) / 9 mod 10 == 1 and similar", ModTests },
         { "Algorithm D tests", AlgorithmDTests },
         { "Square root tests", TestSquareRoot },
+        { "Babylonian square root tests", TestBabylonianSquareRoot },
         { "Modular exponentiation tests", ModExpTests },
         { "Pollard rho algorithm tests", TestRho },
         { "Fermat's method tests", TestFermat },
