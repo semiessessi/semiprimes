@@ -88,6 +88,7 @@ public:
     OPERATOR_FROM_INPLACE_NOZ( << )
     OPERATOR_FROM_INPLACE_NOINT( % )
     
+    bool GreaterThanWithOffset( const Number& xOperand, const uint64_t uPlace ) const;
     void InplaceSubAtLimbOffset( const uint64_t uOther, const uint64_t uPlace );
     void InplaceSubAtLimbOffset( const Number& xOther, const uint64_t uPlace );
     void InplaceMultiplyBy2();

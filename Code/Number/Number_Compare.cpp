@@ -55,3 +55,32 @@ bool Number::operator ==( const Number& xOperand ) const
 
     return true;
 }
+
+bool Number::GreaterThanWithOffset( const Number& xOperand, const uint64_t uPlace ) const
+{
+    // no sign checks ...
+
+    // size checks
+    if( mxLimbs.size() > ( xOperand.mxLimbs.size() - uPlace ) )
+    {
+        return true;
+    }
+
+    if( mxLimbs.size() < ( xOperand.mxLimbs.size() - uPlace ) )
+    {
+        return false;
+    }
+
+    // actual comparison
+    size_t uLimb = xOperand.mxLimbs.size();
+    bool bResult = false;
+    bool bEqual = true;
+    while( bEqual && ( ( uLimb - uPlace ) != 0 ) )
+    {
+        --uLimb;
+        bResult = mxLimbs[ uLimb - uPlace ] > xOperand.mxLimbs[ uLimb ];
+        bEqual = mxLimbs[ uLimb - uPlace ] == xOperand.mxLimbs[ uLimb ];
+    }
+
+    return bResult;
+}
