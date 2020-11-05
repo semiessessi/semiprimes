@@ -55,3 +55,59 @@ bool Number::operator ==( const Number& xOperand ) const
 
     return true;
 }
+
+bool Number::GreaterOrEqualToWithOffset( const Number& xOperand, const uint64_t uPlace ) const
+{
+    // no sign checks ...
+
+    // this might happen.
+    size_t uMySize = mxLimbs.size();
+    if( mxLimbs.back() == 0 )
+    {
+        --uMySize;
+    }
+
+    size_t uOtherSize = xOperand.mxLimbs.size();
+    if( xOperand.mxLimbs.back() == 0 )
+    {
+        --uOtherSize;
+    }
+
+    // size checks
+    if( uMySize + uPlace > uOtherSize )
+    {
+        return true;
+    }
+
+    if( uMySize + uPlace < uOtherSize )
+    {
+        return false;
+    }
+
+    // actual comparison
+    size_t uLimb = uMySize;
+    while( uLimb != 0 )
+    {
+        --uLimb;
+        if( mxLimbs[ uLimb ] < xOperand.mxLimbs[ uLimb + uPlace ] )
+        {
+            return false;
+        }
+
+        if( mxLimbs[ uLimb ] > xOperand.mxLimbs[ uLimb + uPlace ] )
+        {
+            return true;
+        }
+    }
+
+    // equal if all remaining digits are zero
+    for( size_t i = 0; i < uPlace; ++i )
+    {
+        if( xOperand.mxLimbs[ i ] != 0 )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}

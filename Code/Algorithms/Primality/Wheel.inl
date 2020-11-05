@@ -149,7 +149,7 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
 
         if( uTest > uWheelLimit )
         {
-            SetWheelBound( ( Number( uOldTest ) * uOldTest ) - 1 );
+            SetWheelBound( ( Number( uOldTest ) * uOldTest ) - 1ULL );
 
             xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
             return xResult;
@@ -160,7 +160,7 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
         --xTestSquare;
     }
 
-    SetWheelBound( Number( uTest ) * uTest - 1 );
+    SetWheelBound( Number( uTest ) * uTest - 1ULL );
 
     if( xResult.mxKnownFactors.empty() )
     {

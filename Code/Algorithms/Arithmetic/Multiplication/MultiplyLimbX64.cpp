@@ -19,4 +19,10 @@ void MultiplyX64_BaseCase( std::vector< uint64_t >& xLimbs, const uint64_t uOper
     {
         xLimbs.push_back( uCarry );
     }
+
+    while( ( xLimbs.back() == 0 )
+        && ( xLimbs.size() > 1 ) )
+    {
+        xLimbs.pop_back();
+    }
 }

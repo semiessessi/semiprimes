@@ -25,7 +25,7 @@ Factorisation PollardPMinus1( const Number& xNumber )
 
         xA = xA.ModExp( xNumber.MostSignificantBitPosition(), xNumber );
 
-        const Number xGCD = xNumber.GCD( xA - 1 );
+        const Number xGCD = xNumber.GCD( xA - 1ULL );
         if( xGCD == 1 )
         {
             break;

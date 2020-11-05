@@ -15,9 +15,9 @@ bool SimpleAddCarryTest()
     const Number xBig6 =
         0x1000000000000000000000000000000000000000000000000000000000000z;
     return
-        ( ( xBig1 + 1 ) == xBig2 )
-        && ( ( xBig3 + 1 ) == xBig4 )
-        && ( ( xBig5 + 1 ) == xBig6 );
+        ( ( xBig1 + 1ULL ) == xBig2 )
+        && ( ( xBig3 + 1ULL ) == xBig4 )
+        && ( ( xBig5 + 1ULL ) == xBig6 );
 }
 
 bool BigAddCarryTest()
@@ -59,7 +59,7 @@ bool BigSubBorrowTest()
         0xFFFFFFFFFFFFFFFF0000000000000000z;
     const Number xBig2 =
         0x10000000000000000000000000001z;
-    if( ( xBig1 - 1 )
+    if( ( xBig1 - 1ULL )
         != 0xFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFFz )
     {
         return false;
@@ -81,6 +81,23 @@ bool SpecificSubTest()
 
     if( ( xFirst - xSecond )
         != 0x1d9399f45527c6522c0d8d564bf40f8f80807ca0a14z )
+    {
+        return false;
+    }
+
+    Number xPlaceSub = 0xFFFFFFFFFFFFFFFFFFFFFFz;
+    xPlaceSub.InplaceSubAtLimbOffset( 1, 1 );
+    if( ( 0xFFFFFFFFFFFFFFFFFFFFFFz - 0x10000000000000000z )
+        != xPlaceSub )
+    {
+        return false;
+    }
+
+    xPlaceSub = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFz;
+    xPlaceSub.InplaceSubAtLimbOffset( 0x10000000000000000z, 1 );
+    if( ( 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFz
+        - 0x100000000000000000000000000000000z )
+            != xPlaceSub )
     {
         return false;
     }

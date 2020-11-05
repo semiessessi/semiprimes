@@ -69,8 +69,10 @@ public:
 #define OPERATOR_FROM_INPLACE( op ) \
     Number operator op( const Number& xOperand ) const \
     { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; } \
-    Number operator op( const int64_t xOperand ) const \
-    { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; }
+    Number operator op( const int64_t iOperand ) const \
+    { Number xReturnValue = *this; xReturnValue op##= iOperand; return xReturnValue; } \
+    Number operator op( const uint64_t uOperand ) const \
+    { Number xReturnValue = *this; xReturnValue op## = uOperand; return xReturnValue; }
 #define OPERATOR_FROM_INPLACE_NOINT( op ) \
     Number operator op( const Number& xOperand ) const \
     { Number xReturnValue = *this; xReturnValue op##= xOperand; return xReturnValue; }
@@ -86,16 +88,27 @@ public:
     OPERATOR_FROM_INPLACE_NOZ( << )
     OPERATOR_FROM_INPLACE_NOINT( % )
     
+    bool GreaterOrEqualToWithOffset( const Number& xOperand, const uint64_t uPlace ) const;
+    void InplaceSubAtLimbOffset( const uint64_t uOther, const uint64_t uPlace );
+    void InplaceSubAtLimbOffset( const Number& xOther, const uint64_t uPlace );
     void InplaceMultiplyBy2();
     void InplaceLimbShiftLeft( const size_t uLimbs );
     void InplaceLimbShiftRight( const size_t uLimbs );
     void InplaceNegate() { mbNegative = !mbNegative; }
+    void InplaceRemoveLeadingLimb() { mxLimbs.pop_back(); }
 
     bool GetBit( const uint64_t uIndex ) const;
     void SetBit( const uint64_t uIndex, const bool bValue = true );
 
     uint64_t& GetLimb( const uint64_t uIndex ) { return mxLimbs[ uIndex ]; }
     uint64_t GetLimb( const uint64_t uIndex ) const { return mxLimbs[ uIndex ]; }
+    uint64_t GetLimbSafe( const uint64_t uIndex ) const { if( uIndex < mxLimbs.size() ) { return mxLimbs[ uIndex ]; } return 0; }
+    void SetLimb( const uint64_t uIndex, const uint64_t uValue )
+    {
+        mxLimbs.resize( ( uIndex < mxLimbs.size() ) ? mxLimbs.size() : uIndex + 1, 0 );
+        mxLimbs[ uIndex ] = uValue;
+    }
+    void ZeroFillLimbResize( const size_t i ) { mxLimbs.resize( i, 0 ); }
 
     uint64_t GetPerfectPower() const;
     bool IsPerfectSquare() const;

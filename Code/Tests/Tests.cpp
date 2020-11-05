@@ -14,6 +14,7 @@ bool LeftShiftTests();
 bool RightShiftTests();
 bool TestSquareRoot();
 bool ModExpTests();
+bool TestFermat();
 bool TestRho();
 bool SPRPTests();
 bool AlgorithmDTests();
@@ -68,11 +69,12 @@ void DoTests( const Parameters& xParameters )
         { "multiple limb right shifts", RightShiftTests },
         { "multiple limb multiplication", MulTests },
         { "(10^n - 1) / 9 mod 10 == 1 and similar", ModTests },
+        { "Algorithm D tests", AlgorithmDTests },
         { "Square root tests", TestSquareRoot },
         { "Modular exponentiation tests", ModExpTests },
         { "Pollard rho algorithm tests", TestRho },
+        { "Fermat's method tests", TestFermat },
         { "Strong Fermat psuedoprime tests", SPRPTests },
-        { "Algorithm D tests", AlgorithmDTests },
     };
     
     const size_t uTestCount = sizeof( lsaxTests ) / sizeof( lsaxTests[ 0 ] );

@@ -108,3 +108,13 @@ Number& Number::operator -=( const Number& xOperand )
 
     return *this;
 }
+
+void Number::InplaceSubAtLimbOffset( const uint64_t uOther, const uint64_t uPlace )
+{
+    SubX64_BaseCase_Placed( mxLimbs, uOther, uPlace );
+}
+
+void Number::InplaceSubAtLimbOffset( const Number& xOther, const uint64_t uPlace )
+{
+    SubX64_SmallFromLarge_Placed( mxLimbs, xOther.mxLimbs, uPlace );
+}
