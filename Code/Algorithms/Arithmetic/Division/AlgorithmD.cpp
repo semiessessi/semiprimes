@@ -30,22 +30,16 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
     // 'school' division
     for( int iJ = static_cast< int >( uM - uN ); iJ >= 0; --iJ )
     {
-        // note the top part can be any value, so the worst case large result has the high bits as:
-        //   0xFFFFFFFFFFFFFFFF
-        // the divisor being normalised is somewhere between values:
-        //   0x8000000000000000-0xFFFFFFFFFFFFFFFF
-        // this overflows a 128/64 -> 64 divisiom
-
         // the leading zero makes this 'safe' the first time in...
-        // the top part is always zeroes. then subtractions keep it safe. (i think)
+        // then subtractions keep it safe. (i think)
         uint64_t uMostSignificantLimb = xDivisor.MostSignificantLimb();
         uint64_t uApproximateQuotient = _udiv128(
             xRemainder.GetLimb( uN + iJ ),
             xRemainder.GetLimb( uN + iJ - 1 ),
             uMostSignificantLimb, &uMostSignificantLimb );
 
-        // multiply to test if its right, noting the approximate quotient fits in 64-bits
-        // ... but if the result is negative we need to be careful later.
+        // multiply to test the quotient guess
+        // ... but if the result is negative we need to adjust it
         xApproximationTest = xDivisor;
         xApproximationTest *= uApproximateQuotient;
         const bool bNegative = xApproximationTest.GreaterThanWithOffset( xRemainder, iJ );
