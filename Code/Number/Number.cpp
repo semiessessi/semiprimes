@@ -5,6 +5,8 @@
 #include "../Algorithms/General/BinarySquareRoot.h"
 #include "../Algorithms/General/EuclideanGCD.h"
 
+#include <cmath>
+
 Number Number::operator -() const
 {
     Number xCopy( *this );
@@ -81,12 +83,29 @@ bool Number::IsPerfectSquare() const
 
 Number Number::SquareRoot() const
 {
+    if( mxLimbs.size() == 1 )
+    {
+        // do double precision sqrt and round.
+        return static_cast< uint64_t >(
+            sqrt( static_cast< double >( mxLimbs[ 0 ] ) ) );
+    }
+
     Number xRemainder;
     return SquareRoot( xRemainder );
 }
 
 Number Number::SquareRoot( Number& xRemainder ) const
 {
+    if( mxLimbs.size() == 1 )
+    {
+        // do double precision sqrt and round.
+        // sqrt guaranteed to fit in 32 bits...
+       const uint64_t uResult = static_cast< uint64_t >(
+            sqrtl( static_cast< long double >( mxLimbs[ 0 ] ) ) );
+       xRemainder = *this - uResult * uResult;
+       return uResult;
+    }
+
     return BinarySquareRoot( *this, xRemainder );
 }
 
