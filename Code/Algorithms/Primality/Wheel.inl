@@ -159,9 +159,6 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
             return xResult;
         }
 
-        //xTestSquare = uTest;
-        //xTestSquare *= uTest;
-        //--xTestSquare;
         xTestSquare += iStep * ( ( uOldTest << 1 ) + iStep );
     }
 
