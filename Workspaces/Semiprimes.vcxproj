@@ -183,6 +183,7 @@
     <ClCompile Include="..\Code\Algorithms\Factorisation\Fermat.cpp" />
     <ClCompile Include="..\Code\Algorithms\Factorisation\PollardPMinus1.cpp" />
     <ClCompile Include="..\Code\Algorithms\Factorisation\PollardRho.cpp" />
+    <ClCompile Include="..\Code\Algorithms\General\BabylonianSquareRoot.cpp" />
     <ClCompile Include="..\Code\Algorithms\General\BinarySquareRoot.cpp" />
     <ClCompile Include="..\Code\Algorithms\General\EuclideanGCD.cpp" />
     <ClCompile Include="..\Code\Algorithms\Primality\PowersOf2.cpp" />
@@ -207,6 +208,7 @@
     <ClCompile Include="..\Code\Tests\Tests.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Addition.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Division.cpp" />
+    <ClCompile Include="..\Code\Tests\Test_Fermat.cpp" />
     <ClCompile Include="..\Code\Tests\Test_ModExp.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Multiplication.cpp" />
     <ClCompile Include="..\Code\Tests\Test_Rho.cpp" />
@@ -224,6 +226,7 @@
     <ClInclude Include="..\Code\Algorithms\Factorisation\Fermat.h" />
     <ClInclude Include="..\Code\Algorithms\Factorisation\PollardPMinus1.h" />
     <ClInclude Include="..\Code\Algorithms\Factorisation\PollardRho.h" />
+    <ClInclude Include="..\Code\Algorithms\General\BabylonianSquareRoot.h" />
     <ClInclude Include="..\Code\Algorithms\General\BinarySquareRoot.h" />
     <ClInclude Include="..\Code\Algorithms\General\EuclideanGCD.h" />
     <ClInclude Include="..\Code\Algorithms\Primality\PowersOf2.h" />

@@ -7,6 +7,9 @@
 // fix up the initial guess at the quotient digit.
 // this alternative implementation does something simpler in its place
 // and is still guaranteed to be faster than binary division
+
+#define OVERFLOW_CARE (1)
+
 Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number& xRemainder )
 {
     Number xQuotient = 0;
@@ -33,33 +36,52 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
         // the leading zero makes this 'safe' the first time in...
         // then subtractions keep it safe. (i think)
         uint64_t uMostSignificantLimb = xDivisor.MostSignificantLimb();
-        uint64_t uApproximateQuotient = _udiv128(
-            xRemainder.GetLimb( uN + iJ ),
-            xRemainder.GetLimb( uN + iJ - 1 ),
-            uMostSignificantLimb, &uMostSignificantLimb );
+#if OVERFLOW_CARE
+        const bool bOverflow = xRemainder.GetLimb( uN + iJ ) >= uMostSignificantLimb;
+        uint64_t uApproximateQuotient = 0xFFFFFFFFFFFFFFFF;
+        if( !bOverflow )
+        {
+#else
+        uint64_t
+#endif
+            uApproximateQuotient = _udiv128(
+                xRemainder.GetLimb( uN + iJ ),
+                xRemainder.GetLimb( uN + iJ - 1 ),
+                uMostSignificantLimb, &uMostSignificantLimb );
+#if OVERFLOW_CARE
+        }
+#endif
 
         // multiply to test the quotient guess
         // ... but if the result is negative we need to adjust it
         xApproximationTest = xDivisor;
         xApproximationTest *= uApproximateQuotient;
-        const bool bNegative = xApproximationTest.GreaterThanWithOffset( xRemainder, iJ );
+        const bool bNegative = xApproximationTest.GreaterOrEqualToWithOffset( xRemainder, iJ );
         if( bNegative )
         {
             xApproximationTest -= xDivisor;
-            const bool bStillNegative = xApproximationTest.GreaterThanWithOffset( xRemainder, iJ );
-            xQuotient.SetLimb( iJ, uApproximateQuotient - ( bStillNegative ? 2 : 1 ) );
+            const bool bStillNegative = xApproximationTest.GreaterOrEqualToWithOffset( xRemainder, iJ );
+            uApproximateQuotient -= bStillNegative ? 2 : 1;
             if( bStillNegative )
             {
                 xApproximationTest -= xDivisor;
             }
         }
-        else if( uApproximateQuotient != 0 )
+       
+        if( uApproximateQuotient != 0 )
         {
             xQuotient.SetLimb( iJ, uApproximateQuotient );
         }
 
         // subtract the test from the dividend and its done.
         xRemainder.InplaceSubAtLimbOffset( xApproximationTest, iJ );
+
+        // SE - NOTE: this feels sloppy.
+        // put back limbs we might need (!)
+        if( xRemainder.GetLimbCount() < ( uN + iJ ) )
+        {
+            xRemainder.ZeroFillLimbResize( uN + iJ );
+        }
     }
 
     // SE - TODO: are we ever left with leading zeros where we had to subtract?

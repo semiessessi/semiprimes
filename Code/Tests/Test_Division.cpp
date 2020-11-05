@@ -64,6 +64,14 @@ bool AlgorithmDTests()
         return false;
     }
 
+    xNuisance = 0x10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000z;
+    xLesserNuisance = 0x100000000000000000067d88f56a29cca5d2fcdb6998060a6z;
+    if( BinaryDivision( xNuisance, xLesserNuisance, xRemainder )
+        != AlgorithmD( xNuisance, xLesserNuisance, xRemainder ) )
+    {
+        return false;
+    }
+
     // compare Algorithm D with Binary Division...
     for( int i = 0; i < uLength; ++i )
     {

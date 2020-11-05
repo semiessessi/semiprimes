@@ -2,6 +2,7 @@
 
 #include "../Algorithms/Arithmetic/Multiplication/MultiplyLimbX64.h"
 #include "../Algorithms/Arithmetic/Multiplication/GrammarSchoolX64.h"
+#include "../Algorithms/General/BabylonianSquareRoot.h"
 #include "../Algorithms/General/BinarySquareRoot.h"
 #include "../Algorithms/General/EuclideanGCD.h"
 
@@ -91,7 +92,8 @@ Number Number::SquareRoot() const
     }
 
     Number xRemainder;
-    return SquareRoot( xRemainder );
+    return BinarySquareRoot( *this, xRemainder );
+    //return BabylonianSquareRoot_NoRemainder( *this );
 }
 
 Number Number::SquareRoot( Number& xRemainder ) const
@@ -107,6 +109,7 @@ Number Number::SquareRoot( Number& xRemainder ) const
     }
 
     return BinarySquareRoot( *this, xRemainder );
+    //return BabylonianSquareRoot( *this, xRemainder );
 }
 
 std::string Number::ToString() const

@@ -42,14 +42,11 @@ Factorisation Fermat( const Number& xNumber )
         do
         {
             // perfect square checks by modulo arithmetic
-            //uint64_t uTest = xRemainder & 0x7;
-            //if( ( ( uTest == 4 ) || ( uTest < 2 ) ) == false )
-            //uint64_t uTest = xRemainder & 0x15;
-            //if( ( ( uTest == 4 ) || ( uTest == 9 ) || ( uTest < 2 ) ) == false )
-            //uint64_t uTest = xRemainder & 0x3;
-            //if( ( ( uTest < 2 ) ) == false )
-            uint64_t uTest = xRemainder & 0x15;
-            if( ( ( uTest == 4 ) || ( uTest == 9 ) || ( uTest < 2 ) ) == false )
+            uint64_t uTest = xRemainder & 0x15;// 0x63;
+            if( ( /*( uTest == 49 ) || ( uTest < 57 )                                // & 63
+                || ( uTest == 33 ) || ( uTest == 36 ) || ( uTest < 41 )
+                || ( uTest == 16 ) || ( uTest == 17 ) || ( uTest < 25 )
+                || */( uTest == 4 ) || ( uTest == 9 ) || ( uTest < 2 ) ) == false )  // & 15
             {
                 break;
             }
@@ -79,10 +76,10 @@ Factorisation Fermat( const Number& xNumber )
         } while( false );
 
         // iterate
-        //xRemainder += ( xTest << 1 );
-        //++xRemainder;
+        xRemainder += ( xTest << 1 );
+        ++xRemainder;
         ++xTest;
-        xRemainder = xTest * xTest - xNumber;
+        //xRemainder = xTest * xTest - xNumber;
     }
 
     return xResult;

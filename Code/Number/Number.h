@@ -88,7 +88,7 @@ public:
     OPERATOR_FROM_INPLACE_NOZ( << )
     OPERATOR_FROM_INPLACE_NOINT( % )
     
-    bool GreaterThanWithOffset( const Number& xOperand, const uint64_t uPlace ) const;
+    bool GreaterOrEqualToWithOffset( const Number& xOperand, const uint64_t uPlace ) const;
     void InplaceSubAtLimbOffset( const uint64_t uOther, const uint64_t uPlace );
     void InplaceSubAtLimbOffset( const Number& xOther, const uint64_t uPlace );
     void InplaceMultiplyBy2();
@@ -102,11 +102,13 @@ public:
 
     uint64_t& GetLimb( const uint64_t uIndex ) { return mxLimbs[ uIndex ]; }
     uint64_t GetLimb( const uint64_t uIndex ) const { return mxLimbs[ uIndex ]; }
+    uint64_t GetLimbSafe( const uint64_t uIndex ) const { if( uIndex < mxLimbs.size() ) { return mxLimbs[ uIndex ]; } return 0; }
     void SetLimb( const uint64_t uIndex, const uint64_t uValue )
     {
         mxLimbs.resize( ( uIndex < mxLimbs.size() ) ? mxLimbs.size() : uIndex + 1, 0 );
         mxLimbs[ uIndex ] = uValue;
     }
+    void ZeroFillLimbResize( const size_t i ) { mxLimbs.resize( i, 0 ); }
 
     uint64_t GetPerfectPower() const;
     bool IsPerfectSquare() const;

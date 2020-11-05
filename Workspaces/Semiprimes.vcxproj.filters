@@ -150,6 +150,12 @@
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\AlgorithmD.cpp">
       <Filter>Algorithms\Arithmetic\Division</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Tests\Test_Fermat.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\General\BabylonianSquareRoot.cpp">
+      <Filter>Algorithms\General</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -217,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\AlgorithmD.h">
       <Filter>Algorithms\Arithmetic\Division</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\General\BabylonianSquareRoot.h">
+      <Filter>Algorithms\General</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
