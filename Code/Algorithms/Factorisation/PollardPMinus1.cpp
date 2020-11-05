@@ -57,8 +57,14 @@ Factorisation PollardPMinus1( const Number& xNumber )
 
     if( xRemainingValue != xNumber )
     {
-        xResult.mxKnownFactors.push_back( Factorisation(
-            xRemainingValue, xRemainingValue < GetWheelBound() ) );
+        const bool bPrimeByWheel = xRemainingValue < GetWheelBound();
+        Factorisation xNew( xRemainingValue, bPrimeByWheel );
+        xNew.szFactoringAlgorithm = "Pollard's p-1 method";
+        if( bPrimeByWheel )
+        {
+            xNew.szProofName = "bound set by trial division";
+        }
+        xResult.mxKnownFactors.push_back( xNew );
     }
 
     return xResult;
