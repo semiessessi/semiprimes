@@ -93,7 +93,7 @@ void SubX64_SmallFromLarge( std::vector< uint64_t >& xGreater, const std::vector
     //}
 }
 
-void SubX64_SmallFromLarge_Placed( std::vector< uint64_t >& xGreater, const std::vector< uint64_t >& xSmaller, uint64_t uPlace ) noexcept
+void SubX64_SmallFromLarge_Placed_NoShrink( std::vector< uint64_t >& xGreater, const std::vector< uint64_t >& xSmaller, uint64_t uPlace ) noexcept
 {
     unsigned char ucBorrow = 0;
     size_t uLimb = uPlace;
@@ -121,6 +121,11 @@ void SubX64_SmallFromLarge_Placed( std::vector< uint64_t >& xGreater, const std:
         bContinueBorrow = ( ucBorrow > 0 )
             && ( uLimb < uLimbCount );
     }
+}
+
+void SubX64_SmallFromLarge_Placed( std::vector< uint64_t >& xGreater, const std::vector< uint64_t >& xSmaller, uint64_t uPlace ) noexcept
+{
+    SubX64_SmallFromLarge_Placed_NoShrink( xGreater, xSmaller, uPlace );
 
     while( ( xGreater.back() == 0 ) && ( xGreater.size() > 1 ) )
     {
