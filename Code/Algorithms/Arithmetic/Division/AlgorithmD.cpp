@@ -38,23 +38,11 @@ public:
         return xResult;
     }
 
-    uint128d_t& InplaceDivide( const uint64_t uDivisor, uint64_t& uRemainder )
+    uint128d_t& InplaceNarrowingDivide( const uint64_t uDivisor, uint64_t& uRemainder )
     {
-        bool bOverflow = muHighPart > uDivisor;
-        if( bOverflow )
-        {
-            uRemainder = 0;
-            muHighPart = _udiv128(
-                uRemainder, muHighPart, uDivisor, &uRemainder );
-            muLowPart = _udiv128(
-                uRemainder, muLowPart, uDivisor, &uRemainder );
-        }
-        else
-        {
-            muLowPart = _udiv128(
-                muHighPart, muLowPart, uDivisor, &uRemainder );
-            muHighPart = 0;
-        }
+        muLowPart = _udiv128(
+            muHighPart, muLowPart, uDivisor, &uRemainder );
+        muHighPart = 0;
 
         return *this;
     }
@@ -114,9 +102,8 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
 
         uint128d_t uApproximateRemainder = 0;
         uint64_t uMostSignificantLimb = xDivisor.MostSignificantLimb();
-        // SE - NOTE: i feel this division can avoid the second div by careful
-        // handling of the overflow case
-        uApproximateQuotient.InplaceDivide( uMostSignificantLimb, uApproximateRemainder.muLowPart );
+        uApproximateQuotient.InplaceNarrowingDivide(
+            uMostSignificantLimb, uApproximateRemainder.muLowPart );
 
         // SE - TOOD: this seems overly generic and amenable to careful construction
         // ... and is it necessary since we can correct later ??

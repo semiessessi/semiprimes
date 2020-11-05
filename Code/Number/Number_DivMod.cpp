@@ -50,7 +50,7 @@ Number Number::DivMod(
     {
         --uLimb;
         xReturnValue.InplaceLimbShiftLeft( 1 );
-        xReturnValue += _udiv128(
+        xReturnValue |= _udiv128(
             uRemainder,
             xNumerator.mxLimbs[ uLimb ],
             uDenominator,
