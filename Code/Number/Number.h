@@ -86,10 +86,13 @@ public:
     OPERATOR_FROM_INPLACE_NOZ( << )
     OPERATOR_FROM_INPLACE_NOINT( % )
     
+    void InplaceSubAtLimbOffset( const uint64_t uOther, const uint64_t uPlace );
+    void InplaceSubAtLimbOffset( const Number& xOther, const uint64_t uPlace );
     void InplaceMultiplyBy2();
     void InplaceLimbShiftLeft( const size_t uLimbs );
     void InplaceLimbShiftRight( const size_t uLimbs );
     void InplaceNegate() { mbNegative = !mbNegative; }
+    void InplaceRemoveLeadingLimb() { mxLimbs.pop_back(); }
 
     bool GetBit( const uint64_t uIndex ) const;
     void SetBit( const uint64_t uIndex, const bool bValue = true );

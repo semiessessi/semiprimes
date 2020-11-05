@@ -85,5 +85,22 @@ bool SpecificSubTest()
         return false;
     }
 
+    Number xPlaceSub = 0xFFFFFFFFFFFFFFFFFFFFFFz;
+    xPlaceSub.InplaceSubAtLimbOffset( 1, 1 );
+    if( ( 0xFFFFFFFFFFFFFFFFFFFFFFz - 0x10000000000000000z )
+        != xPlaceSub )
+    {
+        return false;
+    }
+
+    xPlaceSub = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFz;
+    xPlaceSub.InplaceSubAtLimbOffset( 0x10000000000000000z, 1 );
+    if( ( 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFz
+        - 0x100000000000000000000000000000000z )
+            != xPlaceSub )
+    {
+        return false;
+    }
+
     return true;
 }

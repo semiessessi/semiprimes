@@ -51,7 +51,7 @@ public:
         uint64_t uCarry;
         muLowPart = _umul128(
             muLowPart, uMultiplicand, &uCarry );
-        muHighPart += _umul128(
+        muHighPart = _umul128(
             muHighPart + uCarry, uMultiplicand, &uCarry );
         return *this;
     }
@@ -98,9 +98,9 @@ public:
         }
         else
         {
-            muHighPart = 0;
             muLowPart = _udiv128(
                 muHighPart, muLowPart, uDivisor, &uRemainder );
+            muHighPart = 0;
         }
 
         return *this;
@@ -170,6 +170,12 @@ private:
     bool mbNegative;
 };
 
+// the original implementation does something clever and a bit faster to
+// fix up the guess at the quotient digit.
+// the alternative implementation does something simpler in its place
+// and is still  guaranteed to be faster than binary division
+#define PREFIXING_LOOP (0)
+
 // this is based on something I believe to be 'Knuth's Algorithm D'
 // .. finding good reference on the internet is difficult so the
 // rough algorithm has been adapted to 128/64-bit arithmetic
@@ -186,6 +192,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
     Number xDividend = xNumerator << uShifts;
     Number xDivisor = xDenominator << uShifts;
     Number xApproximationTest = 0;
+    Number xReducedDividend = 0;
 
     const uint64_t uM = xDividend.GetLimbCount();
     const uint64_t uN = xDivisor.GetLimbCount();
@@ -214,7 +221,9 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
             uDoubleLimb.Divide( uMostSignificantLimb, uApproximateRemainder.muLowPart );
 
         // SE - TOOD: this seems overly generic and amenable to careful construction
-        
+        // ... and is it necessary since we can correct later ??
+
+#if PREFIXING_LOOP
         // this loop fixes the cases where the quotient is overestimated,
         // including the overflow case, and adjusts our quotient digit and
         // remainder accordingly.
@@ -224,36 +233,56 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
                     xDividend.GetLimb( iJ + uN - 2 ) ) ) )
         {
             uApproximateQuotient -= 1;
-            uApproximateRemainder += uMostSignificantLimb;
+            uApproximateRemainder += xDivisor.GetLimb( uN - 1 );
             if( uApproximateRemainder.HighLimb() == 0 )
             {
                 continue;
             }
         }
+#endif
 
         // multiply to test if its right, noting the approximate quotient fits in 64-bits
         // ... but if the result is negative we need to be careful later.
         xApproximationTest = xDivisor * uApproximateQuotient.LowLimb();
-        const bool bNegative = xApproximationTest > xDividend;
+        xReducedDividend = xDividend;
+        xReducedDividend.InplaceLimbShiftRight( iJ );
+        const bool bNegative = xApproximationTest > xReducedDividend;
 
         // set the value of the quotient for this limb
         //xQuotient.SetLimb( iJ, uApproximateQuotient.LowLimb() );
 
         if( bNegative )
         {
+#if PREFIXING_LOOP
             // if its negative adjust it back by one (assume the result is positive)
             // and adjust the approximation test value, then substract
             xQuotient.SetLimb( iJ, uApproximateQuotient.LowLimb() - 1 );
             xApproximationTest -= xDivisor;
-            xDividend -= xApproximationTest;
+#else
+            xApproximationTest -= xDivisor;
+            const bool bStillNegative = xApproximationTest > xReducedDividend;
+            xQuotient.SetLimb( iJ, ( uApproximateQuotient
+                - ( bStillNegative ? 2 : 1 ) ).LowLimb() );
+            if( bStillNegative )
+            {
+                xApproximationTest -= xDivisor;
+            }
+
+#endif
+            xDividend.InplaceSubAtLimbOffset( xApproximationTest, iJ );
         }
         else
         {
             // we got the guess right...
             xQuotient.SetLimb( iJ, uApproximateQuotient.LowLimb() );
             // subtract the test from the dividend and its done.
-            xDividend -= xApproximationTest;
+            xDividend.InplaceSubAtLimbOffset( xApproximationTest, iJ );
         }
+    }
+
+    while( xQuotient.MostSignificantLimb() == 0 )
+    {
+        xQuotient.InplaceRemoveLeadingLimb();
     }
 
     return xQuotient;
