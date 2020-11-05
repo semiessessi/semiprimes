@@ -23,21 +23,6 @@ public:
 
     }
 
-    bool operator >( const uint128d_t& xOther ) const
-    {
-        return ( muHighPart > xOther.muHighPart )
-            ? true
-            : ( muHighPart == xOther.muHighPart ) && ( muLowPart > xOther.muLowPart );
-    }
-
-    uint128d_t& operator +=( const uint128d_t& xOther )
-    {
-        const unsigned char ucCarry =
-            _addcarryx_u64( 0, muLowPart, xOther.muLowPart, &muLowPart );
-        _addcarryx_u64( ucCarry, muHighPart, xOther.muHighPart, &muHighPart );
-        return *this;
-    }
-
     uint128d_t& operator -=( const uint128d_t& xOther )
     {
         const unsigned char ucCarry =
@@ -46,43 +31,11 @@ public:
         return *this;
     }
 
-    uint128d_t& operator *=( const uint64_t& uMultiplicand )
-    {
-        uint64_t uCarry;
-        muLowPart = _umul128(
-            muLowPart, uMultiplicand, &uCarry );
-        muHighPart = _umul128(
-            muHighPart + uCarry, uMultiplicand, &uCarry );
-        return *this;
-    }
-
-    uint128d_t operator +( const uint128d_t& xOther ) const
-    {
-        uint128d_t xResult = *this;
-        xResult += xOther;
-        return xResult;
-    }
-
     uint128d_t operator -( const uint128d_t& xOther ) const
     {
         uint128d_t xResult = *this;
         xResult -= xOther;
         return xResult;
-    }
-
-    uint128d_t operator *( const uint64_t xOther ) const
-    {
-        uint128d_t xResult = *this;
-        xResult *= xOther;
-        return xResult;
-    }
-
-    uint128d_t Divide( const uint64_t uDivisor, uint64_t& uRemainder )
-    {
-        bool bOverflow = muHighPart > uDivisor;
-        uint128d_t uQuotient = *this;
-        uQuotient.InplaceDivide( uDivisor, uRemainder );
-        return uQuotient;
     }
 
     uint128d_t& InplaceDivide( const uint64_t uDivisor, uint64_t& uRemainder )
@@ -128,28 +81,28 @@ private:
 Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number& xRemainder )
 {
     Number xQuotient = 0;
-    xRemainder = 0;
-
     // 'normalise' the divisor and dividend so the high order bit is set on the divisor
     // 
     unsigned long uShifts = 0;
     _BitScanReverse64( &uShifts, xDenominator.MostSignificantLimb() );
     uShifts = 63ULL - uShifts;
-    Number xDividend = xNumerator << uShifts;
-    Number xDivisor = xDenominator << uShifts;
+    xRemainder = xNumerator;
+    xRemainder <<= uShifts;
+    Number xDivisor = xDenominator;
+    xDivisor <<= uShifts;
     Number xApproximationTest = 0;
     Number xReducedDividend = 0;
 
-    const uint64_t uM = xDividend.GetLimbCount();
+    const uint64_t uM = xRemainder.GetLimbCount();
     const uint64_t uN = xDivisor.GetLimbCount();
 
     // unconditionally add an extra limb for the  divisionloop to be safe.
-    xDividend.AddZeroLeadingLimb();
+    xRemainder.AddZeroLeadingLimb();
 
     // 'school' division
     for( int iJ = static_cast< int >( uM - uN ); iJ >= 0; --iJ )
     {
-        uint128d_t uApproximateQuotient( xDividend.GetLimb( uN + iJ ), xDividend.GetLimb( uN + iJ - 1 ) );
+        uint128d_t uApproximateQuotient( xRemainder.GetLimb( uN + iJ ), xRemainder.GetLimb( uN + iJ - 1 ) );
         // note the top part can be any value, so the worst case large result has the high bits as:
         //   0xFFFFFFFFFFFFFFFF
         // the divisor being normalised is somewhere between values:
@@ -168,6 +121,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
         // SE - TOOD: this seems overly generic and amenable to careful construction
         // ... and is it necessary since we can correct later ??
 
+        // SE - TODO: fix this.
 #if PREFIXING_LOOP
         // this loop fixes the cases where the quotient is overestimated,
         // including the overflow case, and adjusts our quotient digit and
@@ -175,7 +129,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
         while( ( uApproximateQuotient.HighLimb() > 0 )
             || ( uApproximateQuotient * xDivisor.GetLimb( uN - 2 )
                 > uint128d_t( uApproximateRemainder.LowLimb(),
-                    xDividend.GetLimb( iJ + uN - 2 ) ) ) )
+                    xRemainder.GetLimb( iJ + uN - 2 ) ) ) )
         {
             uApproximateQuotient -= 1;
             uApproximateRemainder += xDivisor.GetLimb( uN - 1 );
@@ -188,8 +142,9 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
 
         // multiply to test if its right, noting the approximate quotient fits in 64-bits
         // ... but if the result is negative we need to be careful later.
-        xApproximationTest = xDivisor * uApproximateQuotient.LowLimb();
-        xReducedDividend = xDividend;
+        xApproximationTest = xDivisor;
+        xApproximationTest *= uApproximateQuotient.LowLimb();
+        xReducedDividend = xRemainder;
         xReducedDividend.InplaceLimbShiftRight( iJ );
         const bool bNegative = xApproximationTest > xReducedDividend;
 
@@ -214,7 +169,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
             }
 
 #endif
-            xDividend.InplaceSubAtLimbOffset( xApproximationTest, iJ );
+            xRemainder.InplaceSubAtLimbOffset( xApproximationTest, iJ );
         }
         else
         {
@@ -225,7 +180,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
             }
 
             // subtract the test from the dividend and its done.
-            xDividend.InplaceSubAtLimbOffset( xApproximationTest, iJ );
+            xRemainder.InplaceSubAtLimbOffset( xApproximationTest, iJ );
         }
     }
 
@@ -236,7 +191,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
     }
 
     // fixup remainder.
-    xRemainder = xDividend >> uShifts;
+    xRemainder >>= uShifts;
 
     return xQuotient;
 }
