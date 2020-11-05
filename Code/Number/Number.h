@@ -96,6 +96,11 @@ public:
 
     uint64_t& GetLimb( const uint64_t uIndex ) { return mxLimbs[ uIndex ]; }
     uint64_t GetLimb( const uint64_t uIndex ) const { return mxLimbs[ uIndex ]; }
+    void SetLimb( const uint64_t uIndex, const uint64_t uValue )
+    {
+        mxLimbs.resize( ( uIndex < mxLimbs.size() ) ? mxLimbs.size() : uIndex + 1, 0 );
+        mxLimbs[ uIndex ] = uValue;
+    }
 
     uint64_t GetPerfectPower() const;
     bool IsPerfectSquare() const;
