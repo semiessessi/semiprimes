@@ -1,6 +1,6 @@
 #include "../../../Number/Number.h"
 
-Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Number& xRemainder )
+Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Number& xRemainder ) noexcept
 {
     Number xQuotient;
     xRemainder = 0;

@@ -3,6 +3,6 @@
 
 class Number;
 
-Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number& xRemainder );
+Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number& xRemainder ) noexcept;
 
 #endif

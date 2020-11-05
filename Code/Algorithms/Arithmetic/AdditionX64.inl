@@ -2,7 +2,7 @@
 #include <utility>
 #include <vector>
 
-void AddX64_BaseCase( std::vector< uint64_t >& xLimbs, const uint64_t uOperand )
+void AddX64_BaseCase( std::vector< uint64_t >& xLimbs, const uint64_t uOperand ) noexcept
 {
     unsigned char ucCarry = _addcarryx_u64(
         0,
@@ -35,7 +35,7 @@ void AddX64_BaseCase( std::vector< uint64_t >& xLimbs, const uint64_t uOperand )
     }
 }
 
-void AddX64_Generic( std::vector< uint64_t >& xLimbs, const std::vector< uint64_t >& xOperandLimbs )
+void AddX64_Generic( std::vector< uint64_t >& xLimbs, const std::vector< uint64_t >& xOperandLimbs ) noexcept
 {
     const size_t uOperandSize = xOperandLimbs.size();
     if( uOperandSize > xLimbs.size() )
@@ -76,7 +76,7 @@ void AddX64_Generic( std::vector< uint64_t >& xLimbs, const std::vector< uint64_
     }
 }
 
-void AddX64_Generic_Placed( std::vector< uint64_t >& xLimbs, const std::vector< uint64_t >& xOperandLimbs, uint64_t uPlace )
+void AddX64_Generic_Placed( std::vector< uint64_t >& xLimbs, const std::vector< uint64_t >& xOperandLimbs, uint64_t uPlace ) noexcept
 {
     const size_t uOperandSize = xOperandLimbs.size();
     if( uOperandSize + uPlace > xLimbs.size() )

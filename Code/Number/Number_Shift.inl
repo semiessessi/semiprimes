@@ -2,7 +2,7 @@
 
 #include <intrin.h>
 
-Number& Number::operator <<=( const uint64_t uOperand )
+Number& Number::operator <<=( const uint64_t uOperand ) noexcept
 {
     if( ( mxLimbs.size() == 1 )
         && ( mxLimbs.back() == 0 ) )
@@ -46,7 +46,7 @@ Number& Number::operator <<=( const uint64_t uOperand )
     return *this;
 }
 
-Number& Number::operator >>=( const uint64_t uOperand )
+Number& Number::operator >>=( const uint64_t uOperand ) noexcept
 {
     const uint64_t uMSB = MostSignificantBitPosition();
     if( uOperand > uMSB )
@@ -92,7 +92,7 @@ Number& Number::operator >>=( const uint64_t uOperand )
 
 //extern "C" bool Mul2X64( const uint64_t uCount, uint64_t* const pxBase );
 
-void Number::InplaceMultiplyBy2()
+void Number::InplaceMultiplyBy2() noexcept
 {
     // SE - TODO: work out how to shift with carry, sure it can be faster.
     const size_t uSize = mxLimbs.size();
@@ -116,7 +116,7 @@ void Number::InplaceMultiplyBy2()
     //}
 }
 
-void Number::InplaceLimbShiftLeft( const size_t uLimbs )
+void Number::InplaceLimbShiftLeft( const size_t uLimbs ) noexcept
 {
     // maintain zero as zero when shifted
     if( mxLimbs.size() == 1 )
@@ -143,7 +143,7 @@ void Number::InplaceLimbShiftLeft( const size_t uLimbs )
     }
 }
 
-void Number::InplaceLimbShiftRight( const size_t uLimbs )
+void Number::InplaceLimbShiftRight( const size_t uLimbs ) noexcept
 {
     // copy
     const size_t uShiftAmount =

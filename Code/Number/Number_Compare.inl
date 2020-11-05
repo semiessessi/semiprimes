@@ -1,6 +1,6 @@
 #include "Number.h"
 
-bool Number::operator >( const Number& xOperand ) const
+bool Number::operator >( const Number& xOperand ) const noexcept
 {
     // sign checks
     if( xOperand.mbNegative != mbNegative )
@@ -33,7 +33,7 @@ bool Number::operator >( const Number& xOperand ) const
     return mbNegative ? ( bEqual || !bResult ) : bResult;
 }
 
-bool Number::operator ==( const Number& xOperand ) const
+bool Number::operator ==( const Number& xOperand ) const noexcept
 {
     if( mbNegative != xOperand.mbNegative )
     {
@@ -56,7 +56,7 @@ bool Number::operator ==( const Number& xOperand ) const
     return true;
 }
 
-bool Number::GreaterOrEqualToWithOffset( const Number& xOperand, const uint64_t uPlace ) const
+bool Number::GreaterOrEqualToWithOffset( const Number& xOperand, const uint64_t uPlace ) const noexcept
 {
     // no sign checks ...
 

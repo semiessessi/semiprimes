@@ -2,7 +2,7 @@
 #include <utility>
 #include <vector>
 
-void SubX64_BaseCase( std::vector< uint64_t >& xLimbs, uint64_t uOperand )
+void SubX64_BaseCase( std::vector< uint64_t >& xLimbs, uint64_t uOperand ) noexcept
 {
     unsigned char ucBorrow = 0;
     size_t uLimb = 1;
@@ -27,7 +27,7 @@ void SubX64_BaseCase( std::vector< uint64_t >& xLimbs, uint64_t uOperand )
     }
 }
 
-void SubX64_BaseCase_Placed( std::vector< uint64_t >& xLimbs, uint64_t uOperand, uint64_t uPlace )
+void SubX64_BaseCase_Placed( std::vector< uint64_t >& xLimbs, uint64_t uOperand, uint64_t uPlace ) noexcept
 {
     unsigned char ucBorrow = 0;
     size_t uLimb = uPlace + 1;
@@ -52,7 +52,7 @@ void SubX64_BaseCase_Placed( std::vector< uint64_t >& xLimbs, uint64_t uOperand,
     }
 }
 
-void SubX64_SmallFromLarge( std::vector< uint64_t >& xGreater, const std::vector< uint64_t >& xSmaller )
+void SubX64_SmallFromLarge( std::vector< uint64_t >& xGreater, const std::vector< uint64_t >& xSmaller ) noexcept
 {
     unsigned char ucBorrow = 0;
     size_t uLimb = 0;
@@ -93,7 +93,7 @@ void SubX64_SmallFromLarge( std::vector< uint64_t >& xGreater, const std::vector
     //}
 }
 
-void SubX64_SmallFromLarge_Placed( std::vector< uint64_t >& xGreater, const std::vector< uint64_t >& xSmaller, uint64_t uPlace )
+void SubX64_SmallFromLarge_Placed( std::vector< uint64_t >& xGreater, const std::vector< uint64_t >& xSmaller, uint64_t uPlace ) noexcept
 {
     unsigned char ucBorrow = 0;
     size_t uLimb = uPlace;

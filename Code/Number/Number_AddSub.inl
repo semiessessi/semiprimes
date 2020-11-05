@@ -5,7 +5,7 @@
 
 #include <intrin.h>
 
-Number& Number::operator +=( const int64_t iOperand )
+Number& Number::operator +=( const int64_t iOperand ) noexcept
 {
     if( iOperand < 0 )
     {
@@ -19,7 +19,7 @@ Number& Number::operator +=( const int64_t iOperand )
     return *this;
 }
 
-Number& Number::operator +=( const uint64_t uOperand )
+Number& Number::operator +=( const uint64_t uOperand ) noexcept
 {
     // SE - TODO: handle the signed cases.
 
@@ -28,7 +28,7 @@ Number& Number::operator +=( const uint64_t uOperand )
     return *this;
 }
 
-Number& Number::operator +=( const Number& xOperand )
+Number& Number::operator +=( const Number& xOperand ) noexcept
 {
     if( xOperand.mbNegative != mbNegative )
     {
@@ -41,7 +41,7 @@ Number& Number::operator +=( const Number& xOperand )
     return *this;
 }
 
-Number& Number::operator -=( const int64_t iOperand )
+Number& Number::operator -=( const int64_t iOperand ) noexcept
 {
     // SE - TODO: handle the signed cases.
 
@@ -65,7 +65,7 @@ Number& Number::operator -=( const int64_t iOperand )
     return *this;
 }
 
-Number& Number::operator -=( const uint64_t uOperand )
+Number& Number::operator -=( const uint64_t uOperand ) noexcept
 {
     // SE - TODO: handle the signed cases.
     // is iOperand largest?
@@ -83,7 +83,7 @@ Number& Number::operator -=( const uint64_t uOperand )
     return *this;
 }
 
-Number& Number::operator -=( const Number& xOperand )
+Number& Number::operator -=( const Number& xOperand ) noexcept
 {
 
     //if( mbNegative != xOperand.mbNegative )
@@ -109,12 +109,12 @@ Number& Number::operator -=( const Number& xOperand )
     return *this;
 }
 
-void Number::InplaceSubAtLimbOffset( const uint64_t uOther, const uint64_t uPlace )
+void Number::InplaceSubAtLimbOffset( const uint64_t uOther, const uint64_t uPlace ) noexcept
 {
     SubX64_BaseCase_Placed( mxLimbs, uOther, uPlace );
 }
 
-void Number::InplaceSubAtLimbOffset( const Number& xOther, const uint64_t uPlace )
+void Number::InplaceSubAtLimbOffset( const Number& xOther, const uint64_t uPlace ) noexcept
 {
     SubX64_SmallFromLarge_Placed( mxLimbs, xOther.mxLimbs, uPlace );
 }

@@ -63,12 +63,6 @@
     <ClCompile Include="..\Code\Tests\Tests.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Algorithms\Arithmetic\AdditionX64.cpp">
-      <Filter>Algorithms\Arithmetic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.cpp">
-      <Filter>Algorithms\Arithmetic</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Algorithms\Primality\PowersOf2.cpp">
       <Filter>Algorithms\Primality</Filter>
     </ClCompile>
@@ -81,21 +75,6 @@
     <ClCompile Include="..\Code\Algorithms\Primality\Wheel.cpp">
       <Filter>Algorithms\Primality</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Number\Number_Copy.cpp">
-      <Filter>Number</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Number\Number_DivMod.cpp">
-      <Filter>Number</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Number\Number_Shift.cpp">
-      <Filter>Number</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Number\Number_AddSub.cpp">
-      <Filter>Number</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Number\Number_Compare.cpp">
-      <Filter>Number</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Multiplication\MultiplyLimbX64.cpp">
       <Filter>Algorithms\Arithmetic\Multiplication</Filter>
     </ClCompile>
@@ -104,9 +83,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\BinaryDivision.cpp">
       <Filter>Algorithms\Arithmetic\Division</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Number\Number_BitOps.cpp">
-      <Filter>Number</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Tests\Test_Division.cpp">
       <Filter>Tests</Filter>
@@ -155,6 +131,33 @@
     </ClCompile>
     <ClCompile Include="..\Code\Algorithms\General\BabylonianSquareRoot.cpp">
       <Filter>Algorithms\General</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Primality\Erastothenes.cpp">
+      <Filter>Algorithms\Primality</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Number\Number_DivMod.inl">
+      <Filter>Number</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Number\Number_Shift.inl">
+      <Filter>Number</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Number\Number_Compare.inl">
+      <Filter>Number</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Number\Number_Copy.inl">
+      <Filter>Number</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Number\Number_AddSub.inl">
+      <Filter>Number</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\SubtractionX64.inl">
+      <Filter>Algorithms\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\AdditionX64.inl">
+      <Filter>Algorithms\Arithmetic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Number\Number_BitOps.inl">
+      <Filter>Number</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\General\BabylonianSquareRoot.h">
       <Filter>Algorithms\General</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Primality\Erastothenes.h">
+      <Filter>Algorithms\Primality</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

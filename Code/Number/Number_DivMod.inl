@@ -8,7 +8,7 @@
 Number Number::DivMod(
     const Number& xNumerator,
     const int64_t iDenominator,
-    int64_t& iRemainder )
+    int64_t& iRemainder ) noexcept
 {
     const bool bNegativeDenominator = ( iDenominator < 0 );
     Number xReturnValue = DivMod( xNumerator,
@@ -28,7 +28,7 @@ Number Number::DivMod(
 Number Number::DivMod(
     const Number& xNumerator,
     const uint64_t uDenominator,
-    uint64_t& uRemainder )
+    uint64_t& uRemainder ) noexcept
 {
     if( xNumerator < uDenominator )
     {
@@ -65,7 +65,7 @@ Number Number::DivMod(
 Number Number::DivMod(
     const Number& xNumerator,
     const Number& xDenominator,
-    Number& xRemainder )
+    Number& xRemainder ) noexcept
 {
     if( xNumerator < xDenominator )
     {
@@ -91,7 +91,7 @@ Number Number::DivMod(
 
 uint64_t Number::Mod(
     const Number& xNumerator,
-    const uint64_t uDenominator )
+    const uint64_t uDenominator ) noexcept
 {
     uint64_t uRemainder = 0;
     for( size_t uLimb = xNumerator.mxLimbs.size();

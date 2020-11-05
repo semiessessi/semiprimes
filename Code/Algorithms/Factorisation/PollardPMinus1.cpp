@@ -1,5 +1,5 @@
 
-#include "../Primality/Wheel.h"
+#include "../Primality/Erastothenes.h"
 #include "../../Number/Factorisation.h"
 #include "../../Number/Number.h"
 
@@ -8,19 +8,19 @@ Number GetWheelBound();
 Factorisation PollardPMinus1( const Number& xNumber )
 {
     Factorisation xResult( xNumber );
-
+    const uint64_t uSmoothnessBound = 500000;
     Number xRemainingValue = xNumber;
     Number xA = 2;
 
-    // SE - TODO: more primes.
-    size_t uPrimeCount = sizeof( aiWheelPrimes ) / sizeof( aiWheelPrimes[ 0 ] );
+    InitialisePrimesUpTo( uSmoothnessBound );
+    size_t uPrimeCount = GetSievedPrimeCount();
     while( true )
     {
         xA = 1;
         Number xE = 1;
         for( size_t i = 0; i < uPrimeCount; ++i )
         {
-            xA.InplaceModMul( (2z).ModExp( aiWheelPrimes[ i ], xNumber ), xNumber );
+            xA.InplaceModMul( ( 2z ).ModExp( GetSievedPrimes()[ i ], xNumber ), xNumber );
         }
 
         xA = xA.ModExp( xNumber.MostSignificantBitPosition(), xNumber );

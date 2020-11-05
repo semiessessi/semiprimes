@@ -2,37 +2,37 @@
 
 #include <utility>
 
-Number::Number()
+Number::Number() noexcept
 : mxLimbs( { 0 } )
 , mbNegative( false )
 {
 }
 
-Number::Number( const int iValue )
+Number::Number( const int iValue ) noexcept
 : mxLimbs( { static_cast< uint64_t >( ( iValue > 0 ) ? iValue : -iValue ) } )
 , mbNegative( iValue < 0 )
 {
 }
 
-Number::Number( const unsigned int uValue )
+Number::Number( const unsigned int uValue ) noexcept
 : mxLimbs( { uValue } )
 , mbNegative( false )
 {
 }
 
-Number::Number( const int64_t iValue )
+Number::Number( const int64_t iValue ) noexcept
 : mxLimbs( { static_cast< uint64_t >( ( iValue > 0 ) ? iValue : -iValue ) } )
 , mbNegative( iValue < 0 )
 {
 }
 
-Number::Number( const uint64_t uValue )
+Number::Number( const uint64_t uValue ) noexcept
 : mxLimbs( { uValue } )
 , mbNegative( false )
 {
 }
 
-Number::Number( const std::string& xString )
+Number::Number( const std::string& xString ) noexcept
 : mxLimbs( { 0 } ) // initialise limb vector
 , mbNegative( xString[ 0 ] == '-' ) // SE - TODO: robustness against dodgy inputs
 {
@@ -68,14 +68,14 @@ Number::Number( const std::string& xString )
     }
 }
 
-Number::Number( const std::vector< uint64_t >& xLimbs, const bool bNegative )
+Number::Number( const std::vector< uint64_t >& xLimbs, const bool bNegative ) noexcept
 : mxLimbs( xLimbs )
 , mbNegative( bNegative )
 {
 
 }
 
-Number::Number( const Number& xNumber )
+Number::Number( const Number& xNumber ) noexcept
 : mxLimbs( xNumber.mxLimbs )
 , mbNegative( xNumber.mbNegative )
 {
@@ -87,7 +87,7 @@ Number::Number( Number&& xNumber ) noexcept
 {
 }
 
-Number& Number::operator =( const Number& xNumber )
+Number& Number::operator =( const Number& xNumber ) noexcept
 {
     mxLimbs = xNumber.mxLimbs;
     mbNegative = xNumber.mbNegative;
@@ -102,7 +102,7 @@ Number& Number::operator =( Number&& xNumber ) noexcept
 }
 
 #pragma warning( disable : 4455 )
-Number operator ""z( const char* const szToken )
+Number operator ""z( const char* const szToken ) noexcept
 {
     return Number( std::string( szToken ) );
 }

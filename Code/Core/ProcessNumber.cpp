@@ -98,9 +98,10 @@ void ProcessNumber( const Number& xNumber, const Parameters& xParameters )
 
     // prepare for wheel
     Helper< iWheelPrimeCount - 1, ( 2 * 3 * 5 * 7 * 11 ) >::ContinueFactorisation( xTest );
+
     // do wheel
     xTest.ContinueWithAlgorithm( WheelUpTo< 11 > );
-   
+
     xTest.ContinueWithAlgorithm( PollardPMinus1, true );
 
     // sprp tests to identify composites

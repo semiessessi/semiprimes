@@ -3,6 +3,6 @@
 
 class Number;
 
-Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Number& xRemainder );
+Number BinaryDivision( const Number& xNumerator, const Number& xDenominator, Number& xRemainder ) noexcept;
 
 #endif

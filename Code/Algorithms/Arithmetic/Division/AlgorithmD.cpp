@@ -10,7 +10,7 @@
 
 #define OVERFLOW_CARE (1)
 
-Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number& xRemainder )
+Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number& xRemainder ) noexcept
 {
     Number xQuotient = 0;
     // 'normalise' the divisor and dividend so the high order bit is set on the divisor
@@ -22,8 +22,7 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
     xRemainder <<= uShifts;
     Number xDivisor = xDenominator;
     xDivisor <<= uShifts;
-    Number xApproximationTest = 0;
-    Number xReducedDividend = 0;
+    Number xApproximationTest;
 
     const uint64_t uM = xRemainder.GetLimbCount();
     const uint64_t uN = xDivisor.GetLimbCount();

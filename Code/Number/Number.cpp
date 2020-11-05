@@ -8,14 +8,14 @@
 
 #include <cmath>
 
-Number Number::operator -() const
+Number Number::operator -() const noexcept
 {
     Number xCopy( *this );
     xCopy.mbNegative = !xCopy.mbNegative;
     return xCopy;
 }
 
-Number& Number::operator *=( const int64_t iOperand )
+Number& Number::operator *=( const int64_t iOperand ) noexcept
 {
     // handle the possible factor of -1 from the signs of the operands
     mbNegative = ( iOperand < 0 ) != mbNegative;
@@ -26,13 +26,13 @@ Number& Number::operator *=( const int64_t iOperand )
     return *this;
 }
 
-Number& Number::operator *=( const uint64_t uOperand )
+Number& Number::operator *=( const uint64_t uOperand ) noexcept
 {
     MultiplyX64_BaseCase( mxLimbs, uOperand );
     return *this;
 }
 
-Number& Number::operator *=( const Number& xOperand )
+Number& Number::operator *=( const Number& xOperand ) noexcept
 {
     // handle the possible factor of -1 from the signs of the operands
     mbNegative = xOperand.mbNegative != mbNegative;
@@ -40,32 +40,32 @@ Number& Number::operator *=( const Number& xOperand )
     return *this;
 }
 
-Number& Number::operator /=( const int64_t iOperand )
+Number& Number::operator /=( const int64_t iOperand ) noexcept
 {
     static int64_t iDeadRemainder; // :(
     *this = DivMod( *this, iOperand, iDeadRemainder );
     return *this;
 }
 
-Number& Number::operator /=( const Number& xOperand )
+Number& Number::operator /=( const Number& xOperand ) noexcept
 {
     static Number xDeadRemainder; // :(
     *this = DivMod( *this, xOperand, xDeadRemainder );
     return *this;
 }
 
-Number& Number::operator %=( const Number& xOperand )
+Number& Number::operator %=( const Number& xOperand ) noexcept
 {
     DivMod( Number( *this ), xOperand, *this );
     return *this;
 }
 
-int64_t Number::operator %( const int64_t iOperand ) const
+int64_t Number::operator %( const int64_t iOperand ) const noexcept
 {
     return Mod( *this, iOperand );
 }
 
-uint64_t Number::GetPerfectPower() const
+uint64_t Number::GetPerfectPower() const noexcept
 {
     uint64_t uLog2 = MostSignificantBitPosition();
     for( uint64_t u = 1; u < uLog2; ++u )
@@ -75,14 +75,14 @@ uint64_t Number::GetPerfectPower() const
     return 1;
 }
 
-bool Number::IsPerfectSquare() const
+bool Number::IsPerfectSquare() const noexcept
 {
     Number xRemainder;
     SquareRoot( xRemainder );
     return xRemainder == 0;
 }
 
-Number Number::SquareRoot() const
+Number Number::SquareRoot() const noexcept
 {
     if( mxLimbs.size() == 1 )
     {
@@ -96,7 +96,7 @@ Number Number::SquareRoot() const
     //return BabylonianSquareRoot_NoRemainder( *this );
 }
 
-Number Number::SquareRoot( Number& xRemainder ) const
+Number Number::SquareRoot( Number& xRemainder ) const noexcept
 {
     if( mxLimbs.size() == 1 )
     {
@@ -112,7 +112,7 @@ Number Number::SquareRoot( Number& xRemainder ) const
     //return BabylonianSquareRoot( *this, xRemainder );
 }
 
-std::string Number::ToString() const
+std::string Number::ToString() const noexcept
 {
     std::string xReturnValue = "";
     if( mbNegative )
@@ -133,7 +133,7 @@ std::string Number::ToString() const
 uint64_t Number::ModMul(
     const Number& xNumerator,
     const uint64_t uMultiplicand,
-    const uint64_t uDenominator )
+    const uint64_t uDenominator ) noexcept
 {
     // SE - TODO: better algorithms?
     // .. avoid the copy?
@@ -145,7 +145,7 @@ uint64_t Number::ModMul(
 Number Number::ModMul(
     const Number& xNumerator,
     const Number& xMultiplicand,
-    const Number& xDenominator )
+    const Number& xDenominator ) noexcept
 {
     // SE - TODO: better algorithms?
 // .. avoid the copy?
@@ -156,7 +156,7 @@ Number Number::ModMul(
 
 void Number::InplaceModMul(
     const uint64_t uMultiplicand,
-    const uint64_t uDenominator )
+    const uint64_t uDenominator ) noexcept
 {
     *this *= uMultiplicand;
     *this %= uDenominator;
@@ -164,13 +164,13 @@ void Number::InplaceModMul(
 
 void Number::InplaceModMul(
     const Number& xMultiplicand,
-    const Number& xDenominator )
+    const Number& xDenominator ) noexcept
 {
     *this *= xMultiplicand;
     *this %= xDenominator;
 }
 
-Number Number::ModExp( const Number& xExponent, const Number& xModulus ) const
+Number Number::ModExp( const Number& xExponent, const Number& xModulus ) const noexcept
 {
     Number xReturnValue = 1;
     Number xRemainingPower = xExponent;
@@ -192,7 +192,7 @@ Number Number::ModExp( const Number& xExponent, const Number& xModulus ) const
     return xReturnValue;
 }
 
-Number Number::GCD( const Number& xOther ) const
+Number Number::GCD( const Number& xOther ) const noexcept
 {
     return GCD_Euclidean( *this, xOther );
 }

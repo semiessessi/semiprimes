@@ -2,12 +2,12 @@
 
 #include <intrin.h>
 
-bool Number::GetBit( const uint64_t uIndex ) const
+bool Number::GetBit( const uint64_t uIndex ) const noexcept
 {
     return ( mxLimbs[ uIndex >> 6 ] & ( 1uLL << ( uIndex & 63 ) ) ) != 0;
 }
 
-void Number::SetBit( const uint64_t uIndex, const bool bValue )
+void Number::SetBit( const uint64_t uIndex, const bool bValue ) noexcept
 {
     const uint64_t uLimbIndex = uIndex >> 6;
     if( mxLimbs.size() <= uLimbIndex )
@@ -25,7 +25,7 @@ void Number::SetBit( const uint64_t uIndex, const bool bValue )
     }
 }
 
-uint64_t Number::MostSignificantBitPosition() const
+uint64_t Number::MostSignificantBitPosition() const noexcept
 {
     const uint64_t uBase = ( mxLimbs.size() - 1 ) * 64;
     const uint64_t uMSL = MostSignificantLimb();
@@ -34,26 +34,26 @@ uint64_t Number::MostSignificantBitPosition() const
     return uBase + uMSLMSB;
 }
 
-Number& Number::operator &=( const uint64_t uOperand )
+Number& Number::operator &=( const uint64_t uOperand ) noexcept
 {
     mxLimbs.resize( 1 );
     mxLimbs[ 0 ] &= uOperand;
     return *this;
 }
 
-Number& Number::operator |=( const uint64_t uOperand )
+Number& Number::operator |=( const uint64_t uOperand ) noexcept
 {
     mxLimbs[ 0 ] |= uOperand;
     return *this;
 }
 
-Number& Number::operator ^=( const uint64_t uOperand )
+Number& Number::operator ^=( const uint64_t uOperand ) noexcept
 {
     mxLimbs[ 0 ] ^= uOperand;
     return *this;
 }
 
-uint64_t Number::operator &( const uint64_t uOperand ) const
+uint64_t Number::operator &( const uint64_t uOperand ) const noexcept
 {
     return mxLimbs[ 0 ] & uOperand;
 }
