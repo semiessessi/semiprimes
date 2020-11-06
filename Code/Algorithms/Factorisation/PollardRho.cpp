@@ -102,15 +102,16 @@ Factorisation PollardRho( const Number& xNumber )
         }
     }
 
-    if( xRemainingValue > 1 )
+    if( ( xRemainingValue > 1 )
+        && xRemainingValue != xNumber )
     {
         const bool bPrimeByWheel = xRemainingValue < GetWheelBound();
         Factorisation xNew( xRemainingValue, bPrimeByWheel );
         if( bPrimeByWheel )
         {
             xNew.szProofName = "bound set by trial division";
+            xNew.szFactoringAlgorithm = "cofactor left from Pollard's rho";
         }
-        xNew.szFactoringAlgorithm = "Pollard's rho";
         xResult.mxKnownFactors.push_back( xNew );
     }
 
