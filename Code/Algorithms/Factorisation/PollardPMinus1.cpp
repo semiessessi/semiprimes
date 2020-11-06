@@ -23,7 +23,7 @@ Factorisation PollardPMinus1( const Number& xNumber )
     size_t uPrimeCount = GetSievedPrimeCount();
     while( true )
     {
-        xA = 1;
+        xA = 2;
         Number xE = 1;
         for( size_t i = 0; i < uPrimeCount; ++i )
         {
@@ -32,9 +32,10 @@ Factorisation PollardPMinus1( const Number& xNumber )
             {
                 break;
             }
+            xA = xE;
 
             // early out
-            if( ( uPrimeCount & 0x1FFF ) == 0 )
+            if( ( i & 0x1FFF ) == 0 )
             {
                 xGCD = xNumber.GCD( xA - 1ULL );
                 if( xGCD != 1 )
