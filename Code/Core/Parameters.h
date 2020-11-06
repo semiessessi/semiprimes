@@ -20,6 +20,7 @@ public:
     bool Verbose() const { return mxFlags.at( "verbose" ); }
     bool Interactive() const { return mxFlags.at( "interactive" ); }
     bool Test() const { return mxFlags.at( "test" ); }
+    bool Profile() const { return mxFlags.at( "profile" ); }
 
     int NumberCount() const { return static_cast< int >( mxNumbers.size() ); }
     const Number& GetNumber( const int iNumber ) const { return mxNumbers[ iNumber ]; }

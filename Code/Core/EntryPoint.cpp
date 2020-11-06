@@ -3,6 +3,7 @@
 
 void Help();
 void InteractiveMode( const Parameters& xParameters );
+void Profile( const Parameters& xParameters );
 void Test( const Parameters& xParameters );
 
 int main(
@@ -19,6 +20,11 @@ int main(
 	if( xParameters.Test() )
 	{
 		Test( xParameters );
+	}
+
+	if( xParameters.Profile() )
+	{
+		Profile( xParameters );
 	}
 
 	for( int i = 0; i < xParameters.NumberCount(); ++i )

@@ -165,6 +165,9 @@
     <ClCompile Include="..\Code\Tests\Test_PMinus1.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Core\Profile.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\RepeatedMod.h">
       <Filter>Algorithms\Arithmetic\Division</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Core\Profile.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

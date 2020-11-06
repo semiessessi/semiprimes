@@ -17,6 +17,7 @@ Parameters::Parameters(
 	mxFlags[ "verbose" ] = false;
 	mxFlags[ "interactive" ] = false;
 	mxFlags[ "test" ] = false;
+	mxFlags[ "profile" ] = false;
     for( int i = 0; i < iParameterCount; ++i )
     {
 		if( CheckFlag( "-v", iParameterCount, pszParameters[ i ] )
@@ -43,6 +44,11 @@ Parameters::Parameters(
 		else if( CheckFlag( "-test", iParameterCount, pszParameters[ i ] ) )
 		{
 			mxFlags[ "test" ] = true;
+		}
+		else if( CheckFlag( "-p", iParameterCount, pszParameters[ i ] )
+			|| CheckFlag( "-profile", iParameterCount, pszParameters[ i ] ) )
+		{
+			mxFlags[ "profile" ] = true;
 		}
 		else
 		{
