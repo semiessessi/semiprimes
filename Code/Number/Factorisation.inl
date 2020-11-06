@@ -60,6 +60,11 @@ void Factorisation::ContinueWithAlgorithm( const Algorithm& xAlgorithm, const bo
 				for( size_t v = 0; v < xNew.mxKnownFactors.size(); ++v )
 				{
 					xNew.mxKnownFactors[ v ].miPower *= xNew.miPower;
+					if( xNew.mxKnownFactors[ v ].szFactoringAlgorithm[ 0 ] == 0 )
+					{
+						// why not?
+						xNew.mxKnownFactors[ v ].szFactoringAlgorithm = xNew.szFactoringAlgorithm;
+					}
 					mxKnownFactors.insert( mxKnownFactors.begin() + u + v, xNew.mxKnownFactors[ v ] );
 				}
 
