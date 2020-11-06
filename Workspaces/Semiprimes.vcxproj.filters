@@ -162,6 +162,9 @@
     <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\RepeatedMod.inl">
       <Filter>Algorithms\Arithmetic\Division</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Tests\Test_PMinus1.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
