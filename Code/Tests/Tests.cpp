@@ -17,6 +17,7 @@ bool TestBabylonianSquareRoot();
 bool ModExpTests();
 bool TestFermat();
 bool TestRho();
+bool TestPMinus1();
 bool SPRPTests();
 bool AlgorithmDTests();
 
@@ -76,6 +77,7 @@ void DoTests( const Parameters& xParameters )
         { "Modular exponentiation tests", ModExpTests },
         { "Pollard rho algorithm tests", TestRho },
         { "Fermat's method tests", TestFermat },
+        { "Pollard p-1 algorithm tests", TestPMinus1 },
         { "Strong Fermat psuedoprime tests", SPRPTests },
     };
     
