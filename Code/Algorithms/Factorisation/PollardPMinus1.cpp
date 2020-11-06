@@ -8,9 +8,16 @@ Number GetWheelBound();
 Factorisation PollardPMinus1( const Number& xNumber )
 {
     Factorisation xResult( xNumber );
-    const uint64_t uSmoothnessBound = 500000;
+    const uint64_t uSmoothnessBound =
+#ifdef _DEBUG
+        50000
+#else
+        1000000
+#endif
+        ;
     Number xRemainingValue = xNumber;
     Number xA = 2;
+    Number xGCD = 1;
 
     InitialisePrimesUpTo( uSmoothnessBound );
     size_t uPrimeCount = GetSievedPrimeCount();
@@ -20,12 +27,29 @@ Factorisation PollardPMinus1( const Number& xNumber )
         Number xE = 1;
         for( size_t i = 0; i < uPrimeCount; ++i )
         {
-            xA.InplaceModMul( ( 2z ).ModExp( GetSievedPrimes()[ i ], xNumber ), xNumber );
+            xE = xA.ModExp( GetSievedPrimes()[ i ], xNumber );
+            if( xE == 1 )
+            {
+                break;
+            }
+
+            // early out
+            if( ( uPrimeCount & 0x1FFF ) == 0 )
+            {
+                xGCD = xNumber.GCD( xA - 1ULL );
+                if( xGCD != 1 )
+                {
+                    break;
+                }
+            }
         }
 
-        xA = xA.ModExp( xNumber.MostSignificantBitPosition(), xNumber );
+        if( xGCD == 1 )
+        {
+            xA = xA.ModExp( xNumber.MostSignificantBitPosition(), xNumber );
+            xGCD = xNumber.GCD( xA - 1ULL );
+        }
 
-        const Number xGCD = xNumber.GCD( xA - 1ULL );
         if( xGCD == 1 )
         {
             break;
@@ -59,7 +83,7 @@ Factorisation PollardPMinus1( const Number& xNumber )
     {
         const bool bPrimeByWheel = xRemainingValue < GetWheelBound();
         Factorisation xNew( xRemainingValue, bPrimeByWheel );
-        xNew.szFactoringAlgorithm = "Pollard's p-1 method";
+        xNew.szFactoringAlgorithm = "cofactor from Pollard's p-1 method";
         if( bPrimeByWheel )
         {
             xNew.szProofName = "bound set by trial division";
