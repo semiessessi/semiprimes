@@ -154,8 +154,9 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
         if( uTest > uWheelLimit )
         {
             SetWheelBound( ( Number( uOldTest ) * uOldTest ) - 1ULL );
-
-            xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue ) );
+            Factorisation xNew( xWorkingValue );
+            xNew.szFactoringAlgorithm = "cofactor from wheel";
+            xResult.mxKnownFactors.push_back( xNew );
             return xResult;
         }
 
@@ -172,7 +173,7 @@ Factorisation Wheel< N >::operator()( const Number& xNumber ) const
     else if( xWorkingValue > 1 )
     {
         xResult.szProofName = "trial divison with wheel";
-        xResult.szFactoringAlgorithm = "trial divison with wheel";
+        xResult.szFactoringAlgorithm = "cofactor from wheel";
         xResult.mxKnownFactors.push_back( Factorisation( xWorkingValue, true ) );
     }
 
