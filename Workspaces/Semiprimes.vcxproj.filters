@@ -168,6 +168,9 @@
     <ClCompile Include="..\Code\Core\Profile.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Algorithms\Arithmetic\Division\AlgorithmP.cpp">
+      <Filter>Algorithms\Arithmetic\Division</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Code\Number\Number.h">
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="..\Code\Core\Profile.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Code\Algorithms\Arithmetic\Division\AlgorithmP.h">
+      <Filter>Algorithms\Arithmetic\Division</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

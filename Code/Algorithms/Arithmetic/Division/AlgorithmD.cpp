@@ -10,13 +10,17 @@
 
 #define OVERFLOW_CARE (1)
 
-Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number& xRemainder ) noexcept
+Number AlgorithmD(
+    const Number& xNumerator,
+    const Number& xDenominator,
+    Number& xRemainder ) noexcept
 {
     Number xQuotient = 0;
-    // 'normalise' the divisor and dividend so the high order bit is set on the divisor
-    // 
+    // 'normalise' the divisor and dividend
+    // so the high order bit is set on the divisor
     unsigned long uShifts = 0;
-    _BitScanReverse64( &uShifts, xDenominator.MostSignificantLimb() );
+    _BitScanReverse64( &uShifts,
+        xDenominator.MostSignificantLimb() );
     uShifts = 63ULL - uShifts;
     xRemainder = xNumerator;
     xRemainder <<= uShifts;
@@ -36,7 +40,8 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
         // then subtractions keep it safe. (i think)
         uint64_t uMostSignificantLimb = xDivisor.MostSignificantLimb();
 #if OVERFLOW_CARE
-        const bool bOverflow = xRemainder.GetLimb( uN + iJ ) >= uMostSignificantLimb;
+        const bool bOverflow =
+            xRemainder.GetLimb( uN + iJ ) >= uMostSignificantLimb;
         uint64_t uApproximateQuotient = 0xFFFFFFFFFFFFFFFF;
         if( !bOverflow )
         {
@@ -55,11 +60,13 @@ Number AlgorithmD( const Number& xNumerator, const Number& xDenominator, Number&
         // ... but if the result is negative we need to adjust it
         xApproximationTest = xDivisor;
         xApproximationTest *= uApproximateQuotient;
-        const bool bNegative = xApproximationTest.GreaterOrEqualToWithOffset( xRemainder, iJ );
+        const bool bNegative =
+            xApproximationTest.GreaterOrEqualToWithOffset( xRemainder, iJ );
         if( bNegative )
         {
             xApproximationTest -= xDivisor;
-            const bool bStillNegative = xApproximationTest.GreaterOrEqualToWithOffset( xRemainder, iJ );
+            const bool bStillNegative =
+                xApproximationTest.GreaterOrEqualToWithOffset( xRemainder, iJ );
             uApproximateQuotient -= bStillNegative ? 2 : 1;
             if( bStillNegative )
             {

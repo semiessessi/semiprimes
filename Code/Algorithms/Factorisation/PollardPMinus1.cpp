@@ -1,4 +1,3 @@
-
 #include "../Primality/Erastothenes.h"
 #include "../../Number/Factorisation.h"
 #include "../../Number/Number.h"

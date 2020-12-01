@@ -20,6 +20,7 @@ bool TestRho();
 bool TestPMinus1();
 bool SPRPTests();
 bool AlgorithmDTests();
+bool AlgorithmPTests();
 
 bool RunTest( const std::string& xName, bool ( * const pfnTestFunction )() );
 
@@ -72,8 +73,9 @@ void DoTests( const Parameters& xParameters )
         { "multiple limb multiplication", MulTests },
         { "(10^n - 1) / 9 mod 10 == 1 and similar", ModTests },
         { "Algorithm D tests", AlgorithmDTests },
+        //{ "Algorithm P tests", AlgorithmPTests },
         { "Square root tests", TestSquareRoot },
-        { "Babylonian square root tests", TestBabylonianSquareRoot },
+        //{ "Babylonian square root tests", TestBabylonianSquareRoot },
         { "Modular exponentiation tests", ModExpTests },
         { "Pollard rho algorithm tests", TestRho },
         { "Fermat's method tests", TestFermat },
